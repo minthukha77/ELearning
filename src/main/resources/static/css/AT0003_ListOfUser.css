@@ -1,0 +1,906 @@
+.at0003-list-of-users-admin-list {
+    align-items: flex-start;
+    background-color: var(--gallery);
+    display: flex;
+    height: 1261px;
+    overflow: hidden;
+    width: 1440px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group6 {
+    height: 1430px;
+    margin-top: -169px;
+    position: relative;
+    width: 1477px;
+  }
+  
+  .at0003-list-of-users-admin-list .rectangle-204 {
+    height: 835px;
+    left: 414px;
+    position: absolute;
+    top: 354px;
+    width: 996px;
+  }
+  
+  .at0003-list-of-users-admin-list .main {
+    align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    min-height: 1430px;
+    position: absolute;
+    top: 0;
+    width: 1440px;
+  }
+  
+  .at0003-list-of-users-admin-list .student-list {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-right: 60px;
+    margin-top: 410px;
+    min-height: 391px;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .line-38 {
+    height: 1px;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .flex-row {
+    align-items: flex-start;
+    display: flex;
+    height: 35px;
+    margin-left: 16.67px;
+    margin-top: 26px;
+    min-width: 824px;
+  }
+  
+  .at0003-list-of-users-admin-list .place {
+    letter-spacing: 0;
+    margin-top: 3.33px;
+    min-height: 13px;
+    width: 22px;
+  }
+  
+  .at0003-list-of-users-admin-list .place-1 {
+    letter-spacing: 0;
+    margin-left: 68px;
+    margin-top: 3.0px;
+    min-height: 13px;
+    width: 46px;
+  }
+  
+  .at0003-list-of-users-admin-list .email {
+    letter-spacing: 0;
+    margin-left: 100px;
+    min-height: 13px;
+    width: 44px;
+  }
+  
+  .at0003-list-of-users-admin-list .phone-number {
+    align-self: center;
+    letter-spacing: 0;
+    margin-left: 130px;
+    margin-top: 1.0px;
+    min-height: 30px;
+    width: 158px;
+  }
+  
+  .at0003-list-of-users-admin-list .email-1 {
+    align-self: flex-end;
+    letter-spacing: 0;
+    margin-left: 48px;
+    min-height: 32px;
+    width: 208px;
+  }
+  
+  .at0003-list-of-users-admin-list .flex-col {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-top: 35px;
+    min-height: 575px;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group2 {
+    height: 97px;
+    position: relative;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .rectangle-135 {
+    background-color: var(--alabaster);
+    height: 96px;
+    left: 0;
+    position: absolute;
+    top: 2px;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .number {
+    left: 17px;
+    letter-spacing: 0;
+    position: absolute;
+    top: 33px;
+    width: 8px;
+  }
+  
+  .at0003-list-of-users-admin-list .admin1 {
+    left: 106px;
+    letter-spacing: 0;
+    line-height: 28px;
+    position: absolute;
+    top: 29px;
+    white-space: nowrap;
+    width: 92px;
+  }
+  
+  .at0003-list-of-users-admin-list .line-39 {
+    height: 3px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .confirm {
+    left: 835px;
+    letter-spacing: 0;
+    position: absolute;
+    top: 35px;
+    width: 60px;
+  }
+  
+  .at0003-list-of-users-admin-list .stu1gmailcom {
+    cursor: pointer;
+    left: 244px;
+    letter-spacing: 0;
+    line-height: 28px;
+    position: absolute;
+    text-decoration: underline;
+    top: 23px;
+    white-space: nowrap;
+    width: 123px;
+  }
+  
+  .at0003-list-of-users-admin-list .registered {
+    left: 625px;
+    letter-spacing: 0;
+    line-height: 28px;
+    position: absolute;
+    text-align: center;
+    top: 25px;
+    width: 122px;
+  }
+  
+  .at0003-list-of-users-admin-list .phone {
+    left: 426px;
+    letter-spacing: 0;
+    line-height: 28px;
+    position: absolute;
+    top: 31px;
+    white-space: nowrap;
+    width: 174px;
+  }
+  
+  .at0003-list-of-users-admin-list .line-40 {
+    height: 2px;
+    margin-top: 1px;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .flex-row-1 {
+    align-items: flex-start;
+    display: flex;
+    height: 31px;
+    margin-left: 17px;
+    margin-top: 30px;
+    min-width: 750px;
+  }
+  
+  .at0003-list-of-users-admin-list .number-1 {
+    align-self: center;
+    letter-spacing: 0;
+    margin-bottom: 0.03px;
+    min-height: 13px;
+    width: 11px;
+  }
+  
+  .at0003-list-of-users-admin-list .admin2 {
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 78px;
+    margin-top: 2px;
+    min-height: 19px;
+    white-space: nowrap;
+    width: 102px;
+  }
+  
+  .at0003-list-of-users-admin-list .stu2gmailcom {
+    cursor: pointer;
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 30px;
+    min-height: 23px;
+    text-decoration: underline;
+    white-space: nowrap;
+    width: 126px;
+  }
+  
+  .at0003-list-of-users-admin-list .phone-1 {
+    align-self: center;
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-bottom: 6.0px;
+    margin-left: 63px;
+    min-height: 19px;
+    white-space: nowrap;
+    width: 182px;
+  }
+  
+  .at0003-list-of-users-admin-list .registered-1 {
+    align-self: flex-end;
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 33px;
+    min-height: 28px;
+    white-space: nowrap;
+    width: 125px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group-1 {
+    height: 97px;
+    margin-top: 34px;
+    position: relative;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .rectangle-13 {
+    background-color: var(--alabaster);
+    height: 96px;
+    left: 0;
+    position: absolute;
+    top: 1px;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .admin3 {
+    left: 107px;
+    letter-spacing: 0;
+    line-height: 28px;
+    position: absolute;
+    top: 31px;
+    white-space: nowrap;
+    width: 92px;
+  }
+  
+  .at0003-list-of-users-admin-list .number-2 {
+    left: 17px;
+    letter-spacing: 0;
+    position: absolute;
+    top: 41px;
+    width: 11px;
+  }
+  
+  .at0003-list-of-users-admin-list .line-41 {
+    height: 2px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .stu3gmailcom {
+    cursor: pointer;
+    left: 238px;
+    letter-spacing: 0;
+    line-height: 28px;
+    position: absolute;
+    text-decoration: underline;
+    top: 29px;
+    white-space: nowrap;
+    width: 126px;
+  }
+  
+  .at0003-list-of-users-admin-list .suspended {
+    left: 642px;
+    letter-spacing: 0;
+    line-height: 28px;
+    position: absolute;
+    top: 30px;
+    white-space: nowrap;
+    width: 125px;
+  }
+  
+  .at0003-list-of-users-admin-list .phone-2 {
+    left: 426px;
+    letter-spacing: 0;
+    line-height: 28px;
+    position: absolute;
+    top: 31px;
+    white-space: nowrap;
+    width: 109px;
+  }
+  
+  .at0003-list-of-users-admin-list .line-42 {
+    height: 1px;
+    margin-top: 1px;
+    width: 925px;
+  }
+  
+  .at0003-list-of-users-admin-list .flex-row-2 {
+    align-items: flex-start;
+    display: flex;
+    height: 37px;
+    margin-left: 18px;
+    margin-top: 33px;
+    min-width: 708px;
+  }
+  
+  .at0003-list-of-users-admin-list .number-3 {
+    letter-spacing: 0;
+    margin-top: 5.0px;
+    min-height: 13px;
+    width: 11px;
+  }
+  
+  .at0003-list-of-users-admin-list .admin4 {
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 79px;
+    min-height: 19px;
+    white-space: nowrap;
+    width: 91px;
+  }
+  
+  .at0003-list-of-users-admin-list .stu2gmailcom-1 {
+    cursor: pointer;
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 39px;
+    margin-top: 1.0px;
+    min-height: 19px;
+    text-decoration: underline;
+    white-space: nowrap;
+    width: 126px;
+  }
+  
+  .at0003-list-of-users-admin-list .phone-3 {
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 62px;
+    margin-top: 1.0px;
+    min-height: 19px;
+    white-space: nowrap;
+    width: 109px;
+  }
+  
+  .at0003-list-of-users-admin-list .registered-2 {
+    align-self: flex-end;
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 107px;
+    min-height: 35px;
+    text-align: center;
+    width: 84px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group1 {
+    align-items: flex-start;
+    background-color: var(--alabaster);
+    display: flex;
+    height: 96px;
+    margin-top: 23px;
+    min-width: 925px;
+    padding: 26.0px 18px;
+  }
+  
+  .at0003-list-of-users-admin-list .number-4 {
+    letter-spacing: 0;
+    margin-top: 7.0px;
+    min-height: 13px;
+    width: 11px;
+  }
+  
+  .at0003-list-of-users-admin-list .admin5 {
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 79px;
+    margin-top: 3.0px;
+    min-height: 19px;
+    white-space: nowrap;
+    width: 100px;
+  }
+  
+  .at0003-list-of-users-admin-list .stu2gmailcom-2 {
+    cursor: pointer;
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 33px;
+    margin-top: 1.0px;
+    min-height: 19px;
+    text-decoration: underline;
+    white-space: nowrap;
+    width: 126px;
+  }
+  
+  .at0003-list-of-users-admin-list .phone-4 {
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 60px;
+    margin-top: 2.0px;
+    min-height: 19px;
+    white-space: nowrap;
+    width: 182px;
+  }
+  
+  .at0003-list-of-users-admin-list .suspended-1 {
+    letter-spacing: 0;
+    line-height: 28px;
+    margin-left: 36px;
+    min-height: 28px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .group-pagination-element {
+    align-items: flex-start;
+    align-self: flex-end;
+    display: flex;
+    margin-right: 35px;
+    margin-top: 50px;
+    min-width: 239px;
+  }
+  
+  .at0003-list-of-users-admin-list .groupgrouppagin-n-item-disabled {
+    height: 40px;
+    width: 62px;
+  }
+  
+  .at0003-list-of-users-admin-list .groupgrouppagin-ion-item-active {
+    align-items: center;
+    background-color: var(--purple-heart-22);
+    display: flex;
+    height: 40px;
+    min-width: 36px;
+    padding: 0 14px;
+  }
+  
+  .at0003-list-of-users-admin-list .number-5 {
+    letter-spacing: 0;
+    line-height: 16px;
+    min-height: 16px;
+    min-width: 8px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .groupgroup-pagination-item {
+    align-items: center;
+    background-color: var(--white);
+    display: flex;
+    height: 40px;
+    min-width: 38px;
+    padding: 0 14px;
+  }
+  
+  .at0003-list-of-users-admin-list .x1 {
+    letter-spacing: 0;
+    line-height: 16px;
+    min-height: 16px;
+    min-width: 10px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .groupgroup-pagination-item-1 {
+    align-items: center;
+    background-color: var(--white);
+    display: flex;
+    height: 40px;
+    min-width: 39px;
+    padding: 0 14px;
+  }
+  
+  .at0003-list-of-users-admin-list .x1-1 {
+    letter-spacing: 0;
+    line-height: 16px;
+    min-height: 16px;
+    min-width: 11px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .groupgroup-pagi-ation-item-next {
+    height: 40px;
+    width: 64px;
+  }
+  
+  .at0003-list-of-users-admin-list .footer-big-1 {
+    align-items: center;
+    background-color: var(--cinder);
+    display: flex;
+    flex-direction: column;
+    margin-top: 407px;
+    min-height: 222px;
+    width: 1440px;
+  }
+  
+  .at0003-list-of-users-admin-list .div {
+    align-items: flex-start;
+    display: flex;
+    height: 136px;
+    margin-right: 238.0px;
+    margin-top: 18px;
+    min-width: 844px;
+  }
+  
+  .at0003-list-of-users-admin-list .address {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    min-height: 136px;
+    width: 268px;
+  }
+  
+  .at0003-list-of-users-admin-list .address-1 {
+    letter-spacing: 0;
+    line-height: 28px;
+    min-height: 33px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .text {
+    letter-spacing: 0;
+    line-height: 24px;
+    margin-top: 17px;
+    min-height: 86px;
+    width: 264px;
+  }
+  
+  .at0003-list-of-users-admin-list .contact {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-left: 312px;
+    min-height: 136px;
+    width: 268px;
+  }
+  
+  .at0003-list-of-users-admin-list .contact-us {
+    letter-spacing: 0;
+    line-height: 28px;
+    min-height: 33px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .divider {
+    height: 1px;
+    margin-left: 0;
+    margin-top: 14px;
+    width: 1368px;
+  }
+  
+  .at0003-list-of-users-admin-list .text-3 {
+    letter-spacing: 0;
+    line-height: 24px;
+    margin-top: 11px;
+    min-height: 84px;
+    text-align: center;
+    width: 1518px;
+  }
+  
+  .at0003-list-of-users-admin-list .student {
+    align-items: center;
+    background-color: var(--white);
+    border: 1px solid #c9b9f7;
+    border-radius: 4px;
+    cursor: pointer;
+    display: flex;
+    height: 43px;
+    justify-content: flex-end;
+    left: 1197px;
+    min-width: 189px;
+    padding: 0 12px;
+    position: absolute;
+    top: 269px;
+  }
+  
+  .at0003-list-of-users-admin-list .add-admin {
+    align-items: center;
+    display: flex;
+    height: 41px;
+    overflow: hidden;
+    width: 38px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group {
+    height: 31px;
+    position: relative;
+    width: 38px;
+  }
+  
+  .at0003-list-of-users-admin-list .vector {
+    height: 31px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 29px;
+  }
+  
+  .at0003-list-of-users-admin-list .vector-1 {
+    height: 14px;
+    left: 26px;
+    position: absolute;
+    top: 7px;
+    width: 12px;
+  }
+  
+  .at0003-list-of-users-admin-list .add-admin-1 {
+    color: var(--black);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-l2);
+    font-weight: 600;
+    letter-spacing: 0;
+    min-height: 19px;
+    text-align: center;
+    width: 123px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group4 {
+    background-color: var(--white);
+    border-radius: 4px;
+    height: 38px;
+    left: 418px;
+    position: absolute;
+    top: 276px;
+    width: 540px;
+  }
+  
+  .at0003-list-of-users-admin-list .rectangle-69 {
+    height: 38px;
+    left: 460px;
+    position: absolute;
+    top: -1px;
+    width: 79px;
+  }
+  
+  .at0003-list-of-users-admin-list .search {
+    color: var(--black);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-m2);
+    font-weight: 400;
+    left: 475px;
+    letter-spacing: 0;
+    line-height: 16px;
+    position: absolute;
+    top: 10px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .menu-items {
+    align-items: flex-end;
+    background-color: var(--pale-sky);
+    display: flex;
+    flex-direction: column;
+    left: 0;
+    min-height: 1039px;
+    padding: 50px 0;
+    position: absolute;
+    top: 169px;
+    width: 400px;
+  }
+  
+  .at0003-list-of-users-admin-list .space-between-d-hboard-and-menu {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    margin-right: -62px;
+    min-height: 145px;
+    width: 437px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group1-1 {
+    height: 39px;
+    position: relative;
+    width: 437px;
+  }
+  
+  .at0003-list-of-users-admin-list .title {
+    color: var(--purple-heart2);
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxxl);
+    font-weight: 700;
+    height: 39px;
+    left: 0;
+    letter-spacing: 0;
+    position: absolute;
+    top: 0;
+    width: 437px;
+  }
+  
+  .at0003-list-of-users-admin-list .chevron-double-left {
+    align-items: flex-start;
+    display: flex;
+    height: 24px;
+    left: 338px;
+    padding: 2.0px 2.0px;
+    position: absolute;
+    top: 7px;
+    width: 24px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group-2 {
+    height: 20px;
+    position: relative;
+    width: 17px;
+  }
+  
+  .at0003-list-of-users-admin-list .vector-2 {
+    height: 20px;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 11px;
+  }
+  
+  .at0003-list-of-users-admin-list .vector-3 {
+    height: 20px;
+    left: 6px;
+    position: absolute;
+    top: 0;
+    width: 11px;
+  }
+  
+  .at0003-list-of-users-admin-list .profile {
+    letter-spacing: 0;
+    line-height: 36px;
+    margin-top: 70px;
+    min-height: 36px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .text-4 {
+    color: transparent;
+    font-family: var(--font-family-inter);
+    font-size: var(--font-size-xxxl2);
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 36px;
+    margin-top: 20px;
+    min-height: 131px;
+    width: 375px;
+  }
+  
+  .at0003-list-of-users-admin-list .payment-record {
+    letter-spacing: 0;
+    line-height: 36px;
+    margin-bottom: -2px;
+    margin-top: 20px;
+    min-height: 34px;
+    white-space: nowrap;
+    width: 375px;
+  }
+  
+  .at0003-list-of-users-admin-list .course-course-list {
+    letter-spacing: 0;
+    line-height: 36px;
+    margin-top: 20px;
+    min-height: 72px;
+    width: 375px;
+  }
+  
+  .at0003-list-of-users-admin-list .x-list {
+    letter-spacing: 0;
+    line-height: 36px;
+    margin-top: 20px;
+    min-height: 36px;
+    white-space: nowrap;
+    width: 375px;
+  }
+  
+  .at0003-list-of-users-admin-list .navbar-regular {
+    align-items: flex-start;
+    background-color: var(--alabaster);
+    border-radius: 4px;
+    display: flex;
+    height: 48px;
+    left: 400px;
+    min-width: 1077px;
+    padding: 11px 13.5px;
+    position: absolute;
+    top: 171px;
+  }
+  
+  .at0003-list-of-users-admin-list .mapping-site {
+    letter-spacing: 0;
+    min-height: 24px;
+    width: 130px;
+  }
+  
+  .at0003-list-of-users-admin-list .ellipse {
+    height: 48px;
+    left: 1386px;
+    object-fit: cover;
+    position: absolute;
+    top: 171px;
+    width: 50px;
+  }
+  
+  .at0003-list-of-users-admin-list .breadcrumb-level-1 {
+    align-items: flex-start;
+    background-color: var(--alabaster);
+    display: flex;
+    height: 38px;
+    left: 400px;
+    min-width: 1040px;
+    position: absolute;
+    top: 219px;
+  }
+  
+  .at0003-list-of-users-admin-list .overlap-group5 {
+    align-items: flex-end;
+    background-color: var(--alabaster);
+    border-radius: 4px;
+    display: flex;
+    height: 38px;
+    min-width: 1040px;
+    padding: 6px 16px;
+  }
+  
+  .at0003-list-of-users-admin-list .explorer-courses {
+    letter-spacing: 0;
+    line-height: 16px;
+    margin-bottom: 1px;
+    min-height: 16px;
+    min-width: 29px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .text-5 {
+    letter-spacing: 0;
+    line-height: 16px;
+    margin-left: 25px;
+    min-height: 17px;
+    white-space: nowrap;
+    width: 6px;
+  }
+  
+  .at0003-list-of-users-admin-list .admin-list {
+    letter-spacing: 0;
+    line-height: 16px;
+    margin-bottom: 1px;
+    margin-left: 25px;
+    min-height: 16px;
+    min-width: 81px;
+    white-space: nowrap;
+  }
+  
+  .at0003-list-of-users-admin-list .person-plus {
+    align-items: center;
+    display: flex;
+    height: 41px;
+    margin-left: 115px;
+    margin-top: -419px;
+    overflow: hidden;
+    width: 38px;
+  }
+  
+  .container-center-horizontal {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    pointer-events: none;
+    width: 100%;
+  }
+  
+  .container-center-horizontal > * {
+    flex-shrink: 0;
+    pointer-events: auto;
+  }
+  
+  .valign-text-middle {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  

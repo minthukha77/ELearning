@@ -1,0 +1,288 @@
+/* CSS for add category */
+:root {
+	/* Colors */
+	--primary: #309986;
+	--warning: yellow;
+	--navbar-brand-bg-color: #edf3f1;
+	--navbar-color: #0f8173;
+	/* Typography */
+	--links-font-size: 17px;
+	--nav-link-bg-alt: #00736c;
+	--log-out:#e63587;
+	--certificate-border:#057835;
+	--certificate-btn:#3c8a08;
+	--certificate-secondbtn:hsla(160, 64%, 42%, 0.993);
+	--cardbox: #3abea6e7;
+    --btnbg: rgba(16, 226, 233, 0.993);
+    --btnborder:#fff;
+    --btnshadow:#000;
+	--registercomplete:green;
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	font-weight: 400;
+	overflow-x: hidden;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.registration{
+    margin: 0 20px;
+}
+.course-registration{
+    padding-top: 20px;
+}
+.course-registration .card{
+    background-color: #4DC4AE;
+    min-width: 350px;
+    max-width: 800px;
+    margin:  auto;
+}
+
+.img-upload{
+    cursor: pointer;
+}
+
+.display-image{
+    margin: 15px auto;
+    width: 200px;
+}
+
+.unit{
+    background-color: #4DC4AE;
+    width: 70px;
+    height: 100%;
+    top: 0;
+    right: 12px;
+    border-radius: 0 5px 5px 0;
+    border: 2px solid white;
+}
+
+.add-category, .delete-category{
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 55000;
+}
+
+.add-category .add-box, .delete-category .delete-box{
+    width: 50%;
+}
+
+.add-category.ani, .delete-category.ani{
+    animation: fadeIn 0.3s ease-in both;
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+		transform: translate3d(0, -20%, 0);
+	}
+	to {
+		opacity: 1;
+		transform: translate3d(0, 0, 0);
+	}
+}
+
+@media (max-width : 600px) {
+    .add-category .add-box, .delete-category .delete-box{
+        width: 80%  !important;
+    }
+    .add-new-cat, .delete-new-cat{
+        width: 350px !important;
+    }
+}
+
+.table > :not(caption) > * > * {
+  padding: 0.5rem 0.5rem;
+  background-color: #4dc4ae;
+  border-bottom-width: 1px;
+  box-shadow: inset 0 0 0 9999px var(--bs-table-accent-bg);
+}
+
+.table-striped > tbody > tr:nth-of-type(odd) {
+  --bs-table-accent-bg: var(--bs-table-striped-bg);
+  color: #1f2326;
+}
+
+:root {
+  
+  --bs-white: #1f2326;
+  
+}
+
+.fw-normal {
+    font-weight: 400 !important;
+    font-size: 2rem;
+  }
+
+  .bg-white {
+    background-color: #4dc4ae  !important;
+  }
+
+  .text-success {
+    color: #212529 !important;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+  }
+  
+  .btn-primary:hover {
+    color: #fff;
+    background-color: #084db3;
+    border-color: #0d6efd;
+  }
+
+  /* FOOTER */
+.no-padding {
+	padding: 0px 0px;
+}
+
+.footer__container {
+	width: 100vw;
+	height: auto;
+	background-color: #3f877a;
+	color: white;
+}
+
+.footer__div {
+	padding: 73px 103px;
+}
+
+.footer__title {
+	font-size: 24px;
+}
+
+.footer__title ul {
+	list-style: none;
+	font-size: 16px;
+}
+
+.footer__title li::before {
+	content: "•";
+	color: white;
+}
+
+.footer__subtitle {
+	margin-top: 24px;
+}
+
+.hovers:hover{
+	color: var(--warning);
+}
+
+.copyright {
+	width: 100%;
+	background-color: black;
+	height: 49px;
+}
+
+.center {
+	display: block;
+	padding-top: 11px;
+	padding-bottom: 11px;
+	font-size: 16px;
+}
+
+.copyright__text {
+	margin: 0;
+	text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+	.footer__div {
+		padding: 30px 40px;
+	}
+
+	.footer__title {
+		text-align: center;
+	}
+
+	.copyright {
+		height: 70px;
+	}
+
+	.payscreen .card {
+		width: 100%;
+
+	}
+
+	.confirmScreen .card {
+		width: 100%;
+	}
+
+	.profileform {
+		width: fit-content;
+	}
+
+	.paytable {
+		display: grid;
+		font-size: small;
+	}
+
+	.btndelete {
+		/* padding: 0; */
+		font-size: small;
+		
+	}
+
+	.upcard {
+		margin-top: 55%;
+		width: 100%;
+	}
+
+
+
+}
+.scrollToTop {
+	position: fixed;
+	z-index: 12;
+	width: 80px;
+	height: 80px;
+	right: 80px;
+	bottom: -16%;
+	mix-blend-mode: hard-light;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 550px) {
+	.scrollToTop {
+		right: 40px;
+	}
+}
+
+.show-scroll {
+	bottom: 6%;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 1000px) {
+	.registitles{
+		color: var(--registercomplete);
+		font-size: 14px;
+		margin: auto;
+	}
+	.registitlesa{
+		color: var(--registercomplete);
+	}
+	.completeimgs{
+		height: 15%;
+	}
+
+}
+  

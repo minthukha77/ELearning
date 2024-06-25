@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous" />
+	<link rel="icon" type="image/x-icon" href="/images/fav.png" />
+	<link rel="stylesheet" th:href="@{/css/global.css}" />
+	<link rel="stylesheet" th:href="@{/css/pagination.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/CM0002_CourseList.css}" />
+	<title>Explore Page</title>
+</head>
+
+<body>
+	<div th:replace="@{fragments/nav}"></div>
+	<div class=" mt-5 pt-5 "></div>
+	<!-- <header>
+			<nav class="fixed-top">
+				<div class="d-flex justify-content-between w-100">
+					<div class="navbar-logo-holder">
+						<a href="#"
+							><img src="/images/logo.png"
+						/></a>
+					</div>
+					<div class="d-flex links-div" id="linkholder">
+						<div
+							class="d-flex form__group field align-items-center align-self-center"
+						>
+							<img
+								src="./assets/icons/search-icon.svg"
+								class="icon"
+							/>
+							<input
+								type="input"
+								class="form__field"
+								name="search"
+								id="search"
+								placeholder="Search"
+							/>
+						</div>
+						<div class="link-holder">
+							<a class="nav-link" href="#"
+								>Register as a student</a
+							>
+						</div>
+						<div class="link-holder">
+							<a class="nav-link" href="#"
+								>Register as a teacher</a
+							>
+						</div>
+						<div class="link-holder">
+							<a class="nav-link" href="#">Login</a>
+						</div>
+					</div>
+					<div class="hamburger-lines">
+						<input
+							type="checkbox"
+							class="checkboxClass"
+							id="#toggle"
+						/>
+						<span class="line line1"></span>
+						<span class="line line2"></span>
+						<span class="line line3"></span>
+					</div>
+				</div>
+				<div class="menu-items">
+					<li><a href="#">Register as a student</a></li>
+					<li><a href="#">Register as a teacher</a></li>
+					<li>
+						<div
+							class="d-flex form__group field align-items-center align-self-center"
+						>
+							<img
+								src="./assets/icons/search-icon.svg"
+								class="icon"
+							/>
+							<input
+								type="input"
+								class="form__field"
+								name="search"
+								id="search"
+								placeholder="Search"
+							/>
+						</div>
+					</li>
+					<li>
+						<button type="submit" class="date__btn">
+							Search
+						</button>
+					</li>
+				</div>
+			</nav>
+		</header> -->
+
+	<main>
+		<section class="container-fluid explore__courses" th:if="${searchable}">
+			<h1>Explore Courses</h1>
+
+			<form th:action="@{__${#httpServletRequest.requestURI}__}" method="get" th:object="${courseInfoDTO}"
+				class="col-sm">
+				<div class="search__container">
+					<div class="row gap-3">
+						<div class="col-sm">
+							
+							<input
+								type="text"
+								placeholder="Course Name"
+								class="input"
+								 th:field="*{courseName}"
+							/>
+							<input
+								type="date"
+								placeholder="Start Date (dd/mm/yyyy)"
+								class="input mt-3 startdates"
+                                th:field="*{startDate}"
+							/>
+							<!-- <label for="startDate">Start Date</label> -->
+							<div class="col-sm">
+								<button type="submit" class="date__btn small-btn">Search</button>
+								<button type="button" class="date__btn small-btn" onclick="window.location.href='/guest/explore';">Reset</button>
+							  </div>
+						</div>
+						<div class="col-sm">
+							<input
+								type="text"
+								placeholder="Teacher Name"
+								class="input"
+								th:field="*{teacherName}"
+							/>
+							<input
+								type="date"
+								placeholder="End Date (dd/mm/yyyy)"
+								class="input mt-3 enddates"
+								th:field="*{endDate}"
+							/>
+							
+						</div>
+						<div class="col-sm">
+							<input
+								type="number"
+								placeholder="Lowest Fee (0)"
+								class="input"
+								min="0"
+								step="1000"
+								th:field="*{lowestFee}"
+							/>
+							<input
+								type="number"
+								placeholder="Highest Fee (0)"
+								class="input mt-3"
+								min="0"
+								step="1000"
+								th:field="*{highestFee}"
+							/>
+						</div>
+						<!-- <div class="col-sm">
+							<button type="submit" class="date__btn small-btn">Search</button>
+							<button type="button" class="date__btn small-btn" onclick="window.location.href='/guest/explore';">Reset</button>
+						  </div> -->
+						  
+					</div>
+				</div>
+		</section>
+
+		<section class="container-fluid courses__section">
+			<div class="row">
+				<div class="col-sm-12 col-md-12 col-xl-12 mt-4 mt-md-0" th:unless="${userInfo == null}">
+
+					<div class=" mb-3">
+						<img class="detail__img" th:if="${profilePic == null}" th:src="@{/images/profile.png}"
+							style="width: 150px;height: 20vh;" alt="Avatar" />
+						<img th:unless="${profilePic == null}" th:src="${profilePic.url}" class="rounded-circle"
+							style="width: 150px;height: 20vh;" alt="Avatar" />
+					</div>
+					<div class="course__detail">
+						<h3 th:text="${userInfo.userName}" class="detail__title">
+							Git and GitHub (Basic)
+						</h3>
+						<p th:text="${userInfo.selfDescription}" class="role__title">
+							Subuu Teacher
+						</p>
+						<div sec:authorize="hasAuthority('ROLE_TEACHER')">
+							<a href="/teacher/course-registration" class="btn btn-primary" th:if="${userInfo.userAccount.accountStatus == 'VERIFIED'}">Add Course</a>
+							<a href="#" class="btn btn-primary" th:if="${userInfo.userAccount.accountStatus != 'VERIFIED'}" disabled>Add Course</a>
+						</div>
+						<!-- <div class="category__title" sec:authorize="hasAuthority('ROLE_TEACHER')">IT -->
+						<!-- <div  class="detail__description" th:if="${userInfo.userAccount.accountStatus == 'VERIFIED'} ">
+						Learn the basics of Git, Git installation,
+						The basics of terminal, The Basics of
+						GitHub, Learn how to set up collaboration
+						team
+						   <button th:href="@{/teacher/course-registration}" class="detail_btn">FREE</button>
+					   </div> -->
+					</div>
+				</div>
+
+			</div>
+			<div class="row my-3">
+				<div class="col-sm-12 col-md-6 col-xl-3">
+					<div class="card">
+						<div class="filter__heading">Filter By</div>
+						<ul class="list-group list-group-flush filterContainer"></ul>
+						<div class="card-body filter__buttons">
+							<button class="btn-danger clearBtn button__clear" type="submit">
+								Clear
+							</button>
+							<button class=" filterBtn button__apply" type="submit">
+								Apply
+							</button>
+						</div>
+					</div>
+				</div>
+				<div class="col" id="course">
+
+					<!-- <div sec:authorize="hasAuthority('ROLE_TEACHER')">
+						  <div th:if="${userInfo.userAccount.accountStatus != 'VERIFIED'}">
+							<div th:href="@{/teacher/course-registration}"
+								  class="btn-sm btn-block rounded not-allowed mx-auto errormessage1">
+							  <img src="/images/warning.png" style="width: 75px; height:70px;" />
+							  <div class="ms-5 " style="display: inline;">It will take 1 or 2 days for the Admin Confirmation.<br/>
+								<span class="ms-4">After the Admin confirmation,you can proceed the course registration.</span>
+							  </div>
+							</div>
+						   </div>
+					   </div> -->
+
+					<p id="zero-result-msg" class="text-center text-danger mt-5" style="display: none"
+						th:text="${emptyMessage}">
+						Sorry, No Search Result Found!
+					</p>
+					<div id="courseList" class="row g-2 my-3"></div>
+				</div>
+
+			</div>
+
+			</div>
+			</div>
+			</div>
+			</div>
+		</section>
+	</main>
+</body>
+<!-- Footer-->
+<div th:replace="@{fragments/footer}"></div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-pprn3073KE6tl6bjs2QrFaJGz5/SUsLqktiwsUTF55Jfv3qYSDhgCecCxMW52nD2"
+	crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script th:src="@{/js/pagination.min.js}"></script>
+
+<script th:inline="javascript">
+	const courseList = /*[[${courseList}]]*/ false;
+</script>
+<script th:src="@{/js/CM0002_CourseList.js}"></script>
+<!-- <script src="/js/toTheTop.js"></script> -->
+<script th:src="@{./../../../js/main.js}"></script>
+
+</html>

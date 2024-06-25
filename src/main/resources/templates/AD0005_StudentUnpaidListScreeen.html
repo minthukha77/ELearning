@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4">
+
+<head>
+  <meta charset="utf-8" />
+  <!-- <link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, user-scalable=no" />
+  <!-- <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.1/css/bootstrap.min.css"> -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+  <link rel="stylesheet" type="text/css" href="css/dataTables.bootstrap5.css"
+    th:href="@{/css/dataTables.bootstrap5.css}" />
+  <link rel="stylesheet" type="text/css" src="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.min.css" />
+  <link rel="stylesheet" type="text/css" href="css/shCore.css" th:href="@{/css/shCore.css}" />
+  <link rel="stylesheet" type="text/css" href="css/demo.css" th:href="@{/css/demo.css}" />
+  <link rel="stylesheet" type="text/css" href="css/AD0003_PaymentList.css" th:href="@{/css/AD0003_PaymentList.css}" />
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+  <!-- <link rel="stylesheet" type="text/css" href="css/dataTableManual.css">
+            <link rel="stylesheet" type="text/css" href="css/dataTableSCSSMaual.css"> -->
+
+  <title>Pyinnyar Subuu</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+  <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+
+  <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"
+    th:src="@{https://code.jquery.com/jquery-3.5.1.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+    th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js}"
+    integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+    crossorigin="anonymous"></script>
+  <script type="text/javascript" language="javascript" src="js/jquery.dataTables.js"
+    th:src="@{/js/jquery.dataTables.js}"></script>
+  <script type="text/javascript" language="javascript" src="js/dataTables.bootstrap5.js"
+    th:src="@{/js/dataTables.bootstrap5.js}"></script>
+
+  <script type="text/javascript" language="javascript" src="js/shCore.js" th:src="@{/js/shCore.js}"></script>
+  <script type="text/javascript" language="javascript" src="js/demo.js" th:src="@{/js/demo.js}"></script>
+</head>
+
+<body>
+
+  <div style="position: relative">
+    <!-- <div id="mySidebar" class="sidebar" style="float:left;">
+          
+          <div class="text">
+              Menu
+          </div>
+          <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+          <ul class="main_side">
+              <li><a th:href="@{/admin/profile}">Profile</a></li>
+              <li> <a href="#" id="1">User List <span class="fas fa-caret-down"></span> </a>
+                  <ul class="item-show-1">
+                      <li><a th:href="@{/student-list}">Student List</a></li>
+                      <li><a th:href="@{/teacher-list}">Teacher List</a></li>
+                  </ul>
+              </li>
+              <li><a th:href="@{/payment-list}" class="active-link">Payment Record</a></li>
+              <li> <a id="2">Course <span class="fas fa-caret-down"></span> </a>
+                  <ul class="item-show-2">
+                      <li><a th:href="@{/course-list}">Course List</a></li>
+                  </ul>
+              </li>
+              <li><a th:href="@{/review-list}">Review List</a></li>
+              <li><a th:href="@{/absence-list}">Absence List</a></li>
+              <li><a th:href="@{/}">Log Out</a></li>
+          </ul>
+      </div> -->
+    <div th:replace="${nav_type}"></div>
+    <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>'">
+      <ol class="breadcrumb mt-2 ms-3">
+        <li class="breadcrumb-item "><a th:href="@{/admin/top/}">Top</a></li>
+        <li class="breadcrumb-item active" aria-current="page">
+          Student Unpaid List
+        </li>
+      </ol>
+    </nav>
+
+    <!-- <div id="main" style="margin-left: 250px;"> -->
+    <!-- <div id="main"> -->
+    <!-- <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                                                                            <div class="container-fluid">
+                                                                                <div style="justify-content: space-between;">
+                                                                                    <button class="openbtn" onclick="openNav()">☰</button>
+                                                                                    <a class="navbar-brand" href="#">Pyinnyar Subuu</a>
+                                                                                </div> -->
+
+    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                                                                                <span class="navbar-toggler-icon"></span>
+                                                                              </button> -->
+    <!-- <div class="header_img">
+                                                                                <img src="images/admin_profile.jpg" th:src="@{/images/admin_profile.jpg}" alt="people-profile" onclick="location.href='/profile'">
+                                                                            </div>
+                                                                            </div>
+                                                                        </nav> -->
+    <!-- <span class="navbar-toggler-icon openbtn" id="sidebutton" onclick="openNav()" style="display: none;float: left;"></span> -->
+    <!-- <header class="header navbar-light bg-light" id="header" style="padding: 2px;">
+                                                                            <button class="openbtn" style="float: left;" onclick="openNav()">☰</button>
+                                                                            <div class="col-sm-3" style="border: 1px solid red;top: 10px;">
+                                                                                <a class="navbar-brand" href="#" style="margin: 20px 20px;">Pyinnyar Subuu</a>
+                                                                            </div>
+                                                                            
+                                                                            <div class="header_img">
+                                                                                <img src="images/admin_profile.jpg" alt="people-profile" onclick="location.href='/test'">
+                                                                            </div>
+                                                                        </header> -->
+
+    <!-- <div class="col-sm-9">
+                                                                            
+                                                                        </div> -->
+    <!-- <div style="padding-left: 100px;float: right;">
+                                                                            <button type="button" class="btn btn-primary newbtn" id="addadmin" onclick="location.href='/test'">
+                                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                                                                class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                                                                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                                                                <path fill-rule="evenodd"
+                                                                                d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                                                                            </svg>
+                                                                            Add Teacher
+                                                                        </button>
+                                                                    </div> -->
+
+
+    <!-- <div class="input-group-prepend" style="width: 25%;">
+                                                                                      <select class="form-select" aria-label=".form-select-sm" id="column_search"
+                                                                                      style="width: 100%;">
+                                                                                      <option value="">All</option>
+                                                                                      <option value="1">Student</option>
+                                                                                      <option value="2">Course</option>
+                                                                                      </select>
+                                                                              </div> -->
+
+
+    <!-- <div action="" class="input-group mt-3">
+                <div>
+                  <label for="startDate" class="form-label me-3 mt-1">Course Start Date</label>
+                  <input id="startDate" type="date" class="form-control w-50 me-3 float-end" placeholder="Start Date">  
+                </div>
+                
+                <div>
+                  <label for="endDate" class="form-label me-3 mt-1">Course End Date</label>
+                  <input id="endDate" type="date" class="form-control w-50 me-3 float-end"  placeholder="End Date">    
+                </div>
+             </div>                                                                  -->
+
+
+    <div id="pc-view-message">
+      <p><i style="color: yellowgreen;font-size: 25px;" class="fas fa-exclamation-triangle"></i> Please only use PC View
+        for this page.</p>
+    </div>
+
+    <div id="whole-container" class="advanced-search-body">
+      <div class="row">
+        <div class="col-md-12">
+          <form id="myForm">
+            <div class="container mx-auto">
+              <div class="d-none d-md-block d-lg-block d-xl-block">
+                <div class="form-group col-md-12">
+                  <div class="input-group">
+                    <input type="text" class="form-control w-25 me-3" id="courseNameSearch"
+                      placeholder="Search with Course Name" aria-label="Search with Course Name"
+                      aria-describedby="courseNameSearch" />
+
+                    <input type="text" class="form-control w-25 me-3" id="studentNameSearch"
+                      placeholder="Search with Student Name" aria-label="Search with Student Name"
+                      aria-describedby="studentNameSearch" />
+
+                    <input type="text" class="form-control w-25" id="teacherNameSearch"
+                      placeholder="Search with Teacher Name" aria-label="Search with Teacher Name"
+                      aria-describedby="teacherNameSearch" />
+
+                  </div>
+                </div>
+              </div>
+              <div class="form-row d-flex justify-content-center">
+                <!-- <div class="form-group col-md-3 p-1">
+                    </div> -->
+                <div class="form-group col-md-3 p-1">
+                  <label for="" class="text-muted">Course Amount From</label>
+                  <input type="number" id="amount_min" class="form-control mt-2 w-100" placeholder="MMK">
+                </div>
+
+                <div class="form-group col-md-3 p-1">
+                  <label for="" class="text-muted">Course Amount To</label>
+                  <input type="number" id="amount_max" class="form-control mt-2 w-100" placeholder="MMK">
+                </div>
+
+                <div class="form-group col-md-3 p-1">
+                  <label for="" class="text-muted">Course Period From</label>
+                  <input type="date" id="min" class="form-control mt-2 w-100">
+                </div>
+                <div class="form-group col-md-3 p-1">
+                  <label for="" class="text-muted">Course Period To</label>
+                  <input type="date" id="max" class="form-control mt-2 w-100">
+                </div>
+
+              </div>
+
+          </form>
+          <p id="message"></p>
+          <div class="row mt-3">
+            <div class="col-md-12">
+              <button class="btn btn-primary mb-3" id="downloadpaylist">
+                Export to Excel
+              </button>
+              <button id="btnReset" class="btn btn-outline-primary float-end" type="button"
+                onclick="resetForm()">Reset</button>
+              <button id="btnSearch" class="btn btn-outline-primary float-end mx-4" type="button">Search</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+
+    <!-- 
+              <div class="input-group-prepend mb-3 d-inline-block" style="width: 125px">
+                <label class="text-muted">Payment Status</label>
+                <select
+                  class="form-select mt-2"
+                  aria-label=".form-select-sm example"
+                  id="payment_status"
+                  style="width: 100%"
+                >
+                  <option value="">ALL</option>
+                  <option value="unpaid">Unpaid (0)</option>
+                  <option value="paid">Paid (1)</option>
+                </select>
+              </div>
+            </div> -->
+
+    <!-- <div class="mx-auto p-3" > -->
+    <!-- <div>
+                                                                        <section> -->
+
+
+
+    <div class="container d-none d-md-block d-lg-block d-xl-block">
+      <div class="row">
+        <div class="col-lg-12">
+          <div class="card">
+            <div class="card-body table-responsive">
+              <table id="payListTable" class="table w-auto">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Student's Name</th>
+                    <th>Course Name</th>
+                    <th>Teacher's Name</th>
+                    <th>Course Type</th>
+                    <th>Course Start Date</th>
+                    <th>Course End Date</th>
+                    <th>Amount(MMK)</th>
+                    <!-- <th>Payment Status</th> -->
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="dr,index:${allStuUnpaidList}">
+                    <td></td>
+                    <td>
+                      <b><a th:href="@{'/admin/browse/profile/' + ${dr.userId}}" th:text="${dr.userName}"
+                          style="text-decoration: none"></a></b>
+                    </td>
+                    <td>
+                      <b><a th:href="@{'/admin/course-details/' + ${dr.courseId}}" th:text="${dr.courseName}"
+                          style="text-decoration: none"></a></b>
+                    </td>
+                    <td>
+                      <b><a th:href="@{'/admin/browse/profile/' + ${dr.teacherId}}" th:text="${dr.teacherName}"
+                          style="text-decoration: none"></a></b>
+                    </td>
+                    <td th:text="${dr.courseType}"></td>
+                    <td th:text="${dr.courseStartDate}"></td>
+                    <td th:text="${dr.courseEndDate}"></td>
+                    <td class="course_amount" th:text="${dr.courseFees}"></td>
+                    <!-- <td th:text="${dr.paymentStatus}" class="payStatus" style="text-transform: uppercase;"></td> -->
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="mobile-view d-block d-md-none d-lg-none d-xl-none">
+          <div class="mobile-item card" th:each="dr,index:${allStuUnpaidList}">
+            <div class="card-header">
+              <div class="d-flex justify-content-between align-items-center">
+                <div class="">
+                  <span class="fw-bold text-white">
+                    <span class="fw-bold">Student's Name -</span>
+                    <b><a
+                      th:href="@{'/admin/browse/profile/' + ${dr.userId}}"
+                      th:text="${dr.userName}"
+                      style="text-decoration: none"
+                    ></a></b>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div class="card-body text-white">
+              <div class="my-2">
+                <span class="fw-bold">Payment Status -</span>
+                <span class="mx-2 payStatus" th:text="${dr.paymentStatus}" style="text-transform: uppercase;"></span>
+              </div>
+              <div class="my-2">
+                <span class="fw-bold">Amount -</span>
+                <span class="mx-2 text-center" th:text="${dr.courseFees}"></span>
+              </div>
+              <div class="my-2">
+                <span class="fw-bold">Student's Payment Date -</span>
+                <span class="mx-2 text-center" th:text="${dr.paymentDate}"></span>
+              </div>
+              <div class="my-2">
+                <span class="fw-bold">Course Name -</span>
+                <span class="mx-2 text-center" th:text="${dr.courseName}"></span>
+              </div>
+              <div class="my-2">
+                <span class="fw-bold">Teacher's Name -</span>
+                <span class="mx-2 text-center" th:text="${dr.teacherName}"></span>
+              </div>
+              <div class="d-flex align-items-center flex-wrap">
+                <div class="my-2 mx-2">
+                  <i class="fa-regular fa-calendar"></i>
+                  <span class="fw-bold">Course Start Date -</span>
+                  <span class="mx-2" th:text="${dr.courseStartDate}"></span>
+                </div>
+                <div class="my-2 mx-2">
+                  <i class="fa-regular fa-calendar"></i>
+                  <span class="fw-bold">Course End Date -</span>
+                  <span class="mx-2" th:text="${dr.courseEndDate}"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+
+
+  </div>
+  </div>
+
+  <div class="mt-5"></div>
+  <div th:replace="@{fragments/footer}"></div>
+
+  <script>
+    function openNav() {
+      document.getElementById("mySidebar").style.width = "250px";
+      document.getElementById("main").style.marginLeft = "250px";
+      document.getElementById("sidebutton").style.display = "none";
+      document.getElementById("mySidebar").style.position = "fixed";
+    }
+
+    function closeNav() {
+      document.getElementById("mySidebar").style.width = "0";
+      document.getElementById("main").style.marginLeft = "0";
+      document.getElementById("sidebutton").style.display = "block";
+      document.getElementById("sidebutton").style.width = "5px";
+    }
+
+    // $(window).scroll(function () {
+    //     $('#footer').css('left', '-' + $(window).scrollLeft() + 'px');
+    // });
+
+    // $(window).scroll(function () {
+    //     var scroll_top = $(this).scrollTop(); // get scroll position top
+    //     var height_element_parent = $("#mySidebar").parent().outerHeight(); //get high parent element
+    //     var height_element = $("#mySidebar").height(); //get high of elemeneto
+    //     var position_fixed_max = height_element_parent - height_element; // get the maximum position of the elemen
+    //     var position_fixed = scroll_top < 250 ? 250 - scroll_top : position_fixed_max > scroll_top ? 0 : position_fixed_max - scroll_top;
+    //     $("#mySidebar").css("top", position_fixed);
+    // });
+
+    var $scrollingDiv = $("#mySidebar");
+
+    $(window).scroll(function () {
+      var y = $(this).scrollTop(),
+        maxY = $("#footer").offset().top,
+        scrollHeight = $scrollingDiv.height();
+
+      if (y < maxY - scrollHeight) {
+        $scrollingDiv
+          .stop()
+          .animate({ marginTop: $(window).scrollTop() + "px" }, "slow");
+      }
+    });
+  </script>
+  <script>
+    document
+      .getElementById("downloadpaylist")
+      .addEventListener("click", function () {
+        var table2excel = new Table2Excel();
+        table2excel.export(document.querySelectorAll("#payListTable"));
+      });
+  </script>
+  <script th:src="@{/js/table2excel.js}"></script>
+  <script type="text/javascript">
+
+    $(document).ready(function () {
+      var t = $("#payListTable").DataTable();
+
+      // $("#payment_status").on("change", function () {
+      //   t.search(this.value).draw();
+      // });
+      // $("#payment_status").on("keyup search input paste cut", function () {
+      //   t.column(9).search(this.value).draw();
+      // });
+      $("#courseNameSearch").on("keyup search input paste cut", function () {
+        t.column(2).search(this.value).draw();
+      });
+      $("#studentNameSearch").on("keyup search input paste cut", function () {
+        t.column(1).search(this.value).draw();
+      });
+      $("#teacherNameSearch").on("keyup search input paste cut", function () {
+        t.column(3).search(this.value).draw();
+      });
+      t.on("order.dt search.dt", function () {
+        t.column(0, { search: "applied", order: "applied" })
+          .nodes()
+          .each(function (cell, i) {
+            cell.innerHTML = i + 1;
+          });
+      }).draw();
+
+      $.fn.dataTable.ext.search.push(
+        function (settings, data, dataIndex) {
+          var valid = true;
+          var min = new Date($("#min").val());
+
+          // var min = $("#min").val().toLocaleDateString('en-US');
+          // console.log("Min -- " + min);
+          var max = new Date($("#max").val());
+          // console.log("Max -- " + max);
+
+          if (min === null && max === null) {
+            // no filter applied or no date columns
+            valid = true;
+          }
+          else {
+
+            $.each(settings.aoColumns, function (i, col) {
+
+              var cDate = new Date(data[5]);
+              // console.log("date -- " + cDate);
+
+              if (max !== null && max < cDate) {
+                valid = false;
+              }
+              if (min !== null && min > cDate) {
+                valid = false;
+              }
+            });
+          }
+          return valid;
+        });
+
+      // $("#btnSearch").click(function () {
+      //         t.draw();
+      //     });
+
+      // });
+
+
+      $("#btnSearch").click(function () {
+        $.fn.dataTable.ext.search.push(
+          function (settings, data, dataIndex) {
+            var min = parseInt($('#amount_min').val(), 10);
+            var max = parseInt($('#amount_max').val(), 10);
+            if (min > max) {
+              let message = "Search Conditions is Incorrect ";
+              document.getElementById("message").style.color = "red";
+              document.getElementById("message").innerHTML = message;
+            }
+            var salesAmount = parseFloat(data[7].replace(/[\$,]/g, '')) || 0; // Removing $ and , from the sales amount
+            if ((isNaN(min) && isNaN(max)) ||
+              (isNaN(min) && salesAmount <= max) ||
+              (min <= salesAmount && isNaN(max)) ||
+              (min <= salesAmount && salesAmount <= max)) {
+              return true;
+            }
+            return false;
+          }
+        );
+        $('#payListTable').DataTable().draw();
+      });
+      // var min = $("#min").val();
+      // var max = $("#max").val();
+
+      //$('#payListTable').DataTable();
+
+
+      /*var from = $("#amount_min").val();
+      var to = $("#amount_max").val();
+
+      if(from > to){
+        let message = "Search Conditions is Incorrect ";
+        document.getElementById("message").style.color = "red";
+        document.getElementById("message").innerHTML = message;
+      }
+      // console.log(from);
+      // console.log(to);
+      if(from || to){
+        $("tbody tr").each(function(){
+          // console.log($(this));
+          var price = $(this).children("td.course_amount").text();
+          console.log(price);
+          if(price >= from && price <= to){
+              // $(this).show();
+              t.draw();
+
+              // console.log(this);
+              // t.column(3).search(this.value).draw();
+          }else{
+              
+              $(this).hide();
+
+            }
+        });
+      }*/
+
+    });
+
+
+
+
+    function resetForm() {
+      document.getElementById("myForm").reset();
+      location.reload(true);
+
+    }
+
+  </script>
+
+
+</body>
+
+</html>

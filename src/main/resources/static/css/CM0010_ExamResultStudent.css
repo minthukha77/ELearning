@@ -1,0 +1,51 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --success : #309986; 
+}
+
+.exam-result{
+    min-width: 300px;
+    max-width: 800px;
+}
+
+.exam-result :is(h5,.success-text){
+    color: var(--success);
+}
+
+.exam-result .success-bg{
+    background-color: var(--success);
+}
+
+.contact{
+    background-color: var(--success);
+}
+
+.footer{
+    background-color: black;
+}
+
+@media (max-width:576px) {
+
+    .breadcrumb{
+        font-size: 14px;
+    }
+
+    .exam-result h5{
+        font-size: 20px;
+    }
+
+    .exam-result span{
+        font-size: 16px;
+    }
+}
+
+.custom-py-5 {
+    padding-top: 7rem !important;
+    padding-bottom: 3rem !important;
+  }
+  

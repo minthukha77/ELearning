@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exam Result</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <!-- <link rel="stylesheet" href="/style.css" /> -->
+  <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+  <link rel="stylesheet" th:href="@{/css/global.css}" />
+  <link rel="stylesheet" th:href="@{/css/pagination.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+
+  <link rel="stylesheet" type="text/css" th:href="@{/css/CM0010_ExamResultStudent.css}" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+
+</head>
+
+<body>
+  <div th:replace="@{fragments/nav}"></div>
+
+
+  <div id="pc-view-message">
+    <p style="align-items: center;"><i style="color: yellowgreen;font-size: 15px;"
+        class="fas fa-exclamation-triangle"></i>The Exam result is not released yet! Please try again after the exam is
+      released!
+      Please contact the system Admin to know the detailed exam release date and time.</p>
+  </div>
+
+
+
+  <div class="main" style="position: relative">
+
+    <div id="whole_container" class="container exam-container custom-py-5" style="padding-top: 100px;">
+
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#" class="text-decoration-none text-muted">Top</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="#" class="text-decoration-none text-muted">Exam</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a href="#" class="text-decoration-none text-muted">Exam Question</a>
+        </li>
+        <li class="breadcrumb-item active text-success fw-bold" aria-current="page">
+          Result
+        </li>
+      </ol>
+
+
+      <div id="contentToDownload" class="exam-result card mx-auto shadow my-5">
+        <div class="card-body px-3">
+          <h5 class="text-center text-decoration-underline fw-bold">
+
+            Exam Results For <span th:text="${courseName}"></span>
+          </h5>
+
+          <div class="d-flex justify-content-between flex-wrap pt-4 pb-3 border-bottom">
+            <div class="left">
+              <div class="">
+                <span class="fw-bold">Course</span>
+                <span class="fw-bold mx-2 success-text">:</span>
+                <span th:text="${courseName}"></span>
+              </div>
+              <div class="">
+                <span class="fw-bold">Teacher Name</span>
+                <span class="fw-bold mx-2 success-text">:</span>
+                <span th:text="${teacherName}"></span>
+              </div>
+            </div>
+            <div class="right">
+              <div class="">
+                <span class="fw-bold">Examinee Name</span>
+                <span class="fw-bold mx-2 success-text">:</span>
+                <span th:text="${examineeName}"></span>
+              </div>
+              <div class="">
+                <span class="fw-bold">ID</span>
+                <span class="fw-bold mx-2 success-text">:</span>
+                <span th:text="${studentId}"></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="py-3 border-bottom">
+            <div class="">
+              <span class="fw-bold">Exam Date</span>
+              <span class="fw-bold mx-2 success-text">:</span>
+              <span th:text="${examDate}"></span>
+            </div>
+            <div class="">
+              <span class="fw-bold">Time Allowance</span>
+              <span class="fw-bold mx-2 success-text">:</span>
+              <span th:text="${timeAllowed + ' mins'}"></span>
+            </div>
+            <div class="">
+              <span class="fw-bold">Exam Type</span>
+              <span class="fw-bold mx-2 success-text">:</span>
+              <span th:text="${examType}"></span>
+            </div>
+            <div class="">
+              <span class="fw-bold">Exam Status</span>
+              <span class="fw-bold mx-2 success-text">:</span>
+              <span id="examStatus" th:text="${examStatus}"></span>
+            </div>
+
+
+          </div>
+
+
+          <div class="d-flex justify-content-between flex-wrap py-3 border-bottom">
+            <div class="left">
+              <div class="">
+                <span class="fw-bold">Your Score</span>
+                <span class="fw-bold mx-2 success-text">:</span>
+                <span th:text="${studentMarkPercent + ' %'}"></span>
+              </div>
+              <div class="">
+                <span class="fw-bold">Pass Margin</span>
+                <span class="fw-bold mx-2 success-text">:</span>
+                <span th:text="${passScorePercent + ' %'}"></span>
+              </div>
+            </div>
+            <div class="me-5 pe-4">
+              <span class="fw-bold">Result</span>
+              <span class="fw-bold mx-2 success-text">:</span>
+              <span th:text="${passOrfailResult}"></span>
+            </div>
+
+          </div>
+
+          <div class="py-3 border-bottom">
+            <div class="">
+              <span class="fw-bold">Teacher's Comments</span>
+              <span class="fw-bold mx-2 success-text">:</span>
+              <span th:text="${teacherComment}"></span>
+            </div>
+          </div>
+
+          <div class="d-flex justify-content-between align-items-center flex-wrap py-3 text-white">
+            <div class="btn btn-sm btn-dark">
+              <i class="fa-solid fa-backward me-2"></i>Back
+            </div>
+            <div id="downloadPdf" class="btn btn-sm success-bg text-white">
+              <i class="fa-solid fa-file-arrow-down me-2"></i>Download
+            </div>
+            <script>
+              document.getElementById('downloadPdf').addEventListener('click', function () {
+                var element = document.getElementById('contentToDownload');
+                var opt = {
+                  margin: 1,
+                  filename: 'exam-result.pdf',
+                  image: { type: 'jpeg', quality: 0.98 },
+                  html2canvas: { scale: 2 },
+                  jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' },
+                  onclone: function (doc) {
+                    // Add CSS to center the captured element
+                    doc.getElementById('contentToDownload').style.margin = '0 auto';
+                  },
+                };
+
+                // Create a worker and generate the PDF
+                html2pdf().set(opt).from(element).save();
+              });
+
+
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="mt-5"></div>
+    <div th:replace="@{fragments/footer}"></div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+
+    <script th:src="@{/js/main.js}"></script>
+    <script>
+      var status = document.getElementById("examStatus").textContent;
+
+      if (status == "Result Released") {
+        document.getElementById("whole_container").style.display = 'block';
+        document.getElementById("pc-view-message").style.display = 'none';
+      } else {
+        document.getElementById("whole_container").style.display = 'none';
+        document.getElementById("pc-view-message").style.display = 'block';
+
+      }
+    </script>
+</body>
+<style>
+  #pc-view-message {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 100px;
+    padding: 20px;
+    background-color: #F0E68C;
+    border-radius: 1%;
+    margin-left: 100px;
+    margin-right: 100px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
+</style>
+</html>

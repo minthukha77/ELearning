@@ -1,0 +1,66 @@
+{
+    margin: 0;
+    padding: 0;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    box-sizing: border-box;
+    scroll-behavior: smooth;
+}
+.bg-success,
+.btn-success {
+    background-color: #309986 !important;
+}
+.text-success {
+    color: #309986 !important;
+}
+.fw-bold{
+    font-weight: 550 !important;
+}
+.fw-bolder{
+    font-weight: 650 !important;
+}
+
+body{
+    background-color: #F5F5F5;
+}
+.create-exam-content{
+    width: 500px !important;
+}
+
+.true{
+    background-color: #309986;
+}
+.false{
+    background-color: red;
+}
+
+
+@keyframes fadeIn {
+    0%{
+        opacity: 0%;
+    }
+    100%{
+        opacity: 100%;
+    }
+}
+
+.fadeIn{
+    animation: fadeIn 1s;
+}
+
+.card{
+    transition: 0.3s ease-in;
+}
+.card:hover{
+    transform: scale(1.07);
+}
+.card[data-custom-type="result_good"]:hover{
+    background-color: rgba(48, 153, 134, 0.2) !important;
+}
+.card[data-custom-type="result_bad"]:hover{
+    background-color: rgba(255, 0, 0, 0.2) !important;
+}

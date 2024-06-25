@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4"
+  >
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+      <title>Pyinnyar Subuu</title>
+
+      <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+      <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+      <link rel="stylesheet" type="text/css" href="css/CM0001_Complete.css" />
+      <script
+        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js}"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"
+      ></script>
+    </head>
+
+    <body>
+      <div th:replace="@{fragments/nav}"></div>
+      <!-- Hello -->
+      <div
+        class="card mx-auto shadow-sm rounded bg-body"
+        style="max-width: 540px; padding: 20px; margin: 50px"
+      >
+        <div class="card-body">
+          <p class="card-text text-center" th:text="${message}">
+            Do you want to register new admin with mail : sample@gmaill.com
+          </p>
+          <form
+            id="confirmation"
+            th:action="@{${postAction}}"
+            th:object="${email}"
+            method="post"
+          >
+            <input type="hidden" th:value="${email}" id="email" name="email" />
+            <!-- <input th:field="${mail}" type="hidden" th:value="${mail}" /> -->
+            <div
+              style="
+                justify-content: center;
+                display: block;
+                margin-right: 50px;
+                align-items: center;
+                justify-items: center;
+              "
+            >
+              <a
+                href="/admin/admin-list"
+                class="btn btn-primary"
+                style="margin-inline: 30px; float: right"
+                >Back
+              </a>
+
+              <button
+                class="btn btn-primary"
+                id="submitButton"
+                type="submit"
+                style="margin-inline: 120px; float: right"
+              >
+                Yes
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Hello -->
+
+      <!-- Footer -->
+      <div style="position: absolute; bottom: 0; width: 100%; height: 250px">
+        <div th:replace="@{fragments/footer}"></div>
+        <!-- Footer -->
+      </div>
+    </body>
+  </html>
+</html>

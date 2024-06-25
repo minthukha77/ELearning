@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+
+    <!-- Title -->
+      <title>Pyinnyar Subuu</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/fav.png">
+
+    <link rel="shortcut icon" type="image/png" href="img/logo.png" />
+
+    <!-- Bootstrap CSS File -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" /> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" />
+    <link href="https://unpkg.com/gijgo@1.9.13/css/gijgo.min.css" rel="stylesheet" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <script src="js/main.js"></script>
+    <!-- <link rel="stylesheet" href="/css/CM0004_StudentProfile.css"> -->
+    <link rel="stylesheet" href="/css/AS0001_StudentPayment.css">
+    
+    
+    
+    <!--account number changes based on radio button script code start-->
+    <script type="text/javascript">
+        function numCheck() {
+            if (document.getElementById("kpay").checked) {
+                document.getElementById('ifkpay').style.display = 'block';
+                document.getElementById('ifayapay').style.display = 'none';
+                document.getElementById('ifwave').style.display = 'none';
+            } else if (document.getElementById("ayapay").checked) {
+                document.getElementById('ifkpay').style.display = 'none';
+                document.getElementById('ifayapay').style.display = 'block';
+                document.getElementById('ifwave').style.display = 'none';
+            } else {
+                document.getElementById('ifkpay').style.display = 'none';
+                document.getElementById('ifayapay').style.display = 'none';
+                document.getElementById('ifwave').style.display = 'block';
+
+            }
+
+        }
+    </script>
+    <!--account number changes based on radio button script code end-->
+
+</head>
+
+<body style="background-color: #f0f0f0">
+
+    <div th:replace="@{fragments/nav}"></div>
+    
+    <!-- <div class="m-3"> -->
+    <div>
+        <nav class="breadcrums" style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+
+            <ol class="breadcrumb mt-2 ms-3">
+                <li class="breadcrumb-item">
+                    <!-- <a href="#" data-bs-toggle="modal" class="text-decoration-none" data-bs-target="#reEnterEmail">Course Details</a> -->
+                    Course Details
+                </li>
+                <li class="breadcrumb-item ps-0 active">Payment Details</li>
+
+            </ol>
+        </nav>
+
+        <div class="payscreen" style="transform:translateY(15%)">
+            <div class="card cardboxs">
+                <div class="card-header d-flex justify-content-center align-items-center titles">Payment Details</div>
+                <!-- Student view -->
+                <div class="card-body">
+                    <div class="container">
+                        <form>
+                            <div class="row form-sec-header secondtitles">
+                                <div class="col-lg-12 text-center">
+                                    <p>Course Fees</p>
+                                </div>
+                            </div>
+                            <div class="table-responsive mb-3">
+                                <table class="table table-borderless table-hover">
+                                    <tr>
+                                        <td>Course Name</td>
+                                        <td>:</td>
+                                        <td>[[${courseName}]]</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Course Fees</td>
+                                        <td>:</td>
+                                        <td>[[${fees}]]</td>
+                                    </tr>
+                                </table>
+                            </div>
+                    </div>
+                    </form>
+                </div>
+                <br>
+
+            </div>
+
+
+            <div class="card mt-5 cardboxs">
+                <div class="card-header  d-flex justify-content-center align-items-center titles">Payment Methods</div>
+                <!-- Student view -->
+                <div class="card-body">
+                    <form>
+                        <div class="row form-sec-header secondtitles">
+                            <div class="col-lg-12 text-center">
+                                <p>Payment Methods</p>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-1"></div>
+                            <ul>
+                                <li>
+                                    <input type="radio" value="KPay" name="radio" onclick="javascript:numCheck();"
+                                        id="kpay" checked />
+                                    <label for="kpay">KPay</label>
+                                </li>
+                                <li>
+                                    <input type="radio" value="AYAPay" name="radio" onclick="javascript:numCheck();"
+                                        id="ayapay" />
+                                    <label for="ayapay">AYAPay</label>
+                                </li>
+                                <li>
+                                    <input type="radio" value="WaveMoney" name="radio" onclick="javascript:numCheck();"
+                                        id="wave" />
+                                    <label for="wave">Wave Money</label>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-lg-1"></div>
+                            <label for="text" class="col-lg-10 col-form-label">Please transfer course fee to one of the
+                                following numbers.</label>
+                        </div>
+                        <div id="ifkpay" style="display: block;">
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Account Name</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">Kpay Phone Number</label>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Mi Zinhtet Moe</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">09 999999999</label>
+                                </div>
+                                
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Mi Zinhtet Moe</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">09 999999999</label>
+                                </div>
+                               
+                            </div>
+                        </div>
+
+
+                        <div id="ifayapay" style="display: none;">
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Account Name</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">AYAPay Phone Number</label>
+                                </div>
+                               
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Thant Thwe Thwe Htoo</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">09 999999999</label>
+                                </div>
+                              
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Thant Thwe Thwe Htoo</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">09 999999999</label>
+                                </div>
+                                
+                            </div>
+                        </div>
+
+
+                        <div id="ifwave" style="display: none;">
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Account Name</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">WavePay Phone Number</label>
+                                </div>
+                                <!--div class="col-lg-3">
+                            <input type="email" class="form-control" id="inputEmail" placeholder="姓" required>
+                        </div-->
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Admin Name</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">09 999999999</label>
+                                </div>
+                               
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="coursename" class="col-lg-3 col-form-label">Admin Name</label>
+
+                                <div class="col-lg-6">
+                                    <label for="coursename" class="col-form-label">09 999999999</label>
+                                </div>
+                                
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <br>
+
+            </div>
+
+            <div class="card mt-5 cardboxs">
+                <div class="card-header  d-flex justify-content-center align-items-center titles">Payment Details</div>
+                <!-- Student view -->
+                <div class="card-body">
+  
+                        <form method="post"  th:action="@{__${#httpServletRequest.requestURI}__/edit/}" th:object="${payment}"
+                            enctype="multipart/form-data">
+                            <div class="row form-sec-header secondtitles">
+                                <div class="col-lg-12 text-center">
+                                    <p>Upload Slip</p>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <div class="col-lg-1"></div>
+                                <label for="text" class="col-lg-10 col-form-label">After transfering course fee, please
+                                    submit the screenshot of the transaction.</label>
+                            </div>
+                            <div sec:authorize="hasAuthority('ROLE_STUDENT') ">
+                            <div class="alert alert-danger" role="alert" th:if="${payment.paymentStatus eq 'ERROR'}">
+                                Please reupload valid payment slip
+                              </div>
+                              </div>
+                            <div class="center">
+                                <div class="form-input">
+                                    <div class="ml-2">
+                                        <div id="msg"></div>
+                                        
+                                        <div class="ml-2 col-md-8">
+                                            <img id="preview" class="img-thumbnail" th:src="${slip.url}" th:alt="${slip.name}" style="max-width: 480px; max-height: 640px;">
+                                        </div>
+                                        
+                                        
+                                          <input type="file" class="file" accept="image/*"  name="slip"  th:src="${slip.url}"  th:alt="${slip.name}">
+                                          <div sec:authorize="hasAuthority('ROLE_STUDENT') ">
+                                          <div class="input-group my-3">
+                                            <input type="text" class="form-control"  disabled placeholder="Upload File" >
+                                            <div class="input-group-append">
+                                              <button type="button" class="browse btn btn-primary">Browse...</button>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                </div>
+                            </div>
+                            <!--<div class="form-group row">
+                                <label class="form-label" for="img">Slip</label>
+        
+                                <input th:field="*{slip}" class="form-control" th:classappend="${#fields.hasErrors('slip')}?'is-invalid':''" id="cfee" type="file" placeholder="Enter Course Fee(Kyats)" accept="image/*" name="image" />
+                                <input type="file" id="img" name="img" accept="image/*">
+                                <div class="invalid-feedback" th:if="${#fields.hasErrors('slip')}" th:errors="*{slip}">This field is required.</div>
+                            </div>-->
+                            
+                            <div id="status" class="mt-1 mb-3">
+                                <span th:classappend="${payment.paymentStatus eq 'ERROR' ?'bg-danger':' bg-warning'}" class="badge rounded-pill" th:text="${payment.paymentStatus}" style="color: white;"></span>
+                            </div>
+                            <div sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SUPER_ADMIN') ">
+                            <div class="form-group row">    
+                                <label class="radio-inline">
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" th:field="*{paymentStatus}" value="COMPLETED" id="inlineRadio1" 
+                                        th:disabled="${payment.paymentStatus eq 'ERROR' or payment.paymentStatus eq 'REQUESTED'}">
+                                        <label class="form-check-label" for="inlineRadio1" style="color: #28A745;" >COMPLETED</label>
+                                      </div>
+                                      <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" th:field="*{paymentStatus}" value="ERROR" id="inlineRadio2"
+                                        th:disabled="${payment.paymentStatus eq 'COMPLETED' or payment.paymentStatus eq 'REQUESTED'}">
+                                        <label class="form-check-label" for="inlineRadio2" style="color: #DC3545;">ERROR</label>
+                                      </div>
+                                </div>
+                            </div>
+
+                            <div sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SUPER_ADMIN') ">
+                                <div class="form-group row" > 
+                                    <div class="col-lg-12 text-center">
+                                        <button
+                                        id="btnReg" type="submit"
+                                        class="btnColor btn btn-spacing btn-primary center-block" style="width: 150px;"
+                                            OnClick="btnRegister_Click">
+                                            Submit
+                                        </button>
+                                    </div>   
+                                </div>
+                                </div>
+
+                                <div sec:authorize="hasAuthority('ROLE_STUDENT') ">
+                                    <div class="form-group row" > 
+                                        <div class="col-lg-12 text-center">
+                                            <button
+                                            id="btnReg" type="submit"
+                                            class="btnColor btn btn-spacing btn-primary center-block" style="width: 150px;"
+                                                OnClick="btnRegister_Click">
+                                                Submit
+                                            </button>
+                                        </div>   
+                                    </div>
+                                    </div>
+                        </form>
+                    <br>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    
+    
+    <!-- <footer class="container-fluid no-padding footers"   >
+        <div class="footer__container">
+          <div
+            class="d-lg-flex flex-sm-column flex-md-row justify-content-between align-items-sm-center footer__div"
+          >
+            <div class="footer__holder">
+              <h3 class="footer__title">Get to Know Us</h3>
+              <ul 
+              class="footer__subtitle"
+              style="line-height: 200%">
+                <li>
+                  <a
+                    style="color: white; text-decoration: none"
+                    th:href="@{/guest/frequently_asked_questions}"
+                    target="_blank"
+                  >
+                    FAQs
+                  </a>
+                </li><br/>
+                <li>
+                  <a
+                    style="color: white; text-decoration: none"
+                    th:href="@{ /guest/terms_and_conditions}"
+                    target="_blank"
+                  >
+                    Terms and Conditions
+                  </a>
+                </li><br/>
+                <li>
+                  <a
+                    style="color: white; text-decoration: none"
+                    th:href="@{/guest/help_and_support}"
+                    target="_blank"
+                  >
+                    Help and support
+                  </a>
+                </li><br/>
+                <li>
+                  <a
+                    th:href="@{/guest/about_management_company}"
+                    style="color: white; text-decoration: none"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    About the management company
+                  </a>
+                </li>
+              </ul>
+            </div>
+            <div class="footer__holder">
+              <h3 class="footer__title">Contact</h3>
+              <ul
+                class="footer__subtitle"
+                style="line-height: 200%"
+              >
+                <li>Tel: +959 98-656-3091</li><br/>
+                <li>Viber: +959 98-656-3091</li><br/>
+                <li>Telegram: +959 98-656-3091</li><br/>
+                <li>Line: +959 98-656-3091</li><br/>
+                <li>WhatsApp: +959 98-656-3091</li>
+              </ul>
+            </div>
+            <div class="footer__holder">
+              <img
+                src="/images/bliss-stock.png"
+                alt="logo"
+                class="align-self-end"
+              />
+            </div>
+          </div>
+          <div class="copyright">
+            <div class="center">
+              <p class="copyright__text">
+                © Copyright Pyinnyar Subuu. All Rights
+                Reserved
+              </p>
+            </div>
+          </div>
+        </div>
+      </footer> -->
+
+      
+
+
+    <div style="height: 300px"></div>  
+
+    
+  
+  <!-- Footer-->
+   <footer class="container-fluid p-0" style="background-color:#3f877a ; ">
+    <div class="footer__container"id="myFooter">
+      <div
+        class="d-lg-flex flex-sm-column flex-md-row justify-content-between align-items-sm-center footer__div"
+      >
+        <div class="footer__holder">
+          <h3 class="footer__title">Get to Know Us</h3>
+          <ul 
+          class="footer__subtitle"
+          style="line-height: 200%">
+            <li>
+              <a
+                style="color: white; text-decoration: none"
+                th:href="@{/guest/frequently_asked_questions}"
+                target="_blank"
+              >
+                FAQs
+              </a>
+            </li>
+            <li>
+              <a
+                style="color: white; text-decoration: none"
+                th:href="@{ /guest/terms_and_conditions}"
+                target="_blank"
+              >
+                Terms and Conditions
+              </a>
+            </li>
+            <li>
+              <a
+                style="color: white; text-decoration: none"
+                th:href="@{/guest/help_and_support}"
+                target="_blank"
+              >
+                Help and support
+              </a>
+            </li>
+            <li>
+              <a
+                th:href="@{/guest/about_management_company}"
+                style="color: white; text-decoration: none"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                About the management company
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer__holder">
+          <h3 class="footer__title">Contact</h3>
+          <ul
+            class="footer__subtitle"
+            style="line-height: 200%"
+          >
+            <li>Tel: +959 98-656-3091</li>
+            <li>Viber: +959 98-656-3091</li>
+            <li>Telegram: +959 98-656-3091</li>
+            <li>Line: +959 98-656-3091</li>
+            <li>WhatsApp: +959 98-656-3091</li>
+          </ul>
+        </div>
+        <div class="footer__holder">
+          <img
+            src="/images/bliss-stock.png"
+            alt="logo"
+            class="align-self-end"
+          />
+        </div>
+      </div>
+      <div class="copyright">
+        <div class="center">
+          <p class="copyright__text">
+            © Copyright Pyinnyar Subuu. All Rights
+            Reserved
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+
+
+
+    <!-- <div th:replace="@{fragments/footer}"></div> -->
+    <script type="text/javascript">
+        function showPreview(event) {
+            if (event.target.files.length > 0) {
+                var src = URL.createObjectURL(event.target.files[0]);
+                var preview = document.getElementById("file-ip-1-preview");
+                preview.src = src;
+                preview.style.display = "block";
+            }
+        }
+    </script>
+    <script type="text/javascript" src="/js/voucher_preview.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="/js/main.js"></script>
+  
+</body>
+
+</html>

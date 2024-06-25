@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4">
+
+<head>
+  <meta charset="utf-8" />
+  <!-- <link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico"> -->
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, user-scalable=no" />
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" th:href="@{/css/CM0004_Student Profile.css}" />
+  <link rel="stylesheet" th:href="@{/css/global.css}" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <title>Course Edit</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+</head>
+
+<body>
+  <div th:replace="@{fragments/nav}"></div>
+  <main style="margin-top: 160px; margin-bottom: 30px;">
+    <nav class="p-2 container1 breadcrums" aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>'">
+      <ol class="breadcrumb mt-3 ms-4" th:if="${#authorization.expression('hasRole(''ROLE_TEACHER'')')}">
+        <li class="breadcrumb-item">
+          <a th:href="@{/teacher/my-course}">My Course</a>
+        </li>
+        <li class="breadcrumb-item active">Update Registration</li>
+        <li class="breadcrumb-item">Confirmation</li>
+        <li class="breadcrumb-item">Complete</li>
+      </ol>
+      <ol class="breadcrumb" th:unless="${#authorization.expression('hasRole(''ROLE_TEACHER'')')}">
+        <li class="breadcrumb-item">
+          <a th:href="@{/admin/top/}">Top</a>
+        </li>
+        <li class="breadcrumb-item">
+          <a th:href="@{/admin/teacher-list}">Teacher List</a>
+        </li>
+        <li class="breadcrumb-item active">Course Registration</li>
+        <li class="breadcrumb-item">Confirmation</li>
+        <li class="breadcrumb-item">Complete</li>
+      </ol>
+    </nav>
+
+    <div class="container mt-3 container2 ">
+      <div class="card mx-auto cardboxs upcard" style="max-width: 700px">
+        <div class="card-header d-flex justify-content-center align-items-center titles">Update Course</div>
+
+        <div class="card-body">
+          <form th:action="@{${postAction}}" method="post" enctype="multipart/form-data" novalidate>
+            <div th:object="${course}">
+              <div class="form-group row">
+
+                <div class="text-center">
+                  <p class="form-label">Add an Image to a Course</p>
+                </div>
+                <div id="profile">
+                  <div class="profile-pic-wrapper">
+                    <div class="pic-holder" style="border-radius: 0px;">
+                      <div class="d-flex justify-content-center">
+                        <div class="profile-pic-wrapper">
+
+                          <!-- uploaded pic shown here -->
+                          <img id="profilePic" class="pic" th:src="${cphoto.url}" th:alt="${cphoto.name}" />
+
+                          <label for="newProfilePhoto" class="upload-file-block">
+                            <div class="text-center">
+                              <div class="mb-2">
+                                <i class="fa fa-camera fa-2x"></i>
+                              </div>
+                              <div class="text-uppercase">
+                                Upload <br />
+                                Image
+                              </div>
+                            </div>
+                          </label>
+                          <input class="uploadProfileInput" type="file" name="course_pic" id="newProfilePhoto"
+                            accept="image/*" style="display: none;" th:src="${cphoto.url}" th:alt="${cphoto.name}" />
+
+
+                        </div>
+                        <!-- TODO Come back for profile Upload -->
+                      </div>
+                    </div>
+                  </div>
+                  <div class="text-center">
+                    <span style="color: red;">Enter "Save" button to upload course image</span>
+                  </div></br>
+                  <div class="text-center">
+                    <button class="btn btn-primary mb-3 saves" type="submit" name="photoSubmit"
+                      value="pic-edit">Save</button>
+                  </div>
+
+                </div>
+                <input th:field="*{coursePhoto}" class="form-control" id="cname" type="hidden" />
+                <div class="row">
+                  <div class="col-lg-3">
+                    <p class="form-label">Class Type</p>
+                  </div>
+
+                  <div class="col-lg-9 mb-3">
+                    <div class="form-check form-check-inline">
+                      <input type="radio" onclick="javascript:onClassTypeCheckBoxClicked();" name="liveCheck"
+                        id="liveCheck" value="LIVE" th:field="*{classType}" />
+                      <label for="liveCheck">Live</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input type="radio" onclick="javascript:onClassTypeCheckBoxClicked();" name="videoCheck"
+                        id="videoCheck" value="VIDEO" th:field="*{classType}" />
+                      <label for="videoCheck">Video</label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- course name -->
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label class="form-label" for="cname">Course Name</label>
+                  </div>
+
+                  <div class="col-lg-9">
+                    <input th:field="*{courseName}" th:classappend="${#fields.hasErrors('courseName')}?'is-invalid':''"
+                      class="form-control" id="cname" type="text" placeholder="Enter Course Name" required />
+                  </div>
+                </div>
+
+                <div class="invalid-feedback">This field is required.</div>
+              </div>
+
+              <!-- course category -->
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label class="form-label" for="ccategory">Course Category</label>
+                  </div>
+
+                  <div class="col-lg-9">
+                    <select name="ccategory" th:field="*{category}" class="form-select" required>
+                      <option value="" selected="selected">Select Category</option>
+
+                      <option th:each="courselist : ${CourseListHtml}" th:value="${courselist.categoryName}"
+                        th:text="${courselist.categoryName}"></option>
+
+                    </select>
+                    <div sec:authorize="hasAuthority('ROLE_ADMIN') || hasAuthority('ROLE_SUPER_ADMIN')">
+                      <div class="d-flex justify-content-around flex-wrap">
+                        <div
+                          class="add-new-cat bg-white d-flex justify-content-between align-items-center py-1 px-3 rounded mt-2"
+                          style="width: 200px;">
+                          <span class="text-success fw-normal">Add New Category</span>
+                          <a th:href="@{/admin/course-registration/add-new-category}" class="" id="add_new_category"><i
+                              class="fa-solid fa-plus text-dark"></i></a>
+                        </div>
+                        <div
+                          class="delete-new-cat bg-white d-flex justify-content-between align-items-center py-1 px-3 rounded mt-2"
+                          style="width: 200px;">
+                          <span class="text-danger fw-normal">Delete Category</span>
+                          <a th:href="@{/admin/course-registration/updateCategory}" class="" id="del_category"><i
+                              class="fa-solid fa-trash-can text-danger"></i></a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="invalid-feedback">This field is required.</div>
+              </div>
+
+              <!-- course level -->
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label class="form-label" for="clevel">Course Level</label>
+                  </div>
+
+                  <div class="col-lg-9">
+                    <input th:field="*{level}" th:classappend="${#fields.hasErrors('level')}?'is-invalid':''"
+                      class="form-control" list="clevel" type="text"
+                      placeholder="Enter Course Level(For example : Japanese Basic)" required />
+                    <datalist id="clevel">
+                      <option th:value="'Basic'" th:text="Basic"></option>
+                      <option th:value="'Intermediate'" th:text="Intermediate"></option>
+                      <option th:value="'Advance'" th:text="Advance"></option>
+                    </datalist>
+                  </div>
+                </div>
+
+                <div class="invalid-feedback">This field is required.</div>
+              </div>
+
+              <!-- course fee -->
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label class="form-label" for="cfee">Course Fee</label>
+                  </div>
+                  <div class="col-lg-9">
+                    <input th:field="*{fees}" th:classappend="${#fields.hasErrors('fees')}?'is-invalid':''"
+                      class="form-control" id="cfee" type="number" min="0" placeholder="Enter Course Fee(Kyats)"
+                      required />
+                  </div>
+                </div>
+
+                <div class="invalid-feedback">This field is required.</div>
+              </div>
+
+              <!-- about course -->
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label class="form-label" for="cabout">About Course</label>
+                  </div>
+                  <div class="col-lg-9">
+                    <textarea th:field="*{aboutCourse}"
+                      th:classappend="${#fields.hasErrors('aboutCourse')}?'is-invalid':''" class="form-control"
+                      id="cabout" type="text" placeholder="Enter detail about your course here." required></textarea>
+                  </div>
+                </div>
+
+                <div class="invalid-feedback">This field is required.</div>
+              </div>
+
+              <!-- prerequisite -->
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label class="form-label" for="prerequisites">Prerequisites</label>
+                  </div>
+                  <div class="col-lg-9">
+                    <textarea th:field="*{prerequisite}"
+                      th:classappend="${#fields.hasErrors('prerequisite')}?'is-invalid':''" class="form-control"
+                      id="cprequisites" type="text" placeholder="Enter Prerequisites for the course."
+                      required></textarea>
+                  </div>
+                </div>
+
+                <div class="invalid-feedback">This field is required.</div>
+              </div>
+
+              <!-- class link -->
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col-lg-3">
+                    <label class="form-label" for="classlink">Class Link</label>
+                  </div>
+                  <div class="col-lg-9">
+                    <input th:field="*{classLink}" th:classappend="${#fields.hasErrors('classLink')}?'is-invalid':''"
+                      class="form-control" id="cclasslink" type="text"
+                      placeholder="Enter Class Link(Video link or Live link)" required />
+                  </div>
+                </div>
+
+                <div class="invalid-feedback">This field is required.</div>
+              </div>
+              <input type="hidden" class="form-control" id="teacherid" th:field="*{uid}"
+                style="border: none transparent" />
+              <input type="hidden" class="col-auto" id="courseid" th:field="*{courseId}" readonly />
+            </div>
+
+            <div id="iflive" style="display: none">
+              <div th:object="${course}">
+                <div class="mb-3">
+                  <div class="row">
+                    <div class="col-lg-3">
+                      <label class="form-label" for="maxStu">Student Numbers</label>
+                    </div>
+                    <div class="col-lg-9">
+                      <input th:field="*{maxStu}" th:classappend="${#fields.hasErrors('maxStu')}?'is-invalid':''"
+                        class="form-control" id="maxStu" type="number" min="0"
+                        placeholder="Enter the number of students" />
+                    </div>
+                  </div>
+
+                  <div class="invalid-feedback">This field is required.</div>
+                </div>
+
+                <div class="row my-3">
+                  <div class="form-group col-12 col-sm-6">
+                    <!-- <input id="datepicker9" class="form-control" placeholder="yyyy-mm-dd"> -->
+                    <label class="form-label" for="startDate">Start Date</label>
+                    <input type="date" th:field="*{startDate}" class="form-control" />
+                    <div class="invalid-feedback date-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+
+                  <div class="form-group col-12 col-sm-6">
+                    <label class="form-label" for="endDate">End Date</label>
+
+                    <input type="date" th:field="*{endDate}" class="form-control" />
+                    <div class="invalid-feedback date-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <h5 class="my-3">Choose Date and Time</h5>
+
+              <div class="form-group row mb-3">
+                <div class="col-md-3">
+                  <div th:if="${courseTimeList[0].courseDays!=null}">
+                    <input type="checkbox" th:checked="true" value="Monday" id="day0" name="day0" />
+                    <label class="col-form-label">Monday</label>
+                  </div>
+                  <div th:if="${courseTimeList[0].courseDays==null}">
+                    <input type="checkbox" value="Monday" id="day0" name="day0" />
+
+                    <label class="col-form-label">Monday</label>
+                  </div>
+                </div>
+
+                <div class="col-md-9 row">
+                  <div class="col-6">
+                    <label for="time">From</label>
+
+                    <input type="time" th:value="${courseTimeList[0].courseStartTime}" th:name="startTime0"
+                      id="startTime0" class="form-control" data-disabled />
+                    <div class="invalid-feedback day0-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label for="time">To</label>
+
+                    <input type="time" th:value="${courseTimeList[0].courseEndTime}" th:name="endTime0" id="endTime0"
+                      class="form-control" data-disabled />
+                    <div class="invalid-feedback day0-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-md-3">
+                  <div th:if="${courseTimeList[1].courseDays!=null}">
+                    <input type="checkbox" th:checked="true" value="Tuesday" id="day1" name="day1" />
+                    <label class="col-form-label">Tuesday</label>
+                  </div>
+                  <div th:if="${courseTimeList[1].courseDays==null}">
+                    <input type="checkbox" value="Tuesday" id="day1" name="day1" />
+                    <label class="col-form-label">Tuesday</label>
+                  </div>
+                </div>
+
+                <div class="col-md-9 row">
+                  <div class="col-6">
+                    <label for="time">From</label>
+                    <input type="time" th:value="${courseTimeList[1].courseStartTime}" th:name="startTime1"
+                      id="startTime1" class="form-control" data-disabled />
+                    <div class="invalid-feedback day1-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label for="time">To</label>
+
+                    <input type="time" th:value="${courseTimeList[1].courseEndTime}" th:name="endTime1" id="endTime1"
+                      class="form-control" data-disabled />
+                    <div class="invalid-feedback day1-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-md-3">
+                  <div th:if="${courseTimeList[2].courseDays!=null}">
+                    <input type="checkbox" th:checked="true" value="Wednesday" id="day2" name="day2" />
+                    <label class="col-form-label">Wednesday</label>
+                  </div>
+                  <div th:if="${courseTimeList[2].courseDays==null}">
+                    <input type="checkbox" value="Wednesday" id="day2" name="day2" />
+                    <label class="col-form-label">Wednesday</label>
+                  </div>
+                </div>
+
+                <div class="col-md-9 row">
+                  <div class="col-6">
+                    <label for="time">From</label>
+                    <input type="time" th:value="${courseTimeList[2].courseStartTime}" th:name="startTime2"
+                      id="startTime2" class="form-control" data-disabled />
+                    <div class="invalid-feedback day2-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label for="time">To</label>
+                    <input type="time" th:value="${courseTimeList[2].courseEndTime}" th:name="endTime2" id="endTime2"
+                      class="form-control" data-disabled />
+                    <div class="invalid-feedback day2-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-md-3">
+                  <div th:if="${courseTimeList[3].courseDays!=null}">
+                    <input type="checkbox" th:checked="true" value="Thursday" id="day3" name="day3" />
+                    <label class="col-form-label">Thursday</label>
+                  </div>
+                  <div th:if="${courseTimeList[3].courseDays==null}">
+                    <input type="checkbox" value="Thursday" id="day3" name="day3" />
+                    <label class="col-form-label">Thursday</label>
+                  </div>
+                </div>
+
+                <div class="col-md-9 row">
+                  <div class="col-6">
+                    <label for="time">From</label>
+                    <input type="time" th:value="${courseTimeList[3].courseStartTime}" th:name="startTime3"
+                      id="startTime3" class="form-control" data-disabled />
+                    <div class="invalid-feedback day3-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label for="time">To</label>
+                    <input type="time" th:value="${courseTimeList[3].courseEndTime}" th:name="endTime3" id="endTime3"
+                      class="form-control" data-disabled />
+                    <div class="invalid-feedback day3-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-md-3">
+                  <div th:if="${courseTimeList[4].courseDays!=null}">
+                    <input type="checkbox" th:checked="true" value="Friday" id="day4" name="day4" />
+                    <label class="col-form-label">Friday</label>
+                  </div>
+                  <div th:if="${courseTimeList[4].courseDays==null}">
+                    <input type="checkbox" value="Friday" id="day4" name="day4" />
+                    <label class="col-form-label">Friday</label>
+                  </div>
+                </div>
+
+                <div class="col-md-9 row">
+                  <div class="col-6">
+                    <label for="time">From</label>
+                    <input type="time" th:value="${courseTimeList[4].courseStartTime}" th:name="startTime4"
+                      id="startTime4" class="form-control" data-disabled />
+                    <div class="invalid-feedback day4-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label for="time">To</label>
+                    <input type="time" th:value="${courseTimeList[4].courseEndTime}" th:name="endTime4" id="endTime4"
+                      class="form-control" data-disabled />
+                    <div class="invalid-feedback day4-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-md-3">
+                  <div th:if="${courseTimeList[5].courseDays!=null}">
+                    <input type="checkbox" th:checked="true" value="Saturday" id="day5" name="day5" />
+                    <label class="col-form-label">Saturday</label>
+                  </div>
+                  <div th:if="${courseTimeList[5].courseDays==null}">
+                    <input type="checkbox" value="Saturday" id="day5" name="day5" />
+                    <label class="col-form-label">Saturday</label>
+                  </div>
+                </div>
+
+                <div class="col-md-9 row">
+                  <div class="col-6">
+                    <label for="time">From</label>
+                    <input type="time" th:value="${courseTimeList[5].courseStartTime}" th:name="startTime5"
+                      id="startTime5" class="form-control" data-disabled />
+                    <div class="invalid-feedback day5-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label for="time">To</label>
+                    <input type="time" th:value="${courseTimeList[5].courseEndTime}" th:name="endTime5" id="endTime5"
+                      class="form-control" data-disabled />
+                    <div class="invalid-feedback day5-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-md-3">
+                  <div th:if="${courseTimeList[6].courseDays!=null}">
+                    <input type="checkbox" th:checked="true" value="Sunday" id="day6" name="day6" />
+                    <label class="col-form-label">Sunday</label>
+                  </div>
+                  <div th:if="${courseTimeList[6].courseDays==null}">
+                    <input type="checkbox" value="Sunday" id="day6" name="day6" />
+                    <label class="col-form-label">Sunday</label>
+                  </div>
+                </div>
+
+                <div class="col-md-9 row">
+                  <div class="col-6">
+                    <label for="time">From</label>
+                    <input type="time" th:value="${courseTimeList[6].courseStartTime}" th:name="startTime6"
+                      id="startTime6" class="form-control" data-disabled />
+                    <div class="invalid-feedback day6-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+
+                  <div class="col-6">
+                    <label for="time">To</label>
+                    <input type="time" th:value="${courseTimeList[6].courseEndTime}" th:name="endTime6" id="endTime6"
+                      class="form-control" data-disabled />
+                    <div class="invalid-feedback day6-feedback">
+                      This field is required.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="input_fields_wrap"></div>
+            </div>
+
+            <div class="d-grid gap-2 d-flex justify-content-around buttons">
+              <button id="btnReset" type="reset" class="btn btn-spacing btn-secondary center-block btnSubmit"
+                style="width: 100px" OnClick="btnClear_Click">
+                Reset
+              </button>
+
+              <button id="btnReg" type="submit" name="submit" class="btn btn-primary">
+                Register
+              </button>
+            </div>
+            <div class="form-group row"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div th:replace="@{fragments/footer}"></div>
+
+  <script type="text/javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script th:src="@{/js/AT0001_CourseRegistration.js}"></script>
+  <script th:src="@{/js/photoPlaceHolder.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+  <script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>

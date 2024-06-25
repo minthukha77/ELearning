@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exam List Screen</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="stylesheet" th:href="@{/css/AT0004_ExamManagement.css}" />
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+  <link rel="stylesheet" th:href="@{/css/CM0004_Student Profile.css}" />
+  <link rel="stylesheet" th:href="@{/css/global.css}" />
+  <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script th:inline="javascript">
+    var type;
+    var test_id;
+
+    $(document).ready(() => {
+      var role = /*[[${role}]]*/ "default";
+      if (role == "admin") {
+        document.getElementById("teacher_dropdown_main").style.display = 'block';
+      } else {
+        document.getElementById("teacher_dropdown_main").style.display = 'none';
+      }
+
+      let today = new Date().toISOString().slice(0, 10)
+      document.getElementById("exam_date").setAttribute("min", today);
+      let createExamContainer = document.querySelector('.create-exam-container');
+      let deleteExamContainer = document.querySelector('.delete-exam-container');
+      let cancelBtn = document.querySelector('#cancel_btn');
+      let deleteCancelBtn = document.querySelector('#delete_cancel_btn');
+      let createExam = document.querySelector('#create_exam');
+
+      cancelBtn.addEventListener('click', () => createExamContainer.classList.add('d-none'));
+      deleteCancelBtn.addEventListener('click', () => deleteExamContainer.classList.add('d-none'));
+      createExam.addEventListener('click', () => {
+        createExamContainer.classList.remove('d-none')
+        $("#exam_status_dropdown").css("display", "none");
+        type = "Created";
+        document.getElementById("course_name").value = "Choose Course";
+        document.getElementById("description").value = "";
+        document.getElementById("section_name").value = "";
+        document.getElementById("passing_score").value = "";
+        document.getElementById("exam_date").value = "";
+        document.getElementById("exam_start_time").value = "";
+        document.getElementById("exam_end_time").value = "";
+      });
+
+      $("#submit").click(function () {
+        submitData(type);
+      })
+
+      $("#deleteSubmit").click(function () {
+        fetch("/admin/delete-exam?test_id=" + test_id, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(response => {
+          if (response.status == 200) {
+            window.location.reload();
+          }
+        })
+      })
+
+      $("#filterbystatus").change(function () {
+        console.log($("#filterbystatus :selected").text());
+        window.location.href = "/admin/exam?examStatus=" + $("#filterbystatus :selected").text();
+      });
+
+      $("#clearFilter").click(function () {
+        window.location.href = "/admin/exam"
+      })
+
+      $("#filterbycourse").change(function () {
+        var filterCourseDropdown = document.getElementById("filterbycourse");
+        var filterCourseID = filterCourseDropdown.options[filterCourseDropdown.selectedIndex].id;
+        console.log(filterCourseID);
+        window.location.href = "/admin/exam?courseid=" + filterCourseID;
+      });
+
+      $("#filterbyteacher").change(function () {
+        var filterTeacherDropdown = document.getElementById("filterbyteacher");
+        var filterTeacherID = filterTeacherDropdown.options[filterTeacherDropdown.selectedIndex].id;
+        console.log(filterTeacherID);
+        window.location.href = "/admin/exam?teacherid=" + filterTeacherID;
+      });
+
+      $("#teacher_name").change(function () {
+        var course_dropdown = $("#course_name");
+        course_dropdown.empty();
+        course_dropdown.append("<option value='Choose Course' selected><small>Choose Course</small></option>");
+        var teacherNameDropdown = document.getElementById("teacher_name");
+        var teacherID = teacherNameDropdown.options[teacherNameDropdown.selectedIndex].id;
+        if (teacherID == "") {
+          return;
+        }
+        fetch("/admin/get-course-by-teacher?teacher_id=" + teacherID, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }).then(response => response.json())
+          .then(data => {
+            for (var i = 0; i < data.length; i++) {
+              course_dropdown.append("<option value='" + data[i]["courseName"] + "' id='" + data[i]["courseId"] + "'><small>" + data[i]["courseName"] + "</small></option>");
+            }
+          })
+      });
+    })
+
+    function setDataToEditDialog(test) {
+      var course_dropdown = $("#course_name");
+      course_dropdown.empty();
+      course_dropdown.append("<option value='Choose Course' selected><small>Choose Course</small></option>");
+
+      test_id = test.test_id;
+      type = "Update"
+      let createExam = document.querySelector('.create-exam-container');
+      createExam.classList.remove('d-none');
+      var datearray = test.date.split("T");
+
+      document.getElementById("teacher_name").value = test.userInfo.uid;
+      fetch("/admin/get-course-by-teacher?teacher_id=" + test.userInfo.uid, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      }).then(response => response.json())
+        .then(data => {
+          for (var i = 0; i < data.length; i++) {
+            course_dropdown.append("<option value='" + data[i]["courseName"] + "' id='" + data[i]["courseId"] + "'><small>" + data[i]["courseName"] + "</small></option>");
+          }
+          document.getElementById("course_name").value = test.courseInfo.courseName;
+        })
+      document.getElementById("exam_status").value = test.exam_status;
+      document.getElementById("description").value = test.description;
+      document.getElementById("section_name").value = test.section_name;
+      document.getElementById("passing_score").value = test.passing_score_percent;
+      document.getElementById("exam_date").value = datearray[0];
+      document.getElementById("exam_start_time").value = test.start_time;
+      document.getElementById("exam_end_time").value = test.end_time;
+
+      $("#exam_status_dropdown").css("display", "block");
+    }
+
+    function setDataToDeleteDialog(test) {
+      test_id = test.test_id;
+      let deleteExamDialog = document.querySelector('.delete-exam-container');
+      deleteExamDialog.classList.remove('d-none');
+    }
+
+    function submitData(submitType) {
+      var courseDropDown = document.getElementById("course_name");
+      var courseName = courseDropDown.value;
+      var teacherDropDown = document.getElementById("teacher_name");
+      var teacherName = teacherDropDown.value;
+      var courseId = courseDropDown.options[courseDropDown.selectedIndex].id;
+      var teacherId = teacherDropDown.options[teacherDropDown.selectedIndex].id;
+      if (teacherName == "Choose Teacher") {
+        document.getElementById("teacher_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("teacher_warning").style.display = 'none';
+      }
+
+      if (courseName == "Choose Course") {
+        document.getElementById("course_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("course_warning").style.display = 'none';
+      }
+
+      var description = document.getElementById("description").value;
+      if (description == "") {
+        document.getElementById("description_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("description_warning").style.display = 'none';
+      }
+
+      var section_name = document.getElementById("section_name").value;
+      if (section_name == "") {
+        document.getElementById("section_name_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("section_name_warning").style.display = 'none';
+      }
+
+      var exam_date = document.getElementById("exam_date").value;
+      if (exam_date == "") {
+        document.getElementById("exam_date_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("exam_date_warning").style.display = 'none';
+      }
+
+      var exam_start_time = document.getElementById("exam_start_time").value;
+      if (exam_start_time == "") {
+        document.getElementById("exam_start_time_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("exam_start_time_warning").style.display = 'none';
+      }
+
+      var exam_end_time = document.getElementById("exam_end_time").value;
+      if (exam_end_time == "") {
+        document.getElementById("exam_end_time_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("exam_end_time_warning").style.display = 'none';
+      }
+
+      var passing_score = document.getElementById("passing_score").value;
+      if (passing_score == "") {
+        document.getElementById("passing_score_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("passing_score_warning").style.display = 'none';
+      }
+
+      if (isNaN(passing_score)) {
+        document.getElementById("passing_score_number_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("passing_score_number_warning").style.display = 'none';
+        if (passing_score == 0 || passing_score == 100) {
+          document.getElementById("passing_score_number_limit").style.display = 'block';
+          return;
+        } else {
+          document.getElementById("passing_score_number_limit").style.display = 'none';
+        }
+      }
+
+      var exam_start_hour = parseInt(exam_start_time.substr(0, 2));
+      var exam_start_minutes = parseInt(exam_start_time.substr(3));
+      var exam_end_hour = parseInt(exam_end_time.substr(0, 2));
+      var exam_end_minutes = parseInt(exam_end_time.substr(3));
+      exam_start_minutes += exam_start_hour * 60;
+      exam_end_minutes += exam_end_hour * 60;
+      var minutes_allowed = exam_end_minutes - exam_start_minutes;
+
+      if (minutes_allowed <= 0) {
+        document.getElementById("exam_start_end_time_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("exam_start_end_time_warning").style.display = 'none';
+      }
+
+      var exam_status = document.getElementById("exam_status");
+      var exam_status_value = exam_status.value;
+
+      var data;
+
+      if (submitType == "Created") {
+        data = {
+          teacher_id: teacherId,
+          course_id: courseId,
+          description: description,
+          section_name: section_name,
+          passing_score: passing_score,
+          date: exam_date,
+          minutes_allowed: minutes_allowed,
+          start_time: exam_start_time,
+          end_time: exam_end_time,
+          exam_status: "Exam Created"
+        }
+
+        data = JSON.stringify(data);
+        fetch("/admin/create-exam", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: data
+        }).then(response => {
+          if (response.status == 200) {
+            window.location.reload();
+          }
+        })
+      } else {
+        data = {
+          test_id: test_id,
+          teacher_id: teacherId,
+          course_id: courseId,
+          description: description,
+          section_name: section_name,
+          passing_score: passing_score,
+          date: exam_date,
+          minutes_allowed: minutes_allowed,
+          start_time: exam_start_time,
+          end_time: exam_end_time,
+          exam_status: exam_status_value
+        }
+        data = JSON.stringify(data);
+
+        fetch("/admin/edit-exam", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json"
+          },
+          body: data
+        }).then(response => {
+          if (response.status == 200) {
+            window.location.reload();
+          }
+        })
+      }
+    }
+
+    function toHandler(e) {
+      var fromDate = document.getElementById("exam_from").value;
+      var toDate = document.getElementById("exam_to").value;
+      if (fromDate >= toDate) {
+        document.getElementById("filter_date_warning").style.display = 'block';
+        return;
+      } else {
+        document.getElementById("filter_date_warning").style.display = 'none';
+        window.location.replace("/admin/exam?fromDate=" + fromDate + "&toDate=" + toDate);
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div th:replace="@{fragments/nav}"></div>
+  <!-- to create exam content start  -->
+  <div
+    class="create-exam-container min-vh-100 w-100 position-fixed top-0 d-flex justify-content-center align-items-center d-none fadeIn"
+    style="background-color: rgba(0, 0, 0, 0.4); z-index: 1000; padding-top: 80px; max-height: calc(100vh - 210px); overflow-y: auto;">
+    <div class="create-exam-content rounded shadow bg-white">
+      <div class="d-flex justify-content-end p-2">
+        <div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle"
+          style="width: 25px; height: 25px; cursor: pointer" id="cancel_btn">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      <div class="px-3 pb-3">
+        <h5 class="text-success text-center mb-3">To Create Exam Content</h5>
+        <div class="input-group-sm mb-2 shadow-sm">
+          <label for="description" class="form-label fw-bold mb-1"><small style="color: black;">Teacher Name <span
+                class="text-danger">*</span></small></label>
+          <select class="form-select" aria-label="Default select example" id="teacher_name">
+            <option value="Choose Teacher" selected><small>Choose Teacher</small></option>
+            <option th:each="teacher, index: ${teacherList}" th:text="${teacher.userName}" th:id="${teacher.uid}"
+              th:value="${teacher.uid}">
+            </option>
+          </select>
+        </div>
+        <div style="color: red; font-size: 12px; display: none;" id="teacher_warning">Please Select Teacher</div>
+        <div class="input-group-sm mb-2 shadow-sm">
+          <label for="description" class="form-label fw-bold mb-1"><small style="color: black;">Course Name <span
+                class="text-danger">*</span></small></label>
+          <select class="form-select" aria-label="Default select example" id="course_name">
+            <option value="Choose Course" selected><small>Choose Course</small></option>
+            <!-- <option th:each="course, index: ${courseList}" th:text="${course.courseName}" th:id="${course.courseId}"
+              th:value="${course.courseId}"> -->
+            </option>
+          </select>
+        </div>
+        <div style="color: red; font-size: 12px; display: none;" id="course_warning">Please Select Course</div>
+        <div class="input-group-sm mb-2 shadow-sm">
+          <label for="description" class="form-label fw-bold mb-1"><small style="color: black;">Description <span
+                class="text-danger">*</span></small></label>
+          <input class="form-control" id="description" rows="3" placeholder="Add description about exam"
+            required></input>
+        </div>
+        <div style="color: red; font-size: 12px; display: none;" id="description_warning">Please Add Description</div>
+        <div class="input-group-sm mb-2 shadow-sm" style="display: none;" id="exam_status_dropdown">
+          <label for="exam_status" class="form-label fw-bold mb-1"><small style="color: black;">Exam Status <span
+                class="text-danger">*</span></small></label>
+          <select class="form-select" aria-label="Default select example" id="exam_status" required>
+            <option value="Exam Created" selected>Exam Created</option>
+            <option value="Questions Created">Questions Created</option>
+            <option value="Marking">Marking</option>
+            <option value="Result Released">Result Released</option>
+          </select>
+        </div>
+        <div style="color: red; font-size: 12px; display: none;" id="exam_status_warning">Please Choose Exam Status
+        </div>
+        <div class="input-group-sm mb-2 shadow-sm">
+          <label for="section_name" class="form-label fw-bold mb-1"><small style="color: black;">Section Name <span
+                class="text-danger">*</span></small></label>
+          <input type="text" class="form-control" id="section_name" placeholder="Add section about exam" required />
+        </div>
+        <div style="color: red; font-size: 12px; display: none;" id="section_name_warning">Please Add Section Name</div>
+        <div class="input-group-sm mb-2 shadow-sm">
+          <label for="exam_date" class="form-label fw-bold mb-1"><small style="color: black;">Exam Date <span
+                class="text-danger">*</span></small></label>
+          <input type="date" class="form-control" id="exam_date" required />
+        </div>
+        <div style="color: red; font-size: 12px; display: none;" id="exam_date_warning">Please Exam Date</div>
+        <div class="d-flex align-items-center">
+          <div class="col-6 px-1">
+            <div class="input-group-sm mb-2 shadow-sm">
+              <label for="exam_start_time" class="form-label fw-bold mb-1"><small style="color: black;">Start Time
+                  <span class="text-danger">*</span></small></label>
+              <input type="time" class="form-control" id="exam_start_time" required />
+            </div>
+            <div style="color: red; font-size: 12px; display: none;" id="exam_start_time_warning">Please Add Exam Start
+              Time</div>
+          </div>
+          <div class="col-6 px-1">
+            <div class="input-group-sm mb-2 shadow-sm">
+              <label for="exam_end_time" class="form-label fw-bold mb-1"><small style="color: black;">End Time <span
+                    class="text-danger">*</span></small></label>
+              <input type="time" class="form-control" id="exam_end_time" required />
+            </div>
+            <div style="color: red; font-size: 12px; display: none;" id="exam_end_time_warning">Please Add Exam End Time
+            </div>
+          </div>
+        </div>
+        <div style="color: red; font-size: 12px; display: none;" id="exam_start_end_time_warning">End Time Must Be
+          Greater Than Start Time
+        </div>
+        <div class="input-group-sm mb-3 shadow-sm">
+          <label for="passing_score" class="form-label fw-bold mb-1"><small style="color: black;">Passing Score <span
+                class="text-danger">*</span></small></label>
+          <input type="text" class="form-control" id="passing_score" placeholder="Enter minimum passing score"
+            required />
+        </div>
+        <div style="color: red; font-size: 12px; display: none;" id="passing_score_warning">Please Add Minimum Passing
+          Score</div>
+        <div style="color: red; font-size: 12px; display: none;" id="passing_score_number_warning">Please Add Only
+          Number</div>
+        <div style="color: red; font-size: 12px; display: none;" id="passing_score_number_limit">Please Add Between 0
+          and 100</div>
+        <div class="input-group-sm text-end">
+          <input type="submit" class="form-control btn btn-sm btn-success" id="submit" style="width: 100px" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- to create exam content end  -->
+
+  <div
+    class="delete-exam-container min-vh-100 w-100 position-fixed top-0 d-flex justify-content-center align-items-center d-none fadeIn"
+    style="background-color: rgba(0, 0, 0, 0.4); z-index: 1000; padding-top: 80px;">
+    <div class="create-exam-content rounded shadow bg-white">
+      <div class="d-flex justify-content-end p-2">
+        <div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle"
+          style="width: 25px; height: 25px; cursor: pointer" id="delete_cancel_btn">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      <div class="px-3 pb-3">
+        <h5 class="text-success text-center mb-3">Are You Sure Want To Delete?</h5>
+        <div class="input-group-sm text-end">
+          <input type="submit" class="form-control btn btn-sm btn-success" id="deleteSubmit" style="width: 100px" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="main container mt-3">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+          <a href="#" class="text-decoration-none">Home</a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">Exam</li>
+      </ol>
+    </nav>
+
+    <!-- to add filter start  -->
+    <div class="mt-4" style="padding-top: 60px;">
+      <form action="">
+        <div class="d-flex flex-wrap align-items-end justify-content-between">
+          <div class="">
+            <label for="exam_from" class="fw-bold"><small>Exam From</small></label><br>
+            <input type="date" class="px-3 rounded shadow-sm border-1" id="exam_from" onchange="fromHandler(event)">
+          </div>
+          <div class="">
+            <label for="exam_to" class="fw-bold"><small>Exam To</small></label><br>
+            <input type="date" class="px-3 rounded shadow-sm border-1" id="exam_to" onchange="toHandler(event)" disabled>
+          </div>
+          <div class="">
+            <select name="status" id="filterbystatus" class="px-3 rounded shadow-sm">
+              <option value="Filter By Exam Status" selected><small>Filter By Exam Status</small></option>
+              <option value="Exam Created"><small>Exam Created</small></option>
+              <option value="Questions Created"><small>Questions Created</small></option>
+              <option value="Marking"><small>Marking</small></option>
+              <option value="Result Released"><small>Result Released</small></option>
+            </select>
+          </div>
+          <div class="" style="display: none;" id="teacher_dropdown_main">
+            <select name="course" id="filterbyteacher" class="px-3 rounded shadow-sm">
+              <option value="Filter By Course" selected><small>Filter By Teacher</small></option>
+              <option th:each="teacher, index: ${teacherList}" th:text="${teacher.userName}" th:id="${teacher.uid}">
+            </select>
+          </div>
+          <div class="">
+            <select name="course" id="filterbycourse" class="px-3 rounded shadow-sm">
+              <option value="Filter By Course" selected><small>Filter By Course</small></option>
+              <option th:each="course, index: ${courseList}" th:text="${course.courseName}" th:id="${course.courseId}">
+            </select>
+            <input type="reset" class="ms-2 border-0 rounded bg-success text-white px-2" value="Clear Filter"
+              id="clearFilter">
+          </div>
+        </div>
+      </form>
+    </div>
+    
+    <div style="color: red; font-size: 12px; display: none; padding-top: 10px;" id="filter_date_warning">End Date Must Be Greater Than Start Date</div>
+    
+    <script>
+      function fromHandler(event) {
+        var examToInput = document.getElementById("exam_to");
+        var examFromInput = document.getElementById("exam_from");
+        examToInput.disabled = false;
+        if (examFromInput.value === "") {
+          examToInput.disabled = true;
+          examToInput.value = "";
+        }
+      }
+    
+      
+    </script>
+    
+    
+    
+    <!-- to add filter end  -->
+
+    <div class="text-center mt-3">
+      <div class="">
+        <small class="fw-bold me-2">
+          <span th:text="${filterType}"></span>
+          <span th:text="${filter}"></span>
+        </small>
+      </div>
+    </div>
+
+    <div class="text-end mt-3">
+      <div class="">
+        <small class="fw-bold me-2"><span th:text="${testList.size}"></span> exams found</small>
+        <small class="bg-success rounded text-white px-2 py-1 fw-bold" style="cursor: pointer" id="create_exam">Create
+          Exam</small>
+      </div>
+    </div>
+
+    <div class="exam-list mt-2" style="padding-bottom: 50px;">
+      <div class="row">
+        <div class="col-12 col-lg-4" th:each="test, index:${testList}">
+          <div class="card bg-white mt-3 shadow-sm" data-custom-type="result_good">
+            <div class="d-flex justify-content-end align-items-center p-2">
+              <i class="fa-solid fa-pen-to-square text-success" style="cursor: pointer"
+                th:onclick="setDataToEditDialog([[${test}]]);"></i>
+              <div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle ms-2"
+                style="width: 20px; height: 20px; cursor: pointer" id="">
+                <i class="fa-solid fa-xmark" th:onclick="setDataToDeleteDialog([[${test}]]);"></i>
+              </div>
+            </div>
+            <div class="card-body pt-0 rounded">
+              <div class="fw-bolder">
+                <span class="text-success" th:text="${index.count}"></span>
+                <span th:text="${test.description}"></span>
+                ( <span th:text="${test.exam_status}"></span> )
+              </div>
+              <div class="d-flex justify-content-between align-items-center mt-3 fw-bold">
+                <small th:text="${test.courseInfo.courseName}"></small>
+                <div>
+                  ( <small th:text="${test.section_name}"></small> )
+                </div>
+              </div>
+              <div class="fw-bold">
+                <small th:text="${test.userInfo.userName}"></small>
+              </div>
+              <div class="d-flex justify-content-between align-items-center fw-bold">
+                <div>
+                  <small class="text-success" th:text="${test.passing_score_percent}"></small>%
+                </div>
+                <div>
+                  <small th:text="${test.minutes_allowed}"></small> minutes
+                </div>
+              </div>
+              <div class="text-muted fw-bold">
+                <small th:text="${#dates.format(test.date, 'yyyy-MM-dd')}"></small>
+                ( <small th:text="${test.start_time}"></small> - <small th:text="${test.end_time}"></small> )
+              </div>
+              <div class="d-flex flex-wrap justify-content-between align-items-center fw-bold mt-3">
+                <small class=""><a th:href="'/admin/exam/' + ${test.test_id} + '/questions'" class="text-success">Exam
+                    Questions</a></small>
+                <small class=""><a th:href="'/admin/exam/' + ${test.test_id} + '/examinee'" class="text-success">Set
+                    Examinee</a></small>
+                <small class=""><a th:href="'/admin/exam/' + ${test.test_id} + '/exam-result-list'" class="text-success">Exam
+                    Result</a></small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+    <script th:src="@{/js/main.js}"></script>
+</body>
+<div th:replace="@{fragments/footer}"></div>
+
+</html>

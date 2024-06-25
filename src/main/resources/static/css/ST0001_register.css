@@ -1,0 +1,225 @@
+:root {
+	/* Colors */
+	--primary: #309986;
+	--warning: yellow;
+	--navbar-brand-bg-color: #edf3f1;
+	--navbar-color: #0f8173;
+	/* Typography */
+	--links-font-size: 17px;
+	--nav-link-bg-alt: #00736c;
+	--log-out:#e63587;
+	--certificate-border:#057835;
+	--certificate-btn:#3c8a08;
+	--certificate-secondbtn:hsla(160, 64%, 42%, 0.993);
+	--cardbox: #3abea6e7;
+    --btnbg: rgba(16, 226, 233, 0.993);
+    --btnborder:#fff;
+    --btnshadow:#000;
+	--registercomplete:green;
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	font-weight: 400;
+	overflow-x: hidden;
+}
+
+ .container-custom{
+    max-width: 720px;
+    padding-right: 16px;
+    padding-left: 16px;
+    margin-right: auto;
+    margin-left: auto;
+    transform: translateY(30%);
+    font-family: var(--bs-font-sans-serif);
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #ffffff;
+    min-height: 40vh;
+}
+.card-pwd-reset {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #0F8173;
+    background-clip: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: 0.25rem;
+  }
+  .card-header-st0001-css {
+    padding: 0.5rem 1rem;
+    margin-bottom: 0;
+    background-color: #02917F;
+    background-clip: border-box;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  }
+
+  .card-reg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #309986;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+  font-family: var(--bs-font-sans-serif);
+  font-size: 1rem;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #fff;
+  -webkit-text-size-adjust: 100%;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+/* FOOTER */
+.no-padding {
+	padding: 0px 0px;
+}
+
+.footer__container {
+	width: 100vw;
+	height: auto;
+	background-color: #3f877a;
+	color: white;
+}
+
+.footer__div {
+	padding: 73px 103px;
+}
+
+.footer__title {
+	font-size: 24px;
+}
+
+.footer__title ul {
+	list-style: none;
+	font-size: 16px;
+}
+
+.footer__title li::before {
+	content: "•";
+	color: white;
+}
+
+.footer__subtitle {
+	margin-top: 24px;
+}
+
+.hovers:hover{
+	color: var(--warning);
+}
+
+.copyright {
+	width: 100%;
+	background-color: black;
+	height: 49px;
+}
+
+.center {
+	display: block;
+	padding-top: 11px;
+	padding-bottom: 11px;
+	font-size: 16px;
+}
+
+.copyright__text {
+	margin: 0;
+	text-align: center;
+}
+
+@media screen and (max-width: 480px) {
+	.footer__div {
+		padding: 30px 40px;
+	}
+
+	.footer__title {
+		text-align: center;
+	}
+
+	.copyright {
+		height: 70px;
+	}
+
+	.payscreen .card {
+		width: 100%;
+
+	}
+
+	.confirmScreen .card {
+		width: 100%;
+	}
+
+	.profileform {
+		width: fit-content;
+	}
+
+	.paytable {
+		display: grid;
+		font-size: small;
+	}
+
+	.btndelete {
+		/* padding: 0; */
+		font-size: small;
+		
+	}
+
+	.upcard {
+		margin-top: 55%;
+		width: 100%;
+	}
+
+
+
+}
+.scrollToTop {
+	position: fixed;
+	z-index: 12;
+	width: 80px;
+	height: 80px;
+	right: 80px;
+	bottom: -16%;
+	mix-blend-mode: hard-light;
+	transition: all 0.3s ease-in-out;
+	cursor: pointer;
+}
+
+@media screen and (max-width: 550px) {
+	.scrollToTop {
+		right: 40px;
+	}
+}
+
+.show-scroll {
+	bottom: 6%;
+}
+
+
+@media screen and (min-width: 320px) and (max-width: 1000px) {
+	.registitles{
+		color: var(--registercomplete);
+		font-size: 14px;
+		margin: auto;
+	}
+	.registitlesa{
+		color: var(--registercomplete);
+	}
+	.completeimgs{
+		height: 15%;
+	}
+
+}
+
+
+

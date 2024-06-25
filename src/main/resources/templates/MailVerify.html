@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" type="text/css" href="css/CM0001_Complete.css">
+    <link rel="icon" type="image/x-icon" href="/images/fav.png">
+      <title>Pyinnyar Subuu</title>  
+
+    
+</head>
+
+<body>
+    <div th:replace="@{fragments/nav}"></div>
+
+    <div class="container-custom mt-5 " >
+    <!-- Hello -->
+    <div id="registercomplete">
+        
+
+       
+        </nav>
+        
+        <div th:if="${status == 'success'}" class="alert alert-success" role="alert">
+            <h3 class="text-center" th:text="${header3}">
+                 
+            </h3>
+        </div>
+        <div th:if="${status == 'alreadyverified'}" class="alert alert-info" role="alert">
+            <h3 class="text-center" th:text="${header3}">
+                 
+            </h3>
+        </div>
+        <div th:if="${status == 'invalid'}" class="alert alert-warning" role="alert">
+            <h3 class="text-center" th:text="${header3}">
+                 
+            </h3>
+        </div>
+        <div class="card mx-auto shadow-sm rounded bg-body" style="max-width: 540px;">
+           
+            <div class="card-body">
+                <h5 class="card-title text-center" th:text="${header5}"></h5>
+                <p class="card-text text-center" th:text="${paragraph}"></p>
+                <a href="/login" class="btn btn-primary" style="float: right">Login</a>
+            </div>
+        </div>
+    </div>
+</div>
+    <div style="height: 100px"></div>
+  
+    
+    <div th:replace="@{fragments/footer}"></div>
+   
+    
+    <script th:src="@{/js/main.js}"></script>
+
+</body>
+
+</html>

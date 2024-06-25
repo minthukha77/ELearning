@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: border-box !important;
+  text-decoration: none !important;
+  scroll-behavior: smooth;
+}
+/* scrollbar
+  /* width */
+::-webkit-scrollbar {
+  width: 7px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: white;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #309986;
+}
+.bg-success,
+.btn-success {
+  background-color: #309986 !important;
+}
+.text-success {
+  color: #309986 !important;
+}
+body {
+  background-color: #f5f5f5;
+}
+.fw-bold {
+  font-weight: 550 !important;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0%;
+  }
+  100% {
+    opacity: 100%;
+  }
+}
+
+.create-exam-content {
+  width: 500px !important;
+  overflow-y: scroll;
+  max-height: 85vh !important;
+}
+.fadeIn {
+  animation: fadeIn 1s;
+}
+.box {
+  min-width: 320px;
+  max-width: 800px;
+}
+
+.true {
+  background-color: rgba(59, 179, 189, 0.8);
+}

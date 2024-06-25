@@ -1,0 +1,103 @@
+#############
+
+//Post Valid Student
+
+curl 'http://localhost:8080/register/student/what' \
+  -H 'Connection: keep-alive' \
+  -H 'Cache-Control: max-age=0' \
+  -H 'sec-ch-ua: "Google Chrome";v="95", "Chromium";v="95", ";Not A Brand";v="99"' \
+  -H 'sec-ch-ua-mobile: ?1' \
+  -H 'sec-ch-ua-platform: "Android"' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'User-Agent: Mozilla/5.0 (Linux; Android 6.0.1; Moto G (4)) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Mobile Safari/537.36' \
+  -H 'Origin: http://localhost:8080' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Referer: http://localhost:8080/register/student' \
+  -H 'Accept-Language: en-GB,en;q=0.9,my-MM;q=0.8,my;q=0.7,en-US;q=0.6' \
+  -H $'Cookie: pga4_session=f565977b-b5af-4adb-adfd-5d242c3286a4\u0021kghqmXqfLU9n2gM6Vh2ALZB7fig=; PGADMIN_LANGUAGE=en' \
+  --data-raw 'email=lycuzmarki%40gmail.com&name=Sai+Horm+Kham&password=asdfqwer1&confirmPassword=asdfqwer1&phone=09259658621&gender=male&dob=1998-11-12&zipCode=11990&city=City&division=Division&address=Address&education=KE&acceptTerm=true&_acceptTerm=on&action=submit' \
+  --compressed
+
+##################
+
+//Post Valid Teacher
+
+curl 'http://localhost:8080/register/teacher/wait' \
+  -H 'Connection: keep-alive' \
+  -H 'Cache-Control: max-age=0' \
+  -H 'sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'Origin: http://localhost:8080' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Referer: http://localhost:8080/register/teacher' \
+  -H 'Accept-Language: en-GB,en;q=0.9,my-MM;q=0.8,my;q=0.7,en-US;q=0.6' \
+  -H 'Cookie: SESSION=YjY1MjY1MzgtZDhkZi00NzZkLTg2MTgtNDY0ZWZjZDYyODY1' \
+  --data-raw 'email=sai%40gmail.com&name=Sai&password=asdf1234&confirmPassword=asdf1234&phone=%2B959259658621&gender=male&dob=2021-12-06&zipCode=0&city=City&division=Division&address=Address&education=Edu&nrc=Nrc&award=Award&selfDescription=Describe&acceptTerm=true&_acceptTerm=on&action=submit' \
+  --compressed  
+
+
+
+
+##################
+
+curl 'http://localhost:8080/teacher/profile_edit' \
+  -H 'Connection: keep-alive' \
+  -H 'Cache-Control: max-age=0' \
+  -H 'sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Linux"' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'Origin: http://localhost:8080' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Referer: http://localhost:8080/teacher/profile_edit' \
+  -H 'Accept-Language: en-GB,en;q=0.9,my-MM;q=0.8,my;q=0.7,en-US;q=0.6' \
+  -H 'Cookie: SESSION=MjU2NDQxNzAtYzI3OS00OWU1LTliODktYThjNmZiOTE0MTRh' \
+  --data-raw 'email=sai%40gmail.com&name=Sai&phone=%2B959259658621&gender=male&dob=2021-12-06&zipCode=0&city=City&division=Division&address=Address&education=Edu&nrc=Nrc&award=Award&selfDescription=Describe&acceptTerm=true&_acceptTerm=on&action=next' \
+  --compressed
+
+
+###########
+
+
+curl 'http://localhost:8080/register/teacher/sai@gmail.com/' \
+  -H 'Connection: keep-alive' \
+  -H 'Cache-Control: max-age=0' \
+  -H 'sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="96", "Google Chrome";v="96"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'Origin: http://localhost:8080' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'DNT: 1' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.110 Safari/537.36' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Referer: http://localhost:8080/register/teacher/sai@gmail.com/' \
+  -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,my;q=0.7' \
+  -H $'Cookie: pga4_session=240d33d8-2640-4057-a63d-68a340c24b56\u0021OfbS36/uXriDeYOqSaBblC+nz3g=; SESSION=ODk3ODllYzctYTkzMi00NGQwLTg4YzItMjk4NTY4ZGVjYWQ1' \
+  --data-raw 'email=sai%40gmail.com&name=Sai&password=asdf1234&confirmPassword=asdf1234&phone=09123456789&gender=male&dob=2021-12-02&zipCode=0&city=IDK&division=Yangon&address=fdsafsdad&education=fdsfasfas&nrc=fdsfsa&selfDescription=fdsafassa&acceptTerm=true&_acceptTerm=on&action=next' \
+  --compressed
+
+  ##############

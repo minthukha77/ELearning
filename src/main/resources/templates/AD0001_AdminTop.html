@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+   
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css"
+    />
+    <link rel="stylesheet" href="/css/CM0004_Student Profile.css" />
+    <link rel="stylesheet" href="/css/AD0001_AdminTop.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css" />
+    
+      <title>Pyinnyar Subuu</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/fav.png">
+
+  </head>
+
+  <body>
+    <div th:replace="@{fragments/adminnav}"></div>
+    <!-- guest user navi bar -->
+
+
+    <!-- <div class="m-3">
+      <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#reEnterEmail">Top</a>
+          </li>
+          
+        </ol>
+      </nav>
+    </div> -->
+
+      <div class="container-custom my-5">
+        <div class="card" id="adminProfile">
+          <div class="card-header">Personal Information</div>
+          <div class="card-body">
+            <div class="container">
+        
+              <div id="profile">
+                <div class="table-responsive mb-3">
+                  <div class="profile-pic-wrapper">
+                    <div class="pic-holder">
+                      <div class="d-flex justify-content-center">
+                        <div class="profile-pic-wrapper">
+                          <div class="pic-holder">
+                            <!-- profile pic shown here -->
+                            <img id="profilePic"
+                            class="pic" th:src="${profile.url}"  th:alt="${profile.name}" />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <table class="table table-borderless">
+                    <!-- <tr>
+                      <td class="text-end">User Name</td>
+                      <td>:</td>
+                      <td th:text="${userInfo.userName}"></td>
+                    </tr> -->
+                      <tr>
+                        <td class="text-end">Email</td>
+                        <td>:</td>
+                        <td th:text="${userAcc.mail}"></td>
+                      </tr>
+                  </table>
+                </div> 
+                <div class="row justify-content-between">
+                  <button class="btn btn-primary col-auto" id="submitButton" onclick="show('update-admin')">
+                    Update
+                  </button>
+                  <a href="/admin/change_password" class="btn btn-primary" style="width:180px; height:40px;">
+                    <span>Change Password</span>
+                    </a>
+
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---End of Card--> 
+        <div class="visually-hidden">
+        <div id="update-admin">
+       
+        <div class="card">
+          <div class="card-header">Personal Information</div>
+          <div class="card-body">
+            <div class="container">
+              <form
+              id="adminProfile"
+              th:action="@{__${#httpServletRequest.requestURI}__edit/}"
+              th:object="${userAcc}"
+              method="post"
+               enctype="multipart/form-data"
+              >
+              <div id="profile">
+                <div class="profile-pic-wrapper">
+                  <div class="pic-holder">
+                    <div class="d-flex justify-content-center">
+                      <div class="profile-pic-wrapper">
+                        <div class="pic-holder">
+                          <!-- uploaded pic shown here -->
+                          <img id="profilePic"
+                          class="pic" th:src="${profile.url}"  th:alt="${profile.name}" />
+
+                            <label for="newProfilePhoto" class="upload-file-block">
+                              <div class="text-center">
+                                <div class="mb-2">
+                                  <i class="fa fa-camera fa-2x"></i>
+                                </div>
+                                <div class="text-uppercase">
+                                  Update <br />
+                                  Profile Photo
+                                </div>
+                              </div>
+                            </label>
+                            <input
+                            class="uploadProfileInput"
+                            type="file"
+                            name="profile_pic"
+                            id="newProfilePhoto"
+                            accept="image/*"
+                            style="display: none;"
+                            th:src="${profile.url}"
+                            th:alt="${profile.name}"
+                          />
+
+                        </div>
+                      </div>
+                      <!-- TODO Come back for profile Upload -->
+                    </div>
+                  </div>
+                </div>
+                  <div class="text-center">
+                    <button class="btn btn-primary mb-3"  type="submit" name="action" value="pic-edit">Save</button>
+                  </div>
+                  <table class="table table-borderless">
+                      <tr>
+                        <td class="text-end">Email</td>
+                        <td>:</td>
+                        <td th:text="${userAcc.mail}"></td>
+                      </tr>
+                  </table>
+                  <!-- <div class="mb-3">
+                    <label class="form-label" for="name">User Name</label>
+                    <input th:field="*{userInfo.userName}" class="form-control" id="name" type="text" placeholder="Name"/>
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label" for="name">Email</label>
+                    <input th:field="*{mail}" class="form-control" type="text" placeholder="Name"/>
+                  </div> -->
+                <div class="row justify-content-between">
+                  <button class="btn btn-primary col-auto" type="submit" name="action" value="edit">
+                    Back
+                  </button>
+                  <a href="/admin/change_password" class="btn btn-primary" style="width:180px; height:40px;">
+                  <span>Change Password</span>
+                  </a>
+                </div>
+              </div>
+            </form>  
+              </div>
+              </div>
+            </div>
+          </div>
+      
+        </div>
+        <!-- End of Card -->
+        <div class="row  d-flex justify-content-between">
+          <div class="mt-3">
+            <div class = "new-class mb-3 ">
+                <a href="https://us04web.zoom.us/meeting/schedule" class="btn col-lg-3 btn-small" style="background-color: #007bff; color:white;">
+                  <img src="https://img.icons8.com/fluency/50/000000/zoom.png" width="35px" height="35px">
+                  <!-- <i class="fa fa-plus-circle fa-2x"></i> -->
+                  Create Zoom Class
+                </a>
+                <a href="https://classroom.google.com/" class="btn col-lg-3 btn-small" style="background-color: #20A464; color:white;" >
+                  <img src="https://img.icons8.com/color/48/000000/google-classroom.png" width="35px" height="35px"/>
+                  Create Video Class
+                </a>
+                <a href="https://docs.google.com/forms/" class="btn col-lg-3 btn-small" style="background-color:#b56dfd; color:white;">
+                  <img src="https://img.icons8.com/color/48/000000/google-forms-new-logo-1.png" width="35px" height="35px"/>
+                  Create New Test
+                </a>
+                
+            </div>     
+          </div>
+        </div>
+      </div> 
+    </div> 
+      <!-- End of Container -->
+    <!-- </form> -->
+    <div th:replace="@{fragments/footer}"></div>
+    <script>
+      function show(param_div_id) {
+          document.getElementById('adminProfile').innerHTML = document.getElementById(param_div_id).innerHTML;
+      }
+    </script>
+     <script
+     src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+     integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+     crossorigin="anonymous"
+   ></script>
+   <script
+     src="https://code.jquery.com/jquery-3.6.0.min.js"
+     integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+     crossorigin="anonymous"
+   ></script>
+   <script src="/js/photoPlaceHolder.js"></script>
+   <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+  </body>
+</html>

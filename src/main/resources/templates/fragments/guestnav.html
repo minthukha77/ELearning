@@ -1,0 +1,99 @@
+
+  <nav class="fixed-top">
+    <div class="d-flex justify-content-between w-100 navs">
+
+      <div class="navbar-logo-holder">
+        <a th:href="@{/}"
+          ><img src="/images/logo.png"
+        /></a>
+      </div>
+
+      <div class="d-flex links-div " id="linkholder">
+
+        <div
+          class="d-flex form__group field align-items-center align-self-center "
+        >
+        
+          <img
+            src="/images/icons/search-icon.svg" 
+            class="icon"
+          />
+       
+          <a class=" ms-3 linkholder"  th:href="@{/guest/explore}"
+          >Search the Course</a>
+
+        </div>
+
+        <div class="link-holder ">
+          <a class="nav-link linkholder"  th:href="@{/check_email/register/student}"
+            >Register as a student</a
+          >
+        </div>
+
+        <div class="link-holder">
+          <a class="nav-link linkholder" th:href="@{/check_email/register/teacher}"
+            >Register as a teacher</a
+          >
+        </div>
+
+        <div class="link-holder">
+          <a class="nav-link linkholder" th:href="@{/login}">Login</a>
+        </div>
+        
+      </div>
+
+      <div class="hamburger-lines">
+        <input
+          type="checkbox"
+          class="checkboxClass"
+          id="#toggle"
+        />
+        <span class="line line1"></span>
+        <span class="line line2"></span>
+        <span class="line line3"></span>
+      </div>
+    </div>
+
+    <div class="menu-items  ">
+      <li><a class="linkholder" th:href="@{/login}">Login</a></li>
+      <li><a class="linkholder" th:href="@{/check_email/register/student}">Register as a student</a></li>
+      <li><a class="linkholder"  th:href="@{/check_email/register/teacher}">Register as a teacher</a></li>
+     
+      <li>
+        <div
+          class="d-flex form__group field align-items-center align-self-center"
+        >
+          <!-- <img
+            src="../images/icons/search-icon.svg"
+            class="icon"
+          />
+          <input
+            type="input"
+            class="form__field"
+            name="search"
+            id="search"
+            placeholder="Search"
+          />
+          
+        </div>
+      </li>
+      <li>
+        <button type="submit" class="date__btn">
+          Search the course
+        </button>
+      </li> -->
+   
+             
+          <img
+            src="/images/icons/search-icon.svg" 
+            class="icon"
+          />
+       
+          <a class=" ms-3 linkholder"  th:href="@{/guest/explore}"
+          >Search the Course</a>
+
+        </div>
+
+    </div>
+
+  </nav>

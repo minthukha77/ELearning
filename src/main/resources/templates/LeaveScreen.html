@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+  <html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4"
+  >
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+      <title>Pyinnyar Subuu</title>
+
+      <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+      <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+      <style>
+        html,
+        body {
+          height: 100%;
+          margin: 0;
+          position: relative;
+          overflow: auto;
+        }
+
+        .wrapper {
+          min-height: 100%;
+          margin-bottom: -50px;
+        }
+
+        body {
+          background-color: #f0f0f0;
+        }
+
+        .breadcrumb li a {
+          /* background-color: #FFFFFF; */
+          color: #5227cc;
+          background-color: transparent;
+          text-decoration: none;
+        }
+
+        .push {
+          height: 50px;
+        }
+
+        .completecard {
+          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+            0 6px 20px 0 rgba(0, 0, 0, 0.19);
+          margin-left: auto;
+          margin-right: auto;
+          width: 50%;
+          border-radius: 10px;
+          width: 800px;
+        }
+
+        .card-header {
+          text-align: center;
+          background-color: whitesmoke;
+          height: 50px;
+          /* border-radius: 10px; */
+        }
+
+        .btn-primary,
+        .btn-primary:hover,
+        .btn-primary:active,
+        .btn-primary:visited {
+          background-color: #7749f8 !important;
+        }
+        /* .formborder{
+      border:1px solid #DAD9D9;
+      padding: 10px;
+      width: 250px;
+    } */
+        /*footer*/
+
+        .footer-link {
+          margin-top: 40px;
+          padding: 40px 0 30px 0;
+          background-color: #dad9d9;
+        }
+
+        .footer-link ul {
+          padding: 0;
+        }
+
+        .footer-link ul li {
+          list-style-type: none;
+          float: left;
+        }
+
+        .footer-link ul li a {
+          font-weight: 600;
+          text-decoration: none;
+          font-size: 14px;
+          color: rgb(0, 0, 0);
+          display: block;
+          padding: 5px 15px;
+        }
+
+        .footer-link ul li a:hover {
+          color: #f549ec;
+        }
+
+        .footer-link ul li.active a {
+          color: #f549ec;
+        }
+
+        .footer-social {
+          background-color: #dad9d9;
+          color: rgb(0, 0, 0);
+        }
+
+        .copy-c {
+          padding: 15px 0;
+        }
+      </style>
+    </head>
+
+    <body>
+      <!-- Hello -->
+      <div class="wrapper">
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#">MappingSite</a>
+            <!--  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button> -->
+            <div class="d-flex" id="navbarSupportedContent">
+              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="#"
+                    >Home</a
+                  >
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">My Course</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Explore</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#">Profile</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="#" style="color: red">Log Out</a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
+        <nav aria-label="breadcrumb" class="bg-light" style="padding: 0 10px">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Top</a></li>
+            <li class="breadcrumb-item"><a href="#">Course List</a></li>
+            <li class="breadcrumb-item"><a href="#">Course Detail</a></li>
+            <li class="breadcrumb-item active" aria-current="page">
+              Take A Leave
+            </li>
+          </ol>
+        </nav>
+
+        <div class="card mx-auto completecard">
+          <h3 class="card-header" style="border-radius: 10px 10px 0 0">
+            Take A Leave
+          </h3>
+          <div class="card-body">
+            <form
+              id="inquiry-form"
+              method="post"
+              action="/leave-confirm"
+              th:object="${leave}"
+            >
+              <div class="row form-sec-header">
+                <div class="col-lg-12 text-center">
+                  <p></p>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-lg-1"></div>
+                <label for="coursename" class="col-lg-2 col-form-label"
+                  >Course Name</label
+                >
+
+                <div class="col-lg-6">
+                  <label
+                    for="coursename"
+                    class="col-lg-4 col-form-label"
+                    th:text="${course}"
+                  ></label>
+                </div>
+                <!--div class="col-lg-3">
+                  <input type="email" class="form-control" id="inputEmail" placeholder="姓" required>
+              </div-->
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-lg-1"></div>
+                <label for="teachername" class="col-lg-2 col-form-label"
+                  >Teacher Name</label
+                >
+
+                <div class="col-lg-6">
+                  <label
+                    for="teachername"
+                    class="col-lg-4 col-form-label"
+                    th:text="${name}"
+                  ></label>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-lg-1"></div>
+                <label for="about" class="col-lg-2 col-form-label"
+                  >From Date</label
+                >
+
+                <div class="col-lg-3">
+                  <!--<input id="datepicker9" class="form-control" placeholder="yyyy-mm-dd" th:field="*{leaveStartDate}" required>-->
+                  <input
+                    type="date"
+                    id="date9"
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    th:field="*{leaveStartDate}"
+                    required
+                  />
+                </div>
+                <label for="date" class="col-lg-2 col-form-label"
+                  >To Date</label
+                >
+
+                <div class="col-lg-3">
+                  <!--<input id="datepicker10" class="form-control" placeholder="yyyy-mm-dd" th:field="*{leaveEndDate}" required>-->
+                  <input
+                    type="date"
+                    id="date10"
+                    class="form-control"
+                    placeholder="yyyy-mm-dd"
+                    th:field="*{leaveEndDate}"
+                    required
+                  />
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-lg-1"></div>
+                <label for="time" class="col-lg-2 col-form-label">Time</label>
+
+                <div class="col-lg-8 row">
+                  <div class="col-lg-4">
+                    <label for="time" class="col-form-label">From</label>
+                    <input
+                      type="time"
+                      id="time1"
+                      class="form-control"
+                      th:field="*{leaveStartTime}"
+                    />
+                  </div>
+                  <div class="col-lg-1"></div>
+                  <div class="col-lg-4">
+                    <label for="time" class="col-form-label">To</label>
+                    <input
+                      type="time"
+                      id="time2"
+                      class="form-control"
+                      th:field="*{leaveEndTime}"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-lg-1"></div>
+                <label for="reason" class="col-lg-2 col-form-label"
+                  >Reason</label
+                >
+
+                <div class="col-lg-6">
+                  <textarea
+                    class="form-control"
+                    id="inputEmail"
+                    placeholder="reason"
+                    th:field="*{reason}"
+                    required
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="form-group row mb-3">
+                <div class="col-lg-3"></div>
+
+                <div class="row col-lg-8">
+                  <div class="col-lg-4">
+                    <button
+                      id="btnReset"
+                      type="reset"
+                      class="btn btn-spacing btn-secondary center-block"
+                      style="width: 125px"
+                      OnClick="btnClear_Click"
+                    >
+                      Reset
+                    </button>
+                  </div>
+                  <div class="col-lg-4">
+                    <button
+                      id="btnReg"
+                      type="submit"
+                      class="btn btn-spacing btn-primary center-block"
+                      style="width: 150px"
+                      OnClick="btnRegister_Click"
+                    >
+                      Submit
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <!--div class="form-group row text-center">
+              <button type="submit" class="btn">お問い合わせする</button>
+          </div-->
+            </form>
+          </div>
+        </div>
+
+        <div class="push"></div>
+      </div>
+      <!-- Hello -->
+
+      <!-- footer -->
+      <section class="footer-link">
+        <div class="container text-center text-md-start mt-5">
+          <!-- Grid row -->
+          <div class="row mt-3">
+            <!-- Grid column -->
+            <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+              <!-- Content -->
+              <h6 class="text-uppercase fw-bold mb-4 footerhead">Address</h6>
+              <p class="footertext">
+                Building “16/6” Bawzin Street, Thuwanna Lann Sone Bus Stop,
+                Thingangyun Township .
+              </p>
+            </div>
+            <!-- Grid column -->
+
+            <!-- Grid column -->
+            <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+              <!-- Links -->
+              <h6 class="text-uppercase fw-bold mb-4 footerhead">Contact Us</h6>
+              <p class="footertext">
+                <i class="fas fa-envelope me-3"></i>Email :
+                someone@bliss-stock.com
+              </p>
+              <p class="footertext">
+                <i class="fas fa-phone me-3"></i>Phone: +959 259 123 123
+              </p>
+            </div>
+            <!-- Grid column -->
+          </div>
+          <!-- Grid row -->
+        </div>
+      </section>
+
+      <section class="footer-social">
+        <div class="container">
+          <div class="row index-social-link text-center">
+            <p class="copy-c">
+              &copy; Copyright <strong>Bliss Stock</strong>. All Rights Reserved
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+      <!-- Footer -->
+
+      <script type="text/javascript">
+        $("#datepicker9").datepicker({
+          uiLibrary: "bootstrap",
+          format: "yyyy-mm-dd",
+        });
+        $("#datepicker10").datepicker({
+          uiLibrary: "bootstrap",
+          format: "yyyy-mm-dd",
+        });
+        $(function () {
+          $("#datepicker9").datepicker({
+            dateFormat: "yy-mm-dd",
+            numberOfMonths: 2,
+            onSelect: function (selected) {
+              var dt = new Date(selected);
+              dt.setDate(dt.getDate() + 1);
+              $("#datepicker10").datepicker("option", "minDate", dt);
+            },
+          });
+          $("#datepicker10").datepicker({
+            dateFormat: "yy-mm-dd",
+            numberOfMonths: 2,
+            onSelect: function (selected) {
+              var dt = new Date(selected);
+              dt.setDate(dt.getDate() - 1);
+              $("#datepicker9").datepicker("option", "maxDate", dt);
+            },
+          });
+        });
+      </script>
+    </body>
+  </html>
+</html>

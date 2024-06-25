@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, user-scalable=no">
+    
+
+    <link rel="stylesheet" type="text/css" href="/css/dataTables.bootstrap5.css">
+    <link rel="stylesheet" type="text/css" href="/css/shCore.css">
+    <link rel="stylesheet" type="text/css" href="/css/demo.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    
+    <link rel="stylesheet" type="text/css" href="css/CM0001_Complete.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js}"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="/css/AD0002_EnrollStudent.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+        th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js}"
+        integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+        crossorigin="anonymous"></script>
+
+
+      <title>Pyinnyar Subuu</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/fav.png">
+
+
+
+
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/dataTables.bootstrap5.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/shCore.js"></script>
+    <script type="text/javascript" language="javascript" src="/js/demo.js"></script>
+    <script type="text/javascript" language="javascript" class="init">
+
+        $(document).ready(function () {
+            var t = $('#example').DataTable({
+                "columnDefs": [{
+                    "searchable": false,
+                    "orderable": false,
+                }],
+                "order": [
+                    [1, 'asc']
+                ],
+                "dom": '<"top"f>rt<"bottom"lp><"clear">', // Positions table elements
+
+                dom: 'lrtip'
+
+            });
+
+            $("#mySearchButton").on("keyup click", function () {
+                t.search($("#mySearchText").val()).draw();
+            });
+
+
+            // Yay it's ok
+            $("#mySearchText").on("keyup search input paste cut", function () {
+                t.search(this.value).draw();
+            });
+            //Yay it's ok
+
+            t.on('order.dt search.dt', function () {
+                t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                    cell.innerHTML = i + 1;
+                });
+            }).draw();
+        });
+
+
+
+    </script>
+
+</head>
+<div th:replace="@{fragments/nav}"></div>
+
+<body>
+
+    <div style="position: relative;">
+
+
+        <div id="main">
+
+
+
+
+            <nav aria-label="breadcrumb" class="bg-light" style="padding: 0 10px;">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Top</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Student List</li>
+                </ol>
+            </nav>
+
+            <div class="col-sm-9">
+
+            </div>
+            <!-- <div style="padding-left: 100px;float: right;">
+                <button type="button" class="btn btn-primary newbtn" id="addadmin" onclick="location.href='/test'">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-person-plus-fill" viewBox="0 0 16 16">
+                        <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                        <path fill-rule="evenodd"
+                            d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
+                    </svg>
+                    Add Student
+                </button>
+            </div> -->
+            <div class="container mx-auto" style="max-width:1000px ;">
+
+            </div>
+            <div class="container mx-auto" style="max-width: 1000px;">
+                <div class="col-lg-7">
+                    <div th:if="${status == 'success'}" class="alert alert-success" role="alert">
+                        <h5 class="text-center" th:text="${Msg}">
+
+                        </h5>
+                    </div>
+                    <div th:if="${status == 'error'}" class="alert alert-warning" role="alert">
+                        <h5 class="text-center" th:text="${errorMsg}">
+
+                        </h5>
+                    </div>
+                    <div class="CourseInfo">
+                        <div th:if="${isCourseFound}">
+
+                            <table class="CourseInfoTable">
+
+                                <tr>
+                                    <th>Course Name </th>
+                                    <th>:</th>
+                                    <th th:text="${courseName}"></th>
+                                    <th>Teacher Name: </th>
+                                    <th>:</th>
+                                    <th th:text="${teachername}"></th>
+                                </tr>
+
+                                <tr>
+                                    <th>Course level: </th>
+                                    <th>:</th>
+                                    <th th:text="${level}"></th>
+
+                                    <th>Course Type </th>
+                                    <th>:</th>
+                                    <th th:text="${CourseType}"></th>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+            <div class="container mx-auto" style="max-width: 1000px;">
+                <div class="col-lg-7" style="display: inline">
+
+
+
+                    <input style="margin-bottom: 20px;" type="text" class="form-control" id="mySearchText"
+                        placeholder="Search in Student List" aria-label="Search in Student List"
+                        aria-describedby="mySearchButton">
+                    </input>
+                    <!-- <button class="btn btn-outline-secondary fw-bold" id="mySearchButton" type="button">Search</button> -->
+                </div>
+            </div>
+
+
+            <div class="card mx-auto p-3" style="max-width: 1000px;">
+                <div class="card-body">
+                    <section>
+                        <div class="demo-html">
+                            <div th:if="${isCourseFound}">
+                                <table id="example" class="table table-striped" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone Number</th>
+                                            <th>Enroll Student</th>
+
+
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="student:${students}">
+                                            <td th:text="${studentStat.index+1}"></td>
+
+                                            <td th:text="${student.name}"></td>
+
+
+
+                                            <td th:text="${student.email}"></td>
+                                            <td th:text="${student.phone}"></td>
+                                            <td>
+
+
+                                                <button class="EnrollButton"
+                                                    th:attr="onclick=|Enrollstudent('${student.uid}')|">Enroll</button>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Phone Number</th>
+                                            <th>Enroll Student</th>
+
+                                        </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    </div>
+
+
+    <div th:replace="@{fragments/footer}"></div>
+    <script>
+
+        function Enrollstudent(uid) {
+            console.log(window.location.href + "/enroll/" + uid);
+            if (confirm("Do you want to enroll this student?")) {
+                console.log(window.location.hostname + "/enroll/" + uid, "_self");
+                window.open(window.location.href + "/enroll/" + uid, "_self")
+
+            } else {
+
+            }
+        }
+
+
+
+
+
+
+        var $scrollingDiv = $("#mySidebar");
+
+        $(window).scroll(function () {
+            var y = $(this).scrollTop(),
+                maxY = $('#footer').offset().top,
+                scrollHeight = $scrollingDiv.height();
+
+            if (y < maxY - scrollHeight) {
+                $scrollingDiv
+                    .stop()
+                    .animate({ "marginTop": ($(window).scrollTop()) + "px" }, "slow");
+            }
+        });
+
+    </script>
+
+</body>
+
+</html>

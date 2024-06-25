@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    overflow-x: hidden !important;
+    -webkit-touch-callout: none;
+   -webkit-user-select: none;
+   -khtml-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+  box-sizing: border-box;
+  text-decoration: none !important;
+  scroll-behavior: smooth;
+}
+.bg-success,
+.btn-success {
+  background-color: #309986 !important;
+}
+.text-success {
+  color: #309986 !important;
+}
+h1,h2,h3,h4,h5,h6{
+    overflow: hidden !important;
+}
+
+/* scrollbar
+/* width */
+/* ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+   */
+/* Track */
+/* ::-webkit-scrollbar-track {
+background: rgba(48, 153, 134, 0.2);
+} */
+
+/* Handle */
+/* ::-webkit-scrollbar-thumb {
+background: #309986;
+} */
+  
+
+.chart-section{
+    min-width: 1054px;
+    max-width: 1300px;
+    margin: auto;
+    padding: 0 20px 10px;
+    overflow-x: scroll !important;
+}
+.chart{
+    height: 150px;
+    border-bottom: 3px solid #309986;
+    margin: 20px auto 0px;
+    display: flex;
+}
+.chart-data{
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 10px;
+    width: 27px !important;
+    height: 100%;
+}
+.false{
+    width: 100%;
+    height: 20%;
+    background-color: #FFFFFF;
+}
+.true{
+    width: 100%;
+    height: 80%;
+    background-color: #309986;
+}
+
+.label-box{
+    display: flex;
+    margin: 0 auto;
+}
+.label{ 
+    margin: 0 10px;
+    min-width: 20px !important;
+    font-size: 10px;
+    font-weight: bold;
+}
+
+.card{
+    border: none;
+    box-shadow: rgba(48, 153, 134, 0.2) 0px 8px 20px;
+    transition: 0.3s ease-in-out;
+}
+.card[data-custom-type="Pass"]:hover{
+    background-color: rgba(48, 153, 134, 0.2)
+}
+.card[data-custom-type="Fail"]:hover{
+    background-color: rgba(255, 0, 0, 0.2)
+}
+
+.card .result-data{
+    font-size: 17px;
+}

@@ -1,0 +1,57 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.6'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.bliss-stock'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	runtimeOnly 'org.postgresql:postgresql'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation 'org.springframework.security:spring-security-test'
+	implementation 'com.github.javafaker:javafaker:1.0.2'
+	testImplementation 'org.assertj:assertj-core:3.21.0'
+	implementation 'org.springframework.session:spring-session-jdbc'
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	implementation 'org.json:json:20171018'
+
+	// [https://mvnrepository.com/artifact/ch.qos.logback/logback-core](https://mvnrepository.com/artifact/ch.qos.logback/logback-core)
+	implementation 'ch.qos.logback:logback-core:1.2.7'
+
+	// [https://mvnrepository.com/artifact/ch.qos.logback/logback-classic](https://mvnrepository.com/artifact/ch.qos.logback/logback-classic)
+	testImplementation 'ch.qos.logback:logback-classic:1.2.7'
+
+	// [https://mvnrepository.com/artifact/org.slf4j/slf4j-api](https://mvnrepository.com/artifact/org.slf4j/slf4j-api)
+	implementation 'org.slf4j:slf4j-api:1.7.32'
+
+
+
+}
+
+
+test {
+	useJUnitPlatform()
+}

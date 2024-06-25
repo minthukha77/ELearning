@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4"
+>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, minimum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/dataTables.bootstrap5.css"
+      th:href="@{/css/dataTables.bootstrap5.css}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/shCore.css"
+      th:href="@{/css/shCore.css}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/demo.css"
+      th:href="@{/css/demo.css}"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="css/AD0003_PaymentList.css"
+      th:href="@{/css/AD0003_PaymentList.css}"
+    />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+
+    <title>Pyinnyar Subuu</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+    <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+
+    <script
+      type="text/javascript"
+      language="javascript"
+      src="https://code.jquery.com/jquery-3.5.1.js"
+      th:src="@{https://code.jquery.com/jquery-3.5.1.js}"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js}"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      type="text/javascript"
+      language="javascript"
+      src="js/jquery.dataTables.js"
+      th:src="@{/js/jquery.dataTables.js}"
+    ></script>
+    <script
+      type="text/javascript"
+      language="javascript"
+      src="js/dataTables.bootstrap5.js"
+      th:src="@{/js/dataTables.bootstrap5.js}"
+    ></script>
+    <script
+      type="text/javascript"
+      language="javascript"
+      src="js/shCore.js"
+      th:src="@{/js/shCore.js}"
+    ></script>
+    <script
+      type="text/javascript"
+      language="javascript"
+      src="js/demo.js"
+      th:src="@{/js/demo.js}"
+    ></script>
+    <script
+      type="text/javascript"
+      language="javascript"
+      class="init"
+      th:inline="javascript"
+    >
+      /*<![CDATA[*/
+      $(document).ready(function () {
+        var t = $("#example").DataTable({
+          columnDefs: [
+            {
+              searchable: false,
+              orderable: false,
+            },
+          ],
+          order: [1, "asc"],
+          dom: '<"top"f>rt<"bottom"lp><"clear">', // Positions table elements
+          dom: "lrtip",
+          // "language": {
+          //     "search": "_INPUT_",            // Removes the 'Search' field label
+          //     "searchPlaceholder": "Search"   // Placeholder for the search box
+          // }
+        });
+
+        // Search Box
+        $("#mySearchButton").on("keyup click", function () {
+          t.search($("#mySearchText").val()).draw();
+        });
+
+        $("#user_role").on("change", function () {
+          t.search(this.value).draw();
+        });
+
+        $("#mySearchButton").click(function () {
+          t.column(1).search($("#column_search:selected").val());
+          // other columns filters similarly
+          t.draw();
+        });
+
+        $("#column_search").on("change", function () {
+          value = $("#column_search:selected").val();
+          console.log($("#column_search:selected").val());
+          console.log(value);
+          if (value == 1) {
+            $("#mySearchButton").on("keyup click", function () {
+              t.column(1).search($("#mySearchText").val()).draw();
+              t.column(2).searchable = false;
+              // t.column(2).searchable(false);
+            });
+            // t.column(1).search(this.value).draw();
+          } else if (value == 2) {
+            $("#mySearchButton").on("keyup click", function () {
+              t.column(2).search($("#mySearchText").val()).draw();
+              t.column(1).searchable = false;
+              // t.column(1).searchable(false);
+            });
+            // t.column(2).search(this.value).draw();
+          }
+        });
+
+        // Yay it's ok
+        $("#mySearchText").on("keyup search input paste cut", function () {
+          t.search(this.value).draw();
+        });
+        //Yay it's ok
+
+        t.on("order.dt search.dt", function () {
+          t.column(0, { search: "applied", order: "applied" })
+            .nodes()
+            .each(function (cell, i) {
+              cell.innerHTML = i + 1;
+            });
+        }).draw();
+      });
+    </script>
+  </head>
+
+  <body>
+    <div style="position: relative">
+      <div th:replace="@{fragments/nav}"></div>
+      <nav aria-label="breadcrumb" style="--bs-breadcrumb-divider: '>'">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a th:href="@{/admin/top/}">Top</a></li>
+          <li class="breadcrumb-item active" aria-current="page">
+            Absent List
+          </li>
+        </ol>
+      </nav>
+
+      <div class="container mx-auto">
+        <div>
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              id="mySearchText"
+              placeholder="Search in Absent List"
+              aria-label="Search in Absent List"
+              aria-describedby="mySearchButton"
+            />
+            <button
+              class="btn btn-outline-secondary fw-bold"
+              id="mySearchButton"
+              type="button"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="currentColor"
+                class="bi bi-search"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"
+                ></path>
+              </svg>
+              Search
+            </button>
+          </div>
+        </div>
+        <div class="input-group-prepend mb-3" style="width: 125px">
+          <label class="text-muted">User Role</label>
+          <select
+            class="form-select"
+            aria-label=".form-select-sm example"
+            id="user_role"
+            style="width: 100%"
+          >
+            <option value="">ALL</option>
+            <option value="student">STUDENT</option>
+            <option value="teacher">TEACHER</option>
+          </select>
+        </div>
+
+        <div class="container">
+          <div class="card">
+            <div class="card-body table-responsive">
+              <table id="example" class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Requested Course</th>
+                    <th>Date</th>
+                    <th>Role</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr th:each="dr,index:${absentList}">
+                    <td></td>
+                    <td th:text="${dr.join.userInfo.userName}"></td>
+                    <td th:text="${dr.join.userInfo.userAccount.mail}"></td>
+                    <td th:text="${dr.join.courseInfo.courseName}"></td>
+                    <td
+                      th:text="${#strings.substringBefore(dr.leaveDate, ' ')}"
+                    ></td>
+                    <td
+                      th:text="${#strings.substringAfter(dr.join.userInfo.userAccount.role, '_')}"
+                    ></td>
+                  </tr>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <th>No</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Requested Course</th>
+                    <th>Date</th>
+                    <th>Role</th>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div th:replace="@{fragments/footer}"></div>
+
+    <script>
+      function openNav() {
+        document.getElementById("mySidebar").style.width = "250px";
+        document.getElementById("main").style.marginLeft = "250px";
+        document.getElementById("sidebutton").style.display = "none";
+        document.getElementById("mySidebar").style.position = "fixed";
+      }
+
+      function closeNav() {
+        document.getElementById("mySidebar").style.width = "0";
+        document.getElementById("main").style.marginLeft = "0";
+        document.getElementById("sidebutton").style.display = "block";
+        document.getElementById("sidebutton").style.width = "5px";
+      }
+
+      var $scrollingDiv = $("#mySidebar");
+
+      $(window).scroll(function () {
+        var y = $(this).scrollTop(),
+          maxY = $("#footer").offset().top,
+          scrollHeight = $scrollingDiv.height();
+
+        if (y < maxY - scrollHeight) {
+          $scrollingDiv
+            .stop()
+            .animate({ marginTop: $(window).scrollTop() + "px" }, "slow");
+        }
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Verify Mail</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+    <style>
+      @media only screen and (max-width: 600px) {
+        #inner {
+          width: 80%;
+          margin: 0 auto;
+          background-color: aquamarine;
+        }
+      }
+      @media only screen and (min-width: 600px) {
+        #inner {
+          width: 40%;
+          margin: 0 auto;
+          background-color: aquamarine;
+        }
+      }
+      .right {
+        float: right;
+      }
+      p {
+        padding: 20px 20px 10px 20px;
+      }
+      span {
+        padding-left: 20px;
+      }
+      article {
+        padding: 30px 30px 0px 50px;
+        margin-bottom: 30px;
+      }
+      .content {
+        padding: 20px 20px 10px 30px;
+      }
+      button {
+        display: block;
+        margin: 0 auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="inner">
+      <p>PyinnyarSubuu</p>
+      <span th:text="${#dates.format(Date)}">Date</span>
+      <article class="article">
+        Hi there!<br /><br /><br />
+        <span class="content">
+          You have successfully created account with your email. But wait, We
+          are not done yet...<br /><br />
+          To finish verifying your email address and securing your account,
+          click the button below.
+        </span>
+      </article>
+      <button type="button">
+        <a th:href="@{$confirmationUrl}">Email Address</a>
+      </button>
+      <article class="content" style="padding-left: 50px">
+        We wish you learn or earn something valuable using our platform!
+      </article>
+      <footer style="padding-left: 80px; padding-bottom: 20px">
+        Best of luck!<br />
+        Bliss Stock JP
+      </footer>
+    </div>
+  </body>
+</html>

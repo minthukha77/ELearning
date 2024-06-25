@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+  <!-- <html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4"> -->
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Course Details</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+    <!-- CSS -->
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <link
+      href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <link
+      rel="stylesheet"
+      type="text/css"
+      th:href="@{/css/course-details.css}"
+    />
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" /> -->
+    <link rel="stylesheet" type="text/css" href="/css/CM0009_ReviewList.css" />
+    <!-- <link rel="stylesheet" type="text/css" href="/css/ReviewListTab.css"> -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+      th:src="@{https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js}"
+      integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+
+  <body>
+    <div th:replace="@{fragments/nav}"></div>
+
+    <div class="container card-position">
+      <div class="row">
+        <div class="col-lg-4 left">
+          <div th:if="${isLiveClass}">
+            <p
+              class="p16size"
+              th:utext="${#strings.substringBefore(courseInfo.startDate, ' ')} + ' ~ ' + ${#strings.substringBefore(courseInfo.endDate, ' ')}"
+            ></p>
+            <div th:each="time : ${courseTimeList}">
+              <p
+                class="p16normal"
+                th:text="${time.courseDays} + ' : ' + ${time.courseStartTime} + '~' + ${time.courseEndTime}"
+              ></p>
+            </div>
+            <p
+              class="fw-normal customp1 customcolor"
+              th:text="'Only ' + ${availableStuList} + ' more students!'"
+            ></p>
+          </div>
+          <div>
+            <p
+              class="fw-normal customp1 customcolor"
+              th:text="${currentAttending} + ' students have taken this course!!'"
+            ></p>
+          </div>
+        </div>
+        <div class="col-lg-8 right">
+          <h4 th:text="${courseInfo.courseName}"></h4>
+
+          <p
+            class="prerequisites"
+            th:text="${courseInfo.UserInfo.userName}"
+          ></p>
+
+          <p
+            class="p12size"
+            th:text="${courseInfo.category} + ' > ' + ${courseInfo.level}"
+          ></p>
+          <p class="p16normal" th:text="${courseInfo.aboutCourse}"></p>
+          <p class="prerequisites">Prerequisites</p>
+          <p class="p16normal" th:text="${courseInfo.prerequisite}"></p>
+          <p class="prerequisites" th:text="${courseInfo.fees} ? 'MMK ' + ${courseInfo.fees} : 'FREE'"></p>
+
+          <!-- For guest user -->
+          <div th:if="${guest == 'GUEST'}">
+            <span th:if="${isCourseDateValid}!=null">
+              <span th:if="${!isCourseDateValid}">
+                <div class="text-danger">
+                  This course is no longer valid to enroll
+                </div>
+              </span>
+              <span th:if="${isCourseDateValid}">
+                <form
+                  th:action="@{/guest/save/course-id/{courseId}(courseId = ${courseInfo.courseId})}"
+                  method="post"
+                >
+                  <button
+                    th:if="${availableStuList > 0}"
+                    class="btn btn-primary"
+                    type="submit">Enroll</button>
+                </form>
+              </span>
+            </span>
+            <span th:if="${isCourseDateValid}==null">
+              <form
+                th:action="@{/guest/save/course-id/{courseId}(courseId = ${courseInfo.courseId})}"
+                method="post">
+                <button
+                  th:if="${availableStuList > 0}"
+                  class="btn btn-primary"
+                  type="submit">Enroll</button>
+              </form>
+            </span>
+
+            <!-- <a
+              th:href="@{'/student/review-list/course_id/' + ${courseInfo.courseId}}"
+              ><button class="btn btn-primary">Reviews</button></a
+            > -->
+          </div>
+
+          <!-- For Student -->
+          <div th:if="${student == 'STUDENT'}">
+            <span th:if="${isCourseDateValid}!=null">
+              <span th:if="${isCourseDateValid}">
+                <a
+                  th:if="${studentNotRegistered}"
+                  th:href="@{/student/enroll/{courseId}/{userId}(courseId = ${courseInfo.courseId}, userId = ${userId})}"
+                  ><button
+                    th:if="${availableStuList > 0}"
+                    class="btn btn-primary"
+                    th:classappend="${studentRegistered == true}? 'disabled'"
+                  >
+                    Enroll
+                  </button></a
+                >
+              </span>
+
+              <span th:if="${!isCourseDateValid}">
+                <div class="text-danger">
+                  This course is no longer valid to enroll
+                </div>
+              </span>
+            </span>
+
+            <a
+              th:if="${isCourseDateValid}==null"
+              th:href="@{/student/enroll/{courseId}/{userId}(courseId = ${courseInfo.courseId}, userId = ${userId})}"
+            >
+              <button
+                th:if="${studentNotRegistered}"
+                class="btn btn-primary"
+                type="submit"
+              >
+                <span th:if="${availableStuList > 0}">Enroll</span>
+              </button>
+            </a>
+
+            <a
+              th:if="${!paymentComplete && studentRegistered}"
+              th:href="@{'/student/payment-upload/course_id/' + ${courseInfo.courseId}}"
+              ><button
+                class="btn btn-primary"
+              >Payment</button></a>
+
+            <!-- Disable Take A Leave -->
+            <!-- <a
+              th:if="${studentRegistered}"
+              th:href="@{'/student/leave/'+ ${courseInfo.courseId} +'?course_name='+${courseInfo.courseName}+'&teacher_name='+ ${courseInfo.UserInfo.userName}}"
+              ><button class="btn btn-primary">Take a Leave</button></a
+            > -->
+            <!-- <a
+              th:href="@{'/student/review-list/course_id/' + ${courseInfo.courseId}}"
+              ><button class="btn btn-primary">Reviews</button></a
+            > -->
+            <a
+              th:if="${studentRegistered}"
+              th:href="@{'/student/student-review/'+${courseInfo.courseId}}"
+              ><button class="btn btn-primary">
+                <i class="fas fa-plus"></i> Write Review
+              </button></a
+            >
+
+            <!-- class link -->
+            <div th:if="${studentRegistered}" class="mt-3">
+              <a th:href="@{${classLink}}" target="_blank"
+                >Link to the course</a
+              >
+            </div>
+          </div>
+
+          <!-- Teacher -->
+          <div th:if="${teacher == 'TEACHER'}">
+            <a
+              th:if="${teacherRegistered}"
+              th:href="@{'/teacher/edit/'+ ${courseInfo.courseId}}"
+              ><button class="btn btn-primary">Edit Course</button></a
+            >
+             <!-- Disable Take A Leave -->
+            <!-- <a
+              th:if="${teacherRegistered}"
+              th:href="@{'/teacher/leave/'+ ${courseInfo.courseId} +'?course_name='+${courseInfo.courseName}+'&teacher_name='+ ${courseInfo.UserInfo.userName}}"
+              ><button class="btn btn-primary">Take a Leave</button></a
+            > -->
+            <a
+              th:if="${teacherRegistered}"
+              th:href="@{'/teacher/student-list/'+ ${courseInfo.courseId}}"
+            >
+              <button class="btn btn-primary">Student List</button></a
+            >
+            <!-- <a
+              th:href="@{'/teacher/review-list/course_id/' + ${courseInfo.courseId}}"
+              ><button class="btn btn-primary">Review List</button></a
+            > -->
+
+            <a
+              th:if="${teacherRegistered}"
+              th:href="@{'/teacher/course_syllabus/course_id/' + ${courseInfo.courseId}}"
+              ><button class="btn btn-primary">Manage Syllabus</button></a
+            >
+
+            <div th:if="${teacherRegistered}">
+              <p class="prerequisites my-3">Class Link</p>
+
+              <form
+                th:action="@{/teacher/course-details/insert-class-link}"
+                method="POST"
+              >
+                <input
+                  type="hidden"
+                  name="courseId"
+                  th:value="${courseInfo.courseId}"
+                />
+                <input type="hidden" name="roleLink" value="teacher" />
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="class-link"
+                    id="class-link"
+                    th:value="${classlink}"
+                    class="form-control"
+                    placeholder="Insert class link"
+                  />
+                  <button class="btn btn-primary">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+
+          <!-- Admin -->
+          <div th:if="${admin == 'ADMIN'}">
+
+            <!-- live class  -->
+            <span th:if="${isCourseDateValid}!=null">
+              <span th:if="${!isCourseDateValid}">
+                <div class="text-danger">
+                  This course has already passed the starting date
+                </div>
+              </span>
+
+              <span th:if="${isCourseDateValid}">
+                <a
+                  th:if="${!courseNotApprove}"
+                  th:href="@{'/admin/enrollStudent/course/' + ${courseInfo.courseId} }"
+                  ><button
+                    th:if="${availableStuList > 0}"
+                    class="btn btn-primary"
+                  >
+                    Enroll students
+                  </button></a
+                >
+              </span>
+            </span>
+
+            <!-- video class -->
+            <span th:if="${isCourseDateValid}==null">
+              <a
+                th:if="${!courseNotApprove}"
+                th:href="@{'/admin/enrollStudent/course/' + ${courseInfo.courseId} }"
+                ><button
+                  th:if="${availableStuList > 0}"
+                  class="btn btn-primary"
+                >
+                  Enroll students
+                </button></a
+              >
+            </span>
+
+            <a
+              th:href="@{'/admin/edit/course/' + ${courseInfo.courseId} + '/' + ${courseInfo.userInfo.uid}}"
+              ><button class="btn btn-primary">Edit Course</button></a
+            >
+            <!-- verify -->
+            <button
+              th:if="${courseNotApprove}"
+              type="button"
+              class="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#verifyCourseConfirmModal"
+              th:attr="data-bs-id=${courseInfo.courseId}"
+              th:attrappend="data-bs-title=${courseInfo.courseName}"
+            >
+              Verify Course
+            </button>
+
+            <!-- Verify Confirm Modal -->
+            <div
+              class="modal fade"
+              id="verifyCourseConfirmModal"
+              tabindex="-1"
+              aria-labelledby="courseFormModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="courseFormModalLabel">
+                      Verify Course
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>Are you sure to verify this course?</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      id="verifyCourse"
+                      class="btn btn-danger"
+                    >
+                      VERIFY
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <a
+              th:href="@{'/admin/course-details/delete/' + ${courseInfo.courseId}}"
+              ><button class="btn btn-primary" id="deleteCourse">Delete Course</button></a> -->
+            <button
+              type="button"
+              class="btn btn-danger"
+              data-bs-toggle="modal"
+              data-bs-target="#deleteCourseConfirmModal"
+              th:attr="data-bs-id=${courseInfo.courseId}"
+              th:attrappend="data-bs-title=${courseInfo.courseName}"
+            >
+              Delete Course
+            </button>
+
+            <!-- Delete Confirm Modal -->
+            <div
+              class="modal fade"
+              id="deleteCourseConfirmModal"
+              tabindex="-1"
+              aria-labelledby="courseFormModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="courseFormModalLabel">
+                      Delete Course
+                    </h5>
+                    <button
+                      type="button"
+                      class="btn btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div class="modal-body">
+                    <p>
+                      The data will permentently delete! recovery is not
+                      possible!
+                    </p>
+                  </div>
+                  <div class="modal-footer">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button
+                      type="button"
+                      id="deleteCourse"
+                      class="btn btn-danger"
+                    >
+                      DELETE
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- <a
+              th:href="@{'/admin/review-list/course_id/'+${courseInfo.courseId}+'/student_id/'+${courseInfo.userInfo.uid}}"
+              ><button class="btn btn-primary">Review List</button></a
+            > -->
+            <a
+              th:href="@{'/admin/course_syllabus/course_id/' + ${courseInfo.courseId}}"
+              ><button class="btn btn-primary">Manage Syllabus</button></a
+            >
+            <div>
+              <p class="prerequisites my-3">Class Link</p>
+              <form
+                th:action="@{/admin/course-details/insert-class-link}"
+                method="POST"
+              >
+                <input
+                  type="hidden"
+                  name="courseId"
+                  th:value="${courseInfo.courseId}"
+                />
+                <input type="hidden" name="roleLink" value="admin" />
+                <div class="input-group">
+                  <input
+                    type="text"
+                    name="class-link"
+                    id="class-link"
+                    th:value="${classlink}"
+                    class="form-control"
+                    placeholder="Insert class link"
+                  />
+                  <button class="btn btn-primary" type="submit">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- assignment link of student -->
+    <div th:if="${student == 'STUDENT'}">
+      <div
+        th:if="${studentRegistered} AND ${testListSize > 0}"
+        class="container second-section"
+      >
+        <p class="link">Assignment link of the course</p>
+        <div class="mt-3 row row-cols-1 row-cols-md-3 g-4">
+          <div class="col" th:each="testList, stats : ${testList}">
+            <div class="card" th:id="|card-${stats.index}|">
+              <div class="card-body">
+                <a
+                  th:href="@{${testList.testLink}}"
+                  th:text="${testList.testLink}"
+                  target="_blank"
+                  >Test Link</a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TODO -->
+    <!-- syllabus -->
+    <div class="container">
+      <div class="fifth-section">
+        <div class="my-3">
+          <h3>Syllabus</h3>
+        </div>
+
+        <!-- syllabus update -->
+        <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+          <div class="d-flex align-items-center justify-content-between mt-1">
+            <div th:text="${'Chapters : ' + syllabusSize}"></div>
+            <div>
+              <a
+                th:href="@{'/syllabus_details/course_id/' + ${courseInfo.courseId}}"
+                >Show detailed of all Chapter</a
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- accordian fix-->
+        <div class="accordion" id="syllabusAccordion">
+          
+          <div class="accordion-item" th:if="${syllabusSize > 0}">
+            
+            <h4 class="accordion-header" id="headingOne">
+              <button
+                class="accordion-button collapsed"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseOne"
+                data-parent="#accordion"
+                aria-expanded="true"
+                aria-controls="#collapseOne"
+                th:text="${firstSyllabus.title}"
+              >
+                Accordion Item #1
+              </button>
+            </h4>
+            <div
+              id="collapseOne"
+              class="accordion-collapse collapse show"
+              aria-labelledby="headingOne"
+              data-bs-parent="#syllabusAccordion"
+            >
+            
+              <div class="accordion-body" 
+              th:each="fct:${firstSyllabus.content}"
+              th:text= "${fct.content}" > 
+
+                <strong>This is the first item's accordion body.</strong> It is
+                shown by default, until the collapse plugin adds the appropriate
+                classes that we use to style each element. These classes control
+                the overall appearance, as well as the showing and hiding via
+                CSS transitions. You can modify any of this with custom CSS or
+                overriding our default variables. It's also worth noting that
+                just about any HTML can go within the
+                <code>.accordion-body</code>, though the transition does limit
+                overflow.
+              </div>
+            </div>
+          </div>
+
+          <div th:each="sl:${syllabusList}" >
+            <div class="accordion-item" >
+              <h4 class="accordion-header" th:id="${'heading' + sl.syllabusId}">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  th:data-bs-target="${'#co' + sl.syllabusId}"
+                  aria-expanded="false"
+                  th:aria-controls="${'#co' +sl.syllabusId}"
+                  th:text="${sl.title}"
+                >
+                  Accordion Item #1
+                </button>
+              </h4>
+              <div
+                th:id="${'co'+sl.syllabusId}"
+                class="accordion-collapse collapse"
+                th:aria-labelledby="${'heading' + sl.syllabusId}"
+                data-bs-parent="#syllabusAccordion"
+              >
+                <div
+                  class="accordion-body"
+                  th:each="ct:${sl.content}"
+                  th:text="${ct.content}"
+                >
+                  <strong>This is the first item's accordion body.</strong> It
+                  is shown by default, until the collapse plugin adds the
+                  appropriate classes that we use to style each element. These
+                  classes control the overall appearance, as well as the showing
+                  and hiding via CSS transitions. You can modify any of this
+                  with custom CSS or overriding our default variables. It's also
+                  worth noting that just about any HTML can go within the
+                  <code>.accordion-body</code>, though the transition does limit
+                  overflow.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="accordion" id="syllabusAccordion">
+          <div
+            class="accordion-item"
+            th:each="syllabus, status :${syllabusList}"
+            th:with="headingId=${'heading'+status.index},collapseId=${'collapse'+status.index}"
+          >
+            <h2 class="accordion-header" th:id="${headingId}">
+              <button
+                class="accordion-button"
+                type="button"
+                data-bs-toggle="collapse"
+                th:data-bs-target="${'#'+collapseId}"
+                aria-expanded="true"
+                th:aria-controls="${collapseId}"
+                th:text="${syllabus.title}"
+              >
+                Accordion Item #1
+              </button>
+            </h2>
+            <div
+              th:id="${collapseId}"
+              class="accordion-collapse collapse show"
+              th:aria-labelledby="${headingId}"
+              data-bs-parent="#syllabusAccordion"
+            >
+              <div class="accordion-body">
+                <div th:each="content:${syllabus.content}" th:text="${content.content}"></div>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+
+    <!-- reviews -->
+
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-12">
+          <!-- List group-->
+          <ul class="list-group shadow">
+            <!-- list group item-->
+            <li class="list-group-item">
+              <!-- Custom content-->
+              <div class="course-info">
+                <h5 class="font-weight-bold mt-3">[[${courseName}]]</h5>
+                <p class="font-weight-light">[[${trName}]]</p>
+              </div>
+              <h5 style="color: #7749f8" class="mt-5">Course Review</h5>
+              <hr style="width: 140px" />
+            </li>
+
+            <div th:if="${courseReviewListEmpty}">
+              <div class="mb-4 p-3 text-center">
+                <span class="letterpress"
+                  >There is no current reviews from students.</span
+                >
+              </div>
+            </div>
+
+            <!-- code to implement-->
+            <li th:if="${courseReviewListNotEmpty}" class="list-group-item">
+              <div
+                class="media align-items-lg-center flex-column flex-lg-row p-3"
+              >
+                <div>
+                  <div class="row">
+                    <div class="col-lg-10 col-sm-8">
+                      <h5
+                        class="font-weight-bold my-2 col-md-10"
+                        style="color: #87281a"
+                      >
+                        Course Average Rating
+                      </h5>
+                    </div>
+                    <div class="col-lg-2 col-sm-4">
+                      <ul class="list-inline large">
+                        <p class="mx-4" style="color: #87281a">
+                          [[${averageFloat}]]
+                        </p>
+                        <li class="list-inline-item m-0">
+                          <i
+                            class="fa fa-star text-success"
+                            th:each="i : ${#numbers.sequence(1, average)}"
+                          ></i>
+                        </li>
+                        <li class="list-inline-item m-0 gray-star">
+                          <i
+                            class="fa fa-star text-gray"
+                            th:unless="${average} == 5"
+                            th:each="i : ${#numbers.sequence(1, 5-average)}"
+                          ></i>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <!-- here -->
+            <li class="list-group-item" th:each="review:${courseReviewList}">
+              <div
+                class="media align-items-lg-center flex-column flex-lg-row p-3"
+              >
+                <div class="media-body order-2 order-lg-1">
+                  <p
+                    class="font-italic text-muted mb-0 small"
+                    th:text="${#dates.format(review.assignedDate, 'yyyy-MM-dd')}"
+                  ></p>
+                  <div
+                    sec:authorize="hasAuthority('ROLE_ADMIN') or hasAuthority('ROLE_SUPER_ADMIN')"
+                  >
+                    <a
+                      th:href="@{'/admin/edit-student-review/'+${review.reviewId}}"
+                      >Edit</a
+                    >
+                  </div>
+                </div>
+                <h5
+                  class="mt-0 font-weight-bold mb-2"
+                  th:text="${review.join.userInfo.userName}"
+                ></h5>
+                <div>
+                  <div class="row">
+                    <div class="col-lg-10 col-md-8">
+                      <h6
+                        class="font-weight-bold my-2"
+                        th:text="${review.feedback}"
+                      ></h6>
+                    </div>
+                    <div class="col-lg-2 col-md-4">
+                      <ul class="list-inline small">
+                        <li class="list-inline-item m-0">
+                          <i
+                            class="fa fa-star text-warning"
+                            th:each="i : ${#numbers.sequence(1, review.star)}"
+                          ></i>
+                        </li>
+                        <li class="list-inline-item m-0 gray-star">
+                          <i
+                            class="fa fa-star text-gray"
+                            th:unless="${review.star} == 5"
+                            th:each="i : ${#numbers.sequence(1, 5-review.star)}"
+                          ></i>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <!-- see more -->
+            <div
+              class="list list-group-item"
+              th:if="${courseReviewListNotEmpty}"
+            >
+              <div class="py-3">
+                <div th:if="${student == 'STUDENT'}">
+                  <a
+                    th:href="@{'/student/review-list/course_id/' + ${courseInfo.courseId}}"
+                  >
+                    <button class="btn btn-primary">
+                      See more
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-three-dots"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+                        />
+                      </svg>
+                    </button>
+                  </a>
+                </div>
+                <div th:if="${teacher == 'TEACHER'}">
+                  <a
+                    th:href="@{'/teacher/review-list/course_id/' + ${courseInfo.courseId}}"
+                  >
+                    <button class="btn btn-primary">
+                      See more
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-three-dots"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+                        />
+                      </svg>
+                    </button>
+                  </a>
+                </div>
+                <div th:if="${admin == 'ADMIN'}">
+                  <a
+                    th:href="@{'/admin/review-list/course_id/'+${courseInfo.courseId}+'/student_id/'+${courseInfo.userInfo.uid}}"
+                  >
+                    <button class="btn btn-primary">
+                      See more
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-three-dots"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+                        />
+                      </svg>
+                    </button>
+                  </a>
+                </div>
+                <div th:if="${guest == 'GUEST'}">
+                  <a th:href="@{/login}">
+                    <button class="btn btn-primary">
+                      See more
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="16"
+                        height="16"
+                        fill="currentColor"
+                        class="bi bi-three-dots"
+                        viewBox="0 0 16 16"
+                      >
+                        <path
+                          d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z"
+                        />
+                      </svg>
+                    </button>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </ul>
+        </div>
+        <!-- End -->
+        <!-- </li>                       -->
+      </div>
+    </div>
+
+    <div th:if="${admin == 'ADMIN'}">
+      <div class="container second-section">
+        <p class="link">Assign Test to Students</p>
+        <form
+          th:action="@{/admin/course-details/insert-test-link}"
+          method="POST"
+        >
+          <input
+            type="hidden"
+            name="courseId"
+            th:value="${courseInfo.courseId}"
+          />
+          <div class="input-group">
+            <input
+              type="text"
+              name="test-link"
+              id="test-link"
+              class="form-control"
+              placeholder="Insert test link"
+            />
+            <button class="btn btn-primary" type="submit">Assign</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="container third-section">
+        <h2>Student List</h2>
+      </div>
+
+      <div class="container forth-section">
+        <table id="studentListTable">
+          <thead>
+            <th>No</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Account Status</th>
+            <th></th>
+            <th></th>
+          </thead>
+          <tbody>
+            <tr th:each="student,iter : ${studentList}">
+              <td th:text="${iter.index + 1}"></td>
+              <td th:text="${student.userName}"></td>
+              <td th:text="${student.UserAccount.mail}"></td>
+              <td th:text="${student.UserAccount.accountStatus}"></td>
+              <td>
+                <button class="btn">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </td>
+               <!-- Disable Take A Leave --> 
+              <!-- <td>
+                <a
+                  th:href="@{'/admin/leave/'+${courseInfo.courseId}+'/'+${courseInfo.UserInfo.uid}+'?course_name='+${courseInfo.courseName}+'&teacher_name='+${courseInfo.UserInfo.userName}}"
+                  ><button class="btn btn-primary">Take a Leave</button></a
+                >
+              </td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div th:replace="@{fragments/footer}"></div>
+    <!-- <script type="text/javascript">
+      $('#myTab a').on('click', function (e) {
+          e.preventDefault()
+          $(this).tab('show')
+      })
+  </script> -->
+
+    <!-- JS -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+    crossorigin="anonymous"></script> -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script> -->
+    <script src="/js/CM0003_CourseDetails.js"></script>
+  </body>
+</html>

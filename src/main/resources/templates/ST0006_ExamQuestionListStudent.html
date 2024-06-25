@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Questions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/AT0007_TestQuestions.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+</head>
+
+<body style="padding-top: 80px;">
+    <div th:replace="@{fragments/nav}"></div>
+    <section class="main container">
+        <div class="d-flex align-items-center justify-content-between flex-wrap">
+            <div class="mt-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Exam</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Questions
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+
+            <div class="mt-3">
+                <div id="countdown" data-exam-end-time="${exam_end_time}" data-current-time="${current_time}"></div>
+
+
+
+                <script th:inline="javascript">
+                    var examStartTime = /*[[${exam_start_time}]]*/ '';
+                    var examEndTime = /*[[${exam_end_time}]]*/ '';
+
+                    var startTime = new Date('1970/01/01 ' + examStartTime + ':00');
+                    var endTime = new Date('1970/01/01 ' + examEndTime + ':00');
+                    var allowedExamTime = (endTime - startTime) / (1000 * 60);
+
+                    var currentTime = sessionStorage.getItem('currentTime');
+
+                    if (!currentTime) {
+                        currentTime = examStartTime;
+                        sessionStorage.setItem('currentTime', currentTime);
+                    } else {
+                        sessionStorage.clear();
+                        currentTime = examStartTime;
+                        sessionStorage.setItem('currentTime', currentTime);
+                    }
+
+                    var alertShown = false;
+                    var timeIsUp = false;
+
+                    function updateCountdown() {
+                        var submitButton = document.getElementById('submit');
+
+                        var currentTimeParts = currentTime.split(':');
+                        var currentHours = parseInt(currentTimeParts[0]);
+                        var currentMinutes = parseInt(currentTimeParts[1]);
+                        var currentSeconds = parseInt(currentTimeParts[2]);
+
+                        currentSeconds++;
+                        if (currentSeconds >= 60) {
+                            currentMinutes++;
+                            currentSeconds = 0;
+                        }
+                        if (currentMinutes >= 60) {
+                            currentHours++;
+                            currentMinutes = 0;
+                        }
+
+                        currentTime =
+                            currentHours.toString().padStart(2, '0') +
+                            ':' +
+                            currentMinutes.toString().padStart(2, '0') +
+                            ':' +
+                            currentSeconds.toString().padStart(2, '0');
+                        sessionStorage.setItem('currentTime', currentTime);
+
+                        var remainingTime = (endTime - new Date('1970/01/01 ' + currentTime)) / 1000;
+
+                        var remainingHours = Math.floor(remainingTime / 3600);
+                        var remainingMinutes = Math.floor((remainingTime % 3600) / 60);
+                        var remainingSeconds = Math.floor(remainingTime % 60);
+
+                        var countdownElement = document.getElementById('countdown');
+                        countdownElement.textContent =
+                            'Remaining time: ' +
+                            remainingHours.toString().padStart(2, '0') +
+                            'h ' +
+                            remainingMinutes.toString().padStart(2, '0') +
+                            'm ' +
+                            remainingSeconds.toString().padStart(2, '0') +
+                            's';
+
+                        if (!alertShown && remainingTime <= 300 && remainingTime >= 120) {
+                            alertShown = true;
+                            alert('Exam Reminder!!!\n\nThe exam will be time up in the next 5 minutes. Please try to submit your answers before time runs out.');
+                        }
+
+                        if (!timeIsUp && remainingTime <= 0) {
+                            timeIsUp = true;
+                            alert('Time is up! Exam is over.');
+
+                            if (submitButton) {
+                                submitButton.click();
+                            }
+
+                            window.location.href = '/student/exam';
+                        }
+                    }
+
+                    updateCountdown();
+                    setInterval(updateCountdown, 1000);
+                </script>
+
+
+
+
+
+
+                <small class="text-success fw-bold">
+                    <span th:if="${questionList != null}" th:text="${#lists.size(questionList)}"></span>
+                    <span th:unless="${questionList != null}">0</span>
+                    Questions
+                </small>
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center flex-wrap" style="padding-bottom: 50px;">
+            <div class="box">
+                <div class="row">
+                    <div class="col-12 col-lg-12" th:each="testquestion, index:${questionList}">
+                        <div class="col-12 mt-4 question1">
+                            <div class="card border-0">
+                                <div class="card-body text-dark">
+                                    Question No. <small class="fw-bold text-success question-no"
+                                        th:text="${index.count}">
+                                    </small>
+                                    <div class="mb-3"></div>
+                                    <div th:if="${testquestion.question_materials_type == 'AUDIO'}">
+                                        <audio controls class="w-100">
+                                            <source th:src="${testquestion.question_materials}" type="audio/mpeg">
+                                        </audio>
+                                    </div>
+                                    <div th:if="${testquestion.question_materials_type == 'VIDEO'}">
+                                        <video width="100%" height="240" controls>
+                                            <source th:src="${testquestion.question_materials}" type="video/mp4">
+                                        </video>
+                                    </div>
+                                    <div th:if="${testquestion.question_materials_type == 'IMAGE'}"
+                                        style="justify-content: center; align-items: center; display: flex;">
+                                        <img th:src="${testquestion.question_materials}" style="width: 100%;">
+                                    </div>
+                                    <h5 class="">Description</h5>
+                                    <p th:text="${testquestion.question_text}"></p>
+                                    <h5>Select Answer</h5>
+                                    <div th:if="${testquestion.question_type == 'SINGLE_ANSWER'}">
+                                        <div th:each="choice :${testquestion.choices}">
+                                            <div class="form-check border rounded py-2 px-5 mt-2 false">
+                                                <input class="form-check-input" type="radio"
+                                                    th:name="${testquestion.id}"
+                                                    th:id="${testquestion.id}+'_'+${choice.index}" />
+                                                <label class="form-check-label" th:text="${choice.choice}">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:if="${testquestion.question_type == 'MULTIPLE_ANSWER'}">
+                                        <div th:each="choice :${testquestion.choices}">
+                                            <div class="form-check border rounded py-2 px-5 mt-2 false">
+                                                <input class="form-check-input" type="checkbox"
+                                                    th:name="${testquestion.id}"
+                                                    th:id="${testquestion.id}+'_'+${choice.index}" />
+                                                <label class="form-check-label" th:text="${choice.choice}">
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div th:if="${testquestion.question_type == 'FREE_ANSWER'}">
+                                        <div class="mb-3">
+                                            <label for="q2_textarea" class="form-label text-success">
+                                                <h6 class="">Answer as Text</h6>
+                                            </label>
+                                            <textarea class="form-control" th:id="${testquestion.id}+'_text'"
+                                                placeholder="Answer as text" rows="3" required></textarea>
+                                        </div>
+                                        <h6 class="text-muted text-center mb-3">OR</h6>
+                                        <div class="mb-3">
+                                            <label class="form-label text-success">
+                                                <h6 class="">Upload your answer image</h6>
+                                            </label>
+                                            <input class="form-control" type="file" th:id="${testquestion.id}+'_image'"
+                                                accept="image/png, image/gif, image/jpeg" />
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="text-end mb-2">
+                                            <small class="fw-bold">Maximum Mark : <span
+                                                    th:text="${testquestion.maximum_mark}"> </span> Marks</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="d-flex justify-content-center align-items-center flex-wrap" style="padding-bottom: 50px;">
+        <div style="text-align: center;">
+            <h5 class="text-danger fw-bold">
+                <span th:text="${exam_announce}"></span>
+            </h5>
+            <div th:if="${exam_announce}">
+                <a href="/student/exam" class="btn" style="background-color: #198754; color: #ffffff;">OK</a>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="submit-btn-container mt-1" style="padding-bottom: 50px;">
+        <div class="d-flex justify-content-end mx-auto" style="min-width: 400px; max-width: 750px;">
+            <input type="submit" id="submit" value="Submit" class="bg-success text-white border-0 rounded px-2"
+                th:if="${questionList != null}">
+        </div>
+
+    </div>
+    <div style="height: 100px"></div>
+    <div th:replace="@{fragments/footer}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script th:inline="javascript">
+        var questionList = /*[[${questionList}]]*/ "default";
+        var test_id = /*[[${test_id}]]*/ "test_id";
+        var test_date = /*[[${test_date}]]*/ "test_date";
+        var test_start_time = /*[[${test_start_time}]]*/ "";
+        var test_end_time = /*[[${test_end_time}]]*/ "";
+
+        // test_start_time = test_start_time + ":00";
+        // test_end_time = test_end_time + ":00";
+
+
+
+        // var date = test_date.slice(0, 10);
+        // var [year, month, day] = date.split("-");
+        // var [start_hour, start_minute, start_second] = test_start_time.split(":");
+        // var [end_hour, end_minute, end_second] = test_end_time.split(":");
+
+
+
+        // function countdown() {
+        //     const now = new Date();
+        //     const enddateObject = new Date(year, month - 1, day, end_hour, end_minute, end_second);
+        //     const remainingTime = enddateObject - now;
+
+        //     const minutes = Math.floor(remainingTime / 1000 / 60 % 60);
+        //     const hours = Math.floor(remainingTime / (1000 * 60 * 60) % 24);
+
+        //     document.getElementById("countdown").innerHTML = `${hours} hours ${minutes} minutes`;
+        // }
+
+        // countdown();
+        // setInterval(countdown, 1000);
+
+        submit = document.getElementById("submit");
+        submit.addEventListener('click', () => {
+
+            questionList.forEach(question => {
+                let formData = new FormData();
+                student_choice = [];
+                var student_answer;
+                var answer_material;
+                if (question.question_type == 'SINGLE_ANSWER') {
+                    var selectedAnswer = $('input[name="' + question.id + '"]:checked');
+                    if (selectedAnswer.length > 0) {
+                        var check_index = selectedAnswer.attr("id").split("_")[1];
+                        var choice = { "student_choice": parseInt(check_index) }
+                        student_choice.push(choice);
+                        student_answer = JSON.stringify(student_choice);
+                    }
+                    formData.append('answer_type', 'SINGLE_ANSWER');
+                } else if (question.question_type == 'MULTIPLE_ANSWER') {
+                    var selectedAnswer = $('input[name="' + question.id + '"]:checked');
+                    if (selectedAnswer.length > 0) {
+                        for (var i = 0; i < selectedAnswer.length; i++) {
+                            var check_index = selectedAnswer[i].id.split("_")[1];
+                            var choice = { "student_choice": parseInt(check_index) }
+                            student_choice.push(choice);
+                        }
+                        student_answer = JSON.stringify(student_choice);
+                    }
+                    formData.append('answer_type', 'MULTIPLE_ANSWER');
+                } else {
+                    student_answer = $('#' + question.id + "_text").val();
+                    answer_material = document.getElementById(question.id + "_image").files[0];
+                    formData.append('answer_type', 'FREE_ANSWER');
+                    formData.append('answer_material', answer_material);
+                }
+                formData.append('test_id', parseInt(test_id));
+                formData.append('question_id', parseInt(question.id));
+                formData.append('student_answer', student_answer);
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "https://pyinnyarsubuu.com/student/submit-answer", true);
+                xhr.send(formData);
+            });
+            alert("Submitted Successfully.")
+            window.location.href = "/student/exam";
+        })
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,270 @@
+/* Refrence from List of students */
+
+
+
+body {
+    font-family: "Lato", sans-serif;
+}
+
+
+
+.sidebar .text {
+    font-size: 20px;
+    font-weight: 600;
+    line-height: 50px;
+    text-align: center;
+    background-color: #6C757D;
+    letter-spacing: 1px
+}
+
+.text {
+    color: #5227CC;
+    position: absolute;
+    top: 0;
+    float: left;
+    /* padding-left: 2px; */
+}
+
+.sidebar {
+    color: white;
+    height: 100%;
+    width: 250px;
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    left: 0;
+    background-color: #6C757D;
+    overflow-x: hidden;
+    /* float: left; */
+    transition: 0.5s;
+    padding-top: 60px;
+    
+    
+}
+
+.sidebar a {
+    /* padding: 2px 2px 2px 2px; */
+    text-decoration: none;
+    font-size: 15px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidebar a:hover {
+    color: #f1f1f1;
+}
+
+.sidebar .closebtn {
+    position: absolute;
+    top: 10px;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+.openbtn {
+    font-size: 20px;
+    cursor: pointer;
+    background-color: black;
+    color: #f1f1f1;
+    padding: 16px 15px;
+    border: none;
+}
+
+.openbtn:hover {
+    background-color: #444;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+    
+    .sidebar a {
+        font-size: 18px;
+    }
+}
+
+/* Update */
+.sidebar ul {
+    list-style: none;
+    line-height: 24px;
+    /* padding: 0px;  */
+    margin-bottom: 10px;
+}
+
+.sidebar li {
+    margin-bottom: 10px;
+}
+
+.sidebar ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.sidebar ul li a:hover {
+    color: #5227CC;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+.sidebar ul li a:active {
+    color: #5227CC;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+/* header */
+.header {
+    height: calc(3rem + 1rem);
+    /* padding: 0 0 0 calc(68px + 2px) */
+    padding: 0 0 0 50px
+}
+
+.header_img {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    border-radius: 50%;
+    overflow: hidden;
+    float: right;
+}
+
+.header_img img {
+    width: 40px;
+}
+
+
+/* header */
+
+/* breadcrumb */
+.breadcrumb li a {
+    /* background-color: #FFFFFF; */
+    color: #5227CC;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+li {
+    list-style-type: none;
+}
+
+/* Breadcrumb */
+
+footer {
+    background-color: #0B0D17;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+/* #footer {
+    position: fixed;
+    bottom: 0px;
+    left: 0px
+} */
+
+/* nav {
+    -webkit-flex: 2;
+    -ms-flex: 2;
+    flex: 2;
+    background: #ccc;
+    
+} */
+
+/* #mySidebar.stickIt {
+    position: fixed;
+    top: 0px;
+} */
+
+.newbtn {
+    color: #000;
+    background-color: white;
+    border-color: #C9B9F7;
+    float: inherit;
+}
+
+.newbtn:hover {
+    color: #fff;
+    background-color: #7749F8;
+    border-color: #C9B9F7;
+    float: inherit;
+}
+
+.newbtn:focus {
+    color: #fff;
+    background-color: #7749F8;
+    border-color: #C9B9F7;
+    float: inherit;
+}
+
+/* DataTable Update */
+/* .dataTables_filter {
+    float: left !important;
+} */
+
+.pagination>li>a,
+.pagination>li>span {
+    color: #7749F8;
+}
+
+.pagination>li.active>a,
+.pagination>li.active>span {
+    color: #fff !important;
+    background-color: #7749F8 !important;
+}
+
+/* .pagination > li.active > a, .pagination > li.active > span{background-color:#7749F8;color: #fff;} */
+/* .dataTables_wrapper .dataTables_paginate .paginate_button:active {
+    background: #7749F8;
+    color: #fff!important;
+} */
+
+.dataTables_filter {
+    display: none;
+}
+
+
+.CourseInfoTable{
+    border-spacing:80px;
+    font-size: 16px;
+    padding: 5px;
+    
+}
+.CourseInfoTable th {
+    padding: 10px;
+  }
+.CourseInfo{
+  margin: 5px;
+  padding: 5px;
+}
+.EnrollButton{
+    background-color: #4CAF50; /* Green */
+    border:2px solid white;
+    color: whitesmoke;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 5px;
+}
+.EnrollButton :hover{
+    background-color: #4CAF50; /* Green */
+    border:2px solid white;
+    color: blue;
+    padding: 8px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    margin-left: 5px;
+}

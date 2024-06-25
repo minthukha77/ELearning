@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Examinee List</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" th:href="@{/css/AT0005_ExamineeList.css}" />
+
+  <th:block th:if="${#authorization.expression('hasRole(''ROLE_TEACHER'')')}">
+    <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/pagination.css}" />
+  </th:block>
+
+  <!-- <link rel="stylesheet" type="text/css" href="css/shCore.css" th:href="@{/css/shCore.css}" /> -->
+  <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+
+</head>
+
+<body>
+
+  <div th:replace="@{fragments/nav}"></div>
+  <!-- <div th:replace="${nav_type}"></div> -->
+
+  <div th:if="${#authorization.expression('hasRole(''ROLE_TEACHER'')')}">
+    <div style="height: 80px"></div>
+  </div>
+
+
+
+  <!-- add student modal box start  -->
+  <div
+    class="add-student-box min-vh-100 position-fixed w-100 top-0 d-flex justify-content-center align-items-center d-none"
+    style="z-index: 1000;background: rgba(0,0,0,0.4);">
+    <div class="add-student-content px-2 py-3 rounded shadow-sm bg-white">
+      <div class="d-flex justify-content-end">
+        <div class="bg-danger text-white rounded-circle d-flex justify-content-center align-items-center"
+          style="width: 30px;height: 30px;cursor: pointer;" id="add_student_cancel">
+          <i class="fa-solid fa-xmark"></i>
+        </div>
+      </div>
+      <div class="bg-white d-flex align-items-center px-2 mt-3" id="add_student_search_box">
+        <i class="fa-solid fa-magnifying-glass me-1" id="add_student_search_icon"></i>
+        <input type="search" class="px-2 py-1 border-0 w-100" placeholder="Enter StuentName, Email or Phone No"
+          id="add_student_search">
+      </div>
+      <div class="mt-3 shadow-sm rounded p-2 border" id="student_list_container"
+        style="max-height: 500px; overflow-y: scroll;">
+        <div class="d-flex flex-column" th:each="studentlist : ${studentLists}">
+          <div class="d-flex justify-content-between align-items-end mb-3">
+            <div class="d-flex align-items-center">
+              <div class="me-2" style="width: 65px;">
+                <img th:src="${studentlist.profilePic.url}" alt="" class="img-fluid rounded-circle" />
+              </div>
+              <div class="">
+                <small class="fw-bold d-block" th:text="${studentlist.studentName}">Student Name</small>
+                <small class="fw-bold d-block" th:text="${studentlist.studentPhoneNumber}">Phone number</small>
+                <small class="fw-bold d-block" th:text="${studentlist.studentEmail}">Email</small>
+              </div>
+            </div>
+            <a th:href="@{/exam/examinee-list/add-custom-student/{testId}/{email}(testId=${studentlist.testId},email=${studentlist.studentEmail})}"
+              class="btn btn-sm btn-success">Add</a>
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+  </div>
+  <!-- add student modal box end -->
+
+  <section class="main container mt-3">
+    <div class="d-flex flex-wrap align-items-center justify-content-between">
+      <div class="mt-2">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Exam</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="">
+
+        <div class="row">
+          <div class="col">
+            <form method="post" th:action="@{/exam/examinee-list/add-all-enrolled-students/{testId}(testId=${testId})}">
+              <div class="btn btn-success btn-block btn-sm mt-2 text-truncate" onclick="showAddConfirmation()"
+                th:data-test-id="${testId}">
+                Add All Enrolled Students
+              </div>
+            </form>
+          </div>
+          <div class="col">
+            <div class="btn btn-success btn-block btn-sm mt-2 text-truncate" id="add_student">Add Custom Students</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="d-flex flex-wrap align-items-center justify-content-between mt-3">
+      <div class="">
+        <small class="fw-bold text-success me-3"><span th:text="${enrolledStudent}"></span> Students Found</small>
+        <small class="fw-bold text-success"><span th:text="${checkedStudent + '/' + enrolledStudent}"></span>
+          Checked</small>
+      </div>
+      <div class="bg-white d-flex align-items-center px-2 mt-3" id="student_search_box">
+        <i class="fa-solid fa-magnifying-glass me-1" id="student_search_icon"></i>
+        <input type="search" class="px-2 py-1 border-0 w-100" placeholder="Enter StuentName, Email or Phone No"
+          id="student_search">
+      </div>
+    </div>
+
+    <!-- student result start  -->
+
+    <div th:if="${noStudents}" class="d-flex justify-content-center align-items-center" style="height: 30vh;">
+      <h1>There are no students to display.</h1>
+    </div>
+
+    <div class="row">
+      <div class="col-4 mt-3" th:each="student : ${students}">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <img class="img-fluid rounded-circle" th:if="${student.profilePic == null}"
+                th:src="@{/images/profile.png}" style="width: 50px; height: 50px" />
+              <img th:unless="${student.profilePic == null}" th:src="${student.profilePic.url}" alt=""
+                class="img-fluid rounded-circle" style="width: 50px; height: 50px" />
+
+              <form
+                th:action="@{/exam/examinee-list/delete-test-student/{testStudentId}(testStudentId=${student.testStudentId})}"
+                method="post">
+                <button type="submit" onclick="showConfirmation(this.form)"
+                  class="rounded-circle bg-danger text-white d-flex justify-content-center align-items-center fw-bold"
+                  style="cursor: pointer; width: 25px; height: 25px">
+                  <i class="fa-solid fa-xmark"></i>
+                </button>
+              </form>
+
+            </div>
+            <div class="mt-3">
+              <small class="fw-bold name" th:text="${student.studentName}"></small><br />
+              <small class="fw-bold ph-no" th:text="${student.studentPhoneNumber}"></small><br />
+              <small class="fw-bold mail" th:text="${student.studentEmail}"></small><br />
+              <small class="fw-bold text-muted">
+                Checked Questions (<span th:text="${student.checkedQuestion} + '/' + ${student.totalQuestion}"></span>)
+              </small>
+              <div class="text-end mt-2">
+                <small class="fw-bold">
+                  <a href="#" class="text-success text-decoration-underline">Go To Answers</a>
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    </div>
+  </section>
+  <!-- student result end  -->
+  </section>
+  <div style="height: 90px"></div>
+
+  <div th:replace="@{fragments/footer}"></div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script th:src="@{/js/AT0005_ExamineeList.js}"></script>
+  <script th:src="@{/js/main.js}"></script>
+
+  <script>
+    const searchBox = document.getElementById('student_search');
+    searchBox.addEventListener('keyup', function (event) {
+      const searchString = event.target.value.toLowerCase();
+      const cards = document.querySelectorAll('.card');
+      cards.forEach(card => {
+        const name = card.querySelector('.name').textContent.toLowerCase();
+        const phone = card.querySelector('.ph-no').textContent.toLowerCase();
+        const email = card.querySelector('.mail').textContent.toLowerCase();
+        if (name.includes(searchString) || phone.includes(searchString) || email.includes(searchString)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    });
+
+  </script>
+
+  <script>
+    function showAddConfirmation() {
+      var testId = document.querySelector('[data-test-id]').getAttribute('data-test-id');
+      swal({
+        title: "Are you sure?",
+        text: "You are about to add all enrolled students.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willAdd) => {
+        if (willAdd) {
+          var url = "/exam/examinee-list/add-all-enrolled-students/" + testId;
+          window.location.href = url;
+        }
+      });
+    }
+  </script>
+
+
+
+
+  <script>
+    function showConfirmation(form) {
+      event.preventDefault();
+      swal({
+        title: "Are you sure?",
+        text: "You are about to delete this test student. This action cannot be undone.",
+        icon: "warning",
+        buttons: true,
+        dangerMode: true,
+      }).then((willDelete) => {
+        if (willDelete) {
+          form.submit();
+        }
+      });
+    }
+  </script>
+
+</body>
+
+</html>

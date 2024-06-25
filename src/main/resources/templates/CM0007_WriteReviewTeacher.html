@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <title>Pyinnyar Subuu</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+    <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+    <link rel="stylesheet" type="text/css" href="/css/CM0007_WriteReview.css" />
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="/css/CM0008_WriteReviewConfirm.css"
+    />
+    <link rel="stylesheet" type="text/css" href="/css/footer.css" />
+  </head>
+  <body>
+    <div th:replace="fragments/teacher-nav"></div>
+    <div class="m-3">
+      <nav class="container1 breadcrumtreviews" style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+        <ol class="breadcrumb mt-3 ms-4">
+          <li class="breadcrumb-item">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#reEnterEmail"
+              >Course Details</a
+            >
+          </li>
+          <li class="breadcrumb-item active">Review</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="d-flex justify-content-center ">
+      <div class="card container2">
+        <h5 class="card-header d-flex justify-content-center align-items-center text-dark">Add Review</h5>
+        <form method="post" th:action="@{${postAction}}" th:object="${review}">
+          <div class="card-body">
+            <div
+              id="register"
+              th:classappend="${infoMap == null}?'':'visually-hidden'"
+            >
+              <div class="feedback">
+                <div
+                  class="review-type"
+                  th:classappend="${#fields.hasErrors('reviewType')}?'is-invalid':''"
+                >
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      th:field="*{reviewType}"
+                      value="1"
+                      id="inlineRadio1"
+                    />
+                    <label class="form-check-label" for="inlineRadio1"
+                      >Concerns</label
+                    >
+                  </div>
+                  <div class="form-check form-check-inline">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      name="inlineRadioOptions"
+                      th:field="*{reviewType}"
+                      value="2"
+                      id="inlineRadio2"
+                    />
+                    <label class="form-check-label" for="inlineRadio2"
+                      >Compliment</label
+                    >
+                  </div>
+                </div>
+                <div
+                  class="invalid-feedback mb-3"
+                  id="review-type-error"
+                  th:if="${#fields.hasErrors('reviewType')}"
+                  th:errors="*{reviewType}"
+                >
+                  Please fill review type
+                </div>
+              </div>
+              <div class="textarea">
+                <textarea
+                  class="form-control"
+                  id="review"
+                  rows="5"
+                  cols="40"
+                  placeholder="Write feedback here "
+                  th:field="*{feedback}"
+                  th:classappend="${#fields.hasErrors('feedback')}?'is-invalid':''"
+                ></textarea>
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('feedback')}"
+                  th:errors="*{feedback}"
+                ></div>
+              </div>
+              <div class="row">
+                <div class="buttons col-sm-12 text-center">
+                  <button
+                    id="btnReset"
+                    type="reset"
+                    class="btn btn-spacing btn-secondary center-block"
+                    style="width: 100px"
+                    OnClick="btnClear_Click"
+                  >
+                    Reset
+                  </button>
+                  <button
+                    id="btnSubmit"
+                    class="btn btn-spacing btn-primary center-block"
+                    style="width: 150px"
+                    OnClick="btnSearch_Click"
+                    name="action"
+                    value="next"
+                  >
+                    Save Changes
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="confirm" th:if="${infoMap != null}">
+            <div class="card-body">
+              <h5 class="submit-sure">Are You Sure to Submit?</h5>
+              <div class="feedback" th:each="entry, stats : ${infoMap}">
+                <div class="list-inline small" th:if="${entry.value}==1">
+                  <textarea
+                    class="form-control"
+                    id="feedback"
+                    th:text="Concerns"
+                    disabled
+                  ></textarea>
+                </div>
+                <div class="list-inline small" th:if="${entry.value}==2">
+                  <textarea
+                    class="form-control"
+                    id="feedback"
+                    th:text="Compliment"
+                    disabled
+                  ></textarea>
+                </div>
+                <div
+                  class="list-inline small"
+                  th:if="${entry.key eq 'feedback'}"
+                >
+                  <textarea
+                    class="form-control"
+                    id="feedback"
+                    th:text="${entry.value}"
+                    disabled
+                  ></textarea>
+                </div>
+              </div>
+              <div class="row">
+                <div class="buttons col-sm-12 text-center">
+                  <button
+                    id="btnBack"
+                    type="button"
+                    class="btn btn-spacing btn-secondary center-block"
+                    style="width: 100px"
+                    onclick="history.go(-1);"
+                  >
+                    Back
+                  </button>
+                  <button
+                    id="btnSubmit"
+                    class="btn btn-spacing btn-primary center-block"
+                    style="width: 150px"
+                    name="action"
+                    value="submit"
+                  >
+                    Confirm
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

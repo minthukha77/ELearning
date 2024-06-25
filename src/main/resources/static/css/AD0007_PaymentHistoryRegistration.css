@@ -1,0 +1,225 @@
+.main > div {
+  display: inline-block;
+  width: 30%;
+  margin-top: 5px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.register {
+  margin-left: auto;
+  margin-right: auto;
+  width: 400px;
+  margin: 10px auto;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #F0F0F0;
+ 
+}
+
+.register div {
+  margin: 0 0 10px 0;
+  border: none;
+}
+
+.nav{
+  background-color: white;
+}
+
+.header{
+  background-color: #F0F0F0;
+}
+
+.Footer{
+  width: auto;
+  background-color: #4DC4AE;
+}
+
+/* .copyright{
+  width: 100%;
+  background-color: black;
+} */
+
+.footer__holder{
+  margin-top: 1%;
+}
+
+
+#logo{
+  width: 217px;
+  height: 85px;
+  float: right;
+  display: inline-block;
+  margin: auto;
+  margin-top: 2px;
+  margin-bottom: 2px;
+
+}
+
+.register label {
+  display: inline-block;
+  width: 40%;
+  text-align: right;
+  margin: 10px;
+}
+
+#Comment{
+  display: inline-block;
+  margin-left: 15px;
+  margin-right: 4%;
+  overflow: auto;
+  max-height: 100px;
+}
+
+#showComment{
+  display: inline-block;
+  width: 74%;
+  text-align: left;
+  margin: 15px;
+}
+
+#deleteComments{
+  display: inline-block;
+  text-align: right;
+  margin-right: 7%;
+}
+
+#currentDate{
+  /* display: inline-block; */
+  text-align: right;
+  margin-right: 10%;
+
+}
+
+.buttons {
+  display: flex;
+  gap: 16px;
+  
+}
+
+.btnEdit{
+  border: none;
+}
+
+.btnBack{
+  display: inline-block;
+  width: 100px;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.btnSubmit{
+  width: 100px;
+  margin: 0 auto;
+  text-align: center;
+  border-radius: 10px;
+  margin-left: 20px;
+  border-style: solid;
+  border-color:#4DC4AE;
+  color: #4DC4AE;
+}
+
+.btnClose{
+  width: 100px;
+  margin-left: 60%;
+}
+
+#submitRemark{
+  width: 30px;
+  margin-left: 90%;
+} 
+
+#fileToUpload{
+  text-align: center;
+  margin: auto;
+}
+
+output{
+  margin: auto;
+  width: 100%;
+  min-height: 150px;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 15px;
+  position: relative;
+  border-radius: 5px;
+}
+
+
+output .image{
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+output .image img{
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+output .image span {
+  position: absolute;
+  top: -4px;
+  right: 4px;
+  cursor: pointer;
+  font-size: 22px;
+  color: rgb(195, 180, 180);
+}
+
+output .image span:hover {
+  opacity: 0.8;
+}
+
+output .span--hidden{
+  visibility: hidden;
+}
+
+#comment-border{
+  width: auto;
+  height:auto;
+  overflow: auto;
+  /* background-color: lightgray;
+  border-color: black; */
+}
+
+/* #comment-box{
+  width: 80%;
+  border-color: black;
+  position: absolute;
+} */
+
+.error{
+  color: red;
+}
+
+.image-container {
+  height: auto;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  position: relative;
+}
+
+.image-container img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.comment {
+  overflow: auto;
+  max-height: 150px; 
+}
+
+
+
+
+                                                                          
+
+

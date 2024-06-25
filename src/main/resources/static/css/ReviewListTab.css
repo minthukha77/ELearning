@@ -1,0 +1,161 @@
+* {
+	box-sizing: border-box;
+}
+/* Tabs */
+.nav {
+	margin-bottom: 18px;
+	margin-left: 0;
+	list-style: none;
+		
+}
+
+.nav>li>a {
+	display: block;
+}
+
+.nav-tabs {
+	*zoom: 1;
+    
+}
+
+.nav-tabs:before,
+.nav-tabs:after {
+	display: table;
+	content: "";
+}
+
+.nav-tabs:after {
+	clear: both;
+}
+
+.nav-tabs>li {
+	float: left;
+}
+
+.nav-tabs>li>a {
+	padding-right: 12px;
+	padding-left: 12px;
+	margin-right: 2px;
+	line-height: 14px;
+	height: 60px;
+
+}
+
+.nav-tabs {
+	border-bottom: 1px solid #ddd;
+	
+}
+
+.nav-tabs>li {
+	margin-bottom: -1px;
+}
+
+.nav-tabs>li>a {
+	padding-top: 20px;
+	padding-bottom: 8px;
+	line-height: 18px;
+	border: 1px solid transparent;
+	-webkit-border-radius: 4px 4px 0 0;
+	-moz-border-radius: 4px 4px 0 0;
+	border-radius: 4px 4px 0 0;
+}
+
+.nav-tabs>li>a:hover {
+	border-color: #eeeeee #eeeeee #dddddd;
+}
+
+.nav-tabs>.active>a,
+.nav-tabs>.active>a:hover {
+	color: #555555;
+	cursor: default;
+	background-color: #ffffff;
+	border: 1px solid #ddd;
+	border-bottom-color: transparent;	
+}
+
+.nav-tabs .nav-item .nav-link.active {
+	color: #7749F8;
+  }
+
+.tab-content.active {
+	display: block;
+
+}
+
+.tab-content.hide {
+	display: none;
+}
+
+.ui-helper-hidden-accessible {
+	border: 0;
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
+
+.nav-tabs .nav-link:not(.active) {
+	border-color: transparent !important;
+}
+
+.nav-tabs>li>a {
+	color: black;
+}
+
+
+.select-time select {
+	background-color: gold;
+}
+
+.select-time option {
+	background-color: white;
+}
+
+.select-hide {
+	display: none;
+}
+
+.select-items div:hover,
+.same-as-selected {
+	background-color: rgba(0, 0, 0, 0.1);
+}
+
+.tab-content {
+	padding: 20px;
+
+}
+
+.tab-textbox {
+	border: 1px solid #aaa;
+	border-radius: 4px;
+	margin: 8px 0;
+	outline: none;
+	margin-left: 20px;
+	box-sizing: border-box;
+	transition: .3s;
+}
+
+.tab-textbox:focus {
+	border-color: dodgerBlue;
+	box-shadow: 0 0 8px 0 dodgerBlue;
+}
+
+.activity-name {
+	display: inline-block;
+}
+
+.fa{
+	padding-right: 4px !important;
+}
+
+li+li{
+	margin-left: 0!important;
+}
+
+.letterpress {
+	color: #888;
+	text-align: center;
+	text-shadow: 1px 1px rgba(255,255,255,0.8);
+ }

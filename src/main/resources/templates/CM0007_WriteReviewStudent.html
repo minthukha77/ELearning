@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+      <title>Pyinnyar Subuu</title>
+
+  <link rel="icon" type="image/x-icon" href="/images/fav.png">
+
+    <link rel="stylesheet" type="text/css" href="/css/CM0007_WriteReview.css">
+    <link rel="stylesheet" type="text/css" href="/css/CM0008_WriteReviewConfirm.css">
+    <link rel="stylesheet" type="text/css" href="/css/footer.css">
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+
+</head>
+<body>
+  <div th:replace="fragments/student-nav"></div>
+  <div class="m-3 " style="transform: translateY(70px); ">
+    <nav class="breadcrumbs" style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+      <ol class="breadcrumb mt-3 ms-4">
+        <li class="breadcrumb-item">
+          <a href="#" data-bs-toggle="modal" data-bs-target="#reEnterEmail"
+            >Course Details</a
+          >
+        </li>
+        <li class="breadcrumb-item active">Review</li>
+       
+      </ol>
+    </nav>
+  </div>
+
+   <div class="d-flex justify-content-center container-fluid " style="transform: translateY(25%);"> 
+      <div class="card cardboxs">
+        <h5 class="card-header d-flex justify-content-center align-items-center titles">
+          Add Review
+        </h5>
+        
+        <form method="post" th:action="@{${postAction}}"  th:object="${review}">
+          <div class="card-body"> 
+            <div id="register" th:classappend="${infoMap == null}?'':'visually-hidden'">         
+              <div class="feedback">
+                
+                <div class="rating" th:classappend="${#fields.hasErrors('star')}?'is-invalid':''"  >
+                  <input type="radio" name="rating-star" value="5" id="rating-5" th:field="*{star}" required>
+                  <label for="rating-5"></label>
+                  
+                  <input type="radio" name="rating-star" value="4" id="rating-4" th:field="*{star}" required>
+                  <label for="rating-4"></label>
+                 
+                  
+                  <input type="radio" name="rating-star" value="3" id="rating-3" th:field="*{star}" required>
+                  <label for="rating-3"></label>
+           
+                 
+                  <input type="radio" name="rating-star" value="2" id="rating-2" th:field="*{star}" required>
+                  <label for="rating-2"></label>
+            
+                  
+                  <input type="radio" name="rating-star" value="1" id="rating-1" th:field="*{star}" required>
+                  <label for="rating-1"></label>  
+                </div> 
+                
+                <div class="invalid-feedback mb-3"  id= "star-error" th:if="${#fields.hasErrors('star')}" th:errors="*{star}">
+                  Please fill raing star
+                </div>                                
+              <textarea class="form-control" id="review" rows="5" cols="40" placeholder="Write feedback here " th:field=*{feedback} th:classappend="${#fields.hasErrors('feedback')}?'is-invalid':''"  required></textarea>
+              <div class="invalid-feedback" th:if="${#fields.hasErrors('feedback')}" th:errors="*{feedback}">
+                Please fill review
+              </div>
+              <!-- <input type="hidden" value="finished" th:field="*{reviewStatus}">   -->
+            </div>
+              <div class="row">
+                <div class="buttons col-sm-12 text-center">                   
+                     <button id="btnReset" type="reset" class="btn btn-spacing btn-secondary center-block" Style="width: 100px;" OnClick="btnClear_Click">Reset</button>
+                     <button id="btnSubmit" class="btn btn-spacing btn-primary center-block" Style="width: 150px; background: #03493c; border: none; box-shadow: 4px 4px 4px #000;" OnClick="btnSearch_Click" name="action" value="next">Save Changes</button>
+                 </div>
+            </div>
+        </div>
+        </div>
+
+        <div id="confirm" th:if="${infoMap != null}">
+          <div class="card-body">
+            <h5 class="submit-sure">
+              Are You Sure to Submit?
+            </h5>          
+                <div class="feedback" th:each="entry, stats : ${infoMap}">
+                    
+                    <div class="list-inline small" th:if="${entry.key eq 'star'}" >
+                      <textarea class="form-control" id="feedback" th:text="'Rating :'+${entry.value}+' Stars'" disabled></textarea>
+                    </div>
+                    <div class="list-inline small" th:if="${entry.key eq 'feedback'}" >
+                      <textarea class="form-control" id="feedback" th:text="${entry.value}" disabled></textarea>
+                    </div>
+                    
+              </div>
+                <div class="row">
+                  <div class="buttons col-sm-12 text-center">                   
+                       <button id="btnBack" type="button" class="btn btn-spacing btn-secondary center-block" Style="width: 100px;" onclick="history.go(-1);"  >Back</button>
+                       <button id="btnSubmit" type="submit" class="btn btn-spacing btn-primary center-block" Style="width: 150px;" OnClick="btnSearch_Click"  name="action" value="submit">Confirm</button>
+                   </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </form>
+   </div>
+
+   <footer class="container-fluid no-padding footers"  style="transform: translateY(35%);" >
+    <div class="footer__container">
+      <div
+        class="d-lg-flex flex-sm-column flex-md-row justify-content-between align-items-sm-center footer__div"
+      >
+        <div class="footer__holder">
+          <h3 class="footer__title">Get to Know Us</h3>
+          <ul 
+          class="footer__subtitle"
+          style="line-height: 200%">
+            <li>
+              <a
+                style="color: white; text-decoration: none"
+                th:href="@{/guest/frequently_asked_questions}"
+                target="_blank"
+              >
+                FAQs
+              </a>
+            </li>
+            <li>
+              <a
+                style="color: white; text-decoration: none"
+                th:href="@{ /guest/terms_and_conditions}"
+                target="_blank"
+              >
+                Terms and Conditions
+              </a>
+            </li>
+            <li>
+              <a
+                style="color: white; text-decoration: none"
+                th:href="@{/guest/help_and_support}"
+                target="_blank"
+              >
+                Help and support
+              </a>
+            </li>
+            <li>
+              <a
+                th:href="@{/guest/about_management_company}"
+                style="color: white; text-decoration: none"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                About the management company
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div class="footer__holder">
+          <h3 class="footer__title">Contact</h3>
+          <ul
+            class="footer__subtitle"
+            style="line-height: 200%"
+          >
+            <li>Tel: +959 98-656-3091</li>
+            <li>Viber: +959 98-656-3091</li>
+            <li>Telegram: +959 98-656-3091</li>
+            <li>Line: +959 98-656-3091</li>
+            <li>WhatsApp: +959 98-656-3091</li>
+          </ul>
+        </div>
+        <div class="footer__holder">
+          <img
+            src="/images/bliss-stock.png"
+            alt="logo"
+            class="align-self-end"
+          />
+        </div>
+      </div>
+      <div class="copyright">
+        <div class="center">
+          <p class="copyright__text">
+            © Copyright Pyinnyar Subuu. All Rights
+            Reserved
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+    <!-- <div th:replace="@{fragments/footer}"></div> -->
+    <script src="//code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="//code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script type="text/javascript" src="js/CM0007_WriteReview.js"></script>
+    <script th:src="@{./../../../js/main.js}"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+  
+
+  </body>
+</html>

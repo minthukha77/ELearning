@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <link rel="stylesheet" href="/css/ST0001_register.css" />
+    <!-- <link rel="stylesheet" th:href="@{/css/global.css}" /> -->
+    <title>Register</title>
+
+    <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+  </head>
+
+  <body style="background-color: #f0f0f0">
+    <!-- guest user navi bar -->
+    
+    <div th:replace="@{fragments/nav}"></div>
+
+    <div class="m-3" th:if="${action=='register'}">
+      <nav style="--bs-breadcrumb-divider: '>'" aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item active">Email</li>
+          <li class="breadcrumb-item">Registration</li>
+          <li class="breadcrumb-item" aria-current="page">Confirmation</li>
+          <li class="breadcrumb-item" aria-current="page">Completion</li>
+        </ol>
+      </nav>
+    </div>
+
+    <!-- Email Return Modal -->
+    <div
+      class="modal fade"
+      id="reEnterEmail"
+      tabindex="-1"
+      aria-labelledby="reEnterEmailLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="reEnterEmailLabel">Re-enter Email</h5>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            All the filled information will be lost. Do you willing to continue?
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button type="button" class="btn btn-danger">Discard</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <form
+      id="contactForm"
+      th:action="@{${postAction}}"
+      th:object="${emailCheck}"
+      method="post"
+    >
+      <!-- Hidden Info -->
+      <input th:field="*{role}" type="hidden" th:value="*{role}" />
+      <!-- Visible Info -->
+      <div class="container-custom mt-5">
+        <div class="alert alert-danger" role="alert" th:if="${error!=null}">
+          The Email <b th:text="*{email}"></b> has already registered in the
+          system. Please <a href="/login">Login</a> to continue.
+        </div>
+        <div
+          class="alert alert-danger"
+          role="alert"
+          th:if="${passwordResetError!=null}"
+        >
+          The Email <b th:text="*{email}"></b> has not been registered in the
+          system.
+        </div>
+        <div class="card-pwd-reset">
+          <div class="card-header" th:if="${action == 'register'}">
+            <span
+              th:text="${emailCheck.role}"
+              style="text-transform: capitalize"
+            ></span>
+            Registration
+          </div>
+          <div class="card-header-st0001-css" th:if="${action == 'verify_password'}">
+            Reset Password
+          </div>
+          <div class="card-body">
+            <div class="container">
+              <div class="mb-3">
+                <label class="form-label" for="emailAddress"
+                  >Email Address</label
+                >
+                <input
+                  th:field="*{email}"
+                  class="form-control"
+                  id="email"
+                  type="text"
+                  th:classappend="${#fields.hasErrors('email')}?'is-invalid':''"
+                  placeholder="e.g. john@gmail.com"
+                />
+                <div
+                  class="invalid-feedback"
+                  th:if="${#fields.hasErrors('email')}"
+                  th:errors="*{email}"
+                >
+                  This field is required.
+                </div>
+              </div>
+
+              <div class="d-grid">
+                <button
+                  class="btn btn-primary btn-lg"
+                  id="submitButton"
+                  type="submit"
+                >
+                  Submit
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!---End of Card-->
+      </div>
+      <!-- End of Container -->
+    </form>
+
+    <div style="height: 140px"></div>
+
+    <div th:replace="@{fragments/footer}"></div>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.slim.min.js"
+      integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI="
+      crossorigin="anonymous"
+    ></script>
+    <script src="/js/ST0001_register.js"></script>
+    <script th:src="@{/js/main.js}"></script>
+  </body>
+</html>

@@ -1,0 +1,49 @@
+curl 'http://localhost:8080/register/student/kyawzlinnkb007@gmail.com/' \
+  -H 'Connection: keep-alive' \
+  -H 'Cache-Control: max-age=0' \
+  -H 'sec-ch-ua: " Not A;Brand";v="99", "Chromium";v="98", "Google Chrome";v="98"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'Origin: http://localhost:8080' \
+  -H 'Upgrade-Insecure-Requests: 1' \
+  -H 'DNT: 1' \
+  -H 'Content-Type: application/x-www-form-urlencoded' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36' \
+  -H 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'Sec-Fetch-Mode: navigate' \
+  -H 'Sec-Fetch-User: ?1' \
+  -H 'Sec-Fetch-Dest: document' \
+  -H 'Referer: http://localhost:8080/register/student/kyawzlinnkb007@gmail.com/' \
+  -H 'Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,my;q=0.7' \
+  -H 'Cookie: SESSION=ZGFmNTFkOWMtNTdmZS00YjA1LWI3OWMtNjIyY2Y0NjhmMjll' \
+  --data-raw 'email=kyawzlinnkb007%40gmail.com&name=kzl&password=asdf1234&confirmPassword=asdf1234&phone=09123456789&gender=male&dob=1999-02-10&zipCode=0&city=kalaw&division=shan&address=kama+street&education=Master&acceptTerm=true&_acceptTerm=on&action=submit' \
+  --compressed
+
+#######
+
+  curl "http://localhost:8080/register/student/kyawzayarlinnkb10^@gmail.com/" ^
+  -H "Connection: keep-alive" ^
+  -H "Cache-Control: max-age=0" ^
+  -H "sec-ch-ua: ^\^" Not A;Brand^\^";v=^\^"99^\^", ^\^"Chromium^\^";v=^\^"98^\^", ^\^"Google Chrome^\^";v=^\^"98^\^"" ^
+  -H "sec-ch-ua-mobile: ?0" ^
+  -H "sec-ch-ua-platform: ^\^"Windows^\^"" ^
+  -H "Origin: http://localhost:8080" ^
+  -H "Upgrade-Insecure-Requests: 1" ^
+  -H "DNT: 1" ^
+  -H "Content-Type: application/x-www-form-urlencoded" ^
+  -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/98.0.4758.82 Safari/537.36" ^
+  -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9" ^
+  -H "Sec-Fetch-Site: same-origin" ^
+  -H "Sec-Fetch-Mode: navigate" ^
+  -H "Sec-Fetch-User: ?1" ^
+  -H "Sec-Fetch-Dest: document" ^
+  -H "Referer: http://localhost:8080/register/student/kyawzayarlinnkb10^@gmail.com/" ^
+  -H "Accept-Language: en-GB,en-US;q=0.9,en;q=0.8,my;q=0.7" ^
+  -H "Cookie: SESSION=Y2M4ODQyYzQtYjc0My00Yjk4LWE5NGUtZmU1NGJmMTZjZTRl" ^
+  --data-raw "email=kyawzayarlinnkb10^%^40gmail.com&name=king&password=asdf1234&confirmPassword=asdf1234&phone=09123456789&gender=male&dob=2000-02-15&zipCode=0&city=kalaw&division=shan&address=block&education=Bachelor&acceptTerm=true&_acceptTerm=on&action=submit" ^
+  --compressed
+
+  ####
+
+  

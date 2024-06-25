@@ -1,0 +1,159 @@
+/* @media screen and (max-height: 450px) {
+    #link-btn{
+        width:100px;
+    }
+} */
+:root {
+	/* Colors */
+	--primary: #309986;
+	--warning: yellow;
+	--navbar-brand-bg-color: #edf3f1;
+	--navbar-color: #0f8173;
+	/* Typography */
+	--links-font-size: 17px;
+	--nav-link-bg-alt: #00736c;
+	--log-out:#e63587;
+	--certificate-border:#057835;
+	--certificate-btn:#3c8a08;
+	--certificate-secondbtn:hsla(160, 64%, 42%, 0.993);
+	--cardbox: #3abea6e7;
+    --btnbg: rgba(16, 226, 233, 0.993);
+    --btnborder:#fff;
+    --btnshadow:#000;
+	--registercomplete:green;
+}
+
+*,
+*::after,
+*::before {
+	box-sizing: border-box;
+}
+
+body {
+	font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+	font-weight: 400;
+	overflow-x: hidden;
+}
+
+.btn-small, .btn-small:active, .btn-small.active{
+  font-size: 16px;
+  color:#333;
+  background: #f7f7f7;
+  border: none; 
+  min-width: 225px;
+  padding: 9px;
+}
+
+
+/*  medium-sized devices */ 
+@media all and (min-width: 501px) and (max-width: 800px)
+{
+.new-class{
+  text-align:center;
+}  
+.btn{
+  margin-right:4px;
+  display: inline-block;
+}
+.btn-small, .btn-small:active, .btn-small.active{
+  font-size: 14px;
+  min-width: 50px;
+  padding: 6px;
+}  
+
+    }
+
+
+/*  small devices */ 
+@media all and (min-width: 401px) and (max-width: 500px)
+{
+.new-class{
+  text-align:center;
+}  
+.btn{
+  margin-right:2px;
+  display: inline-block;
+}
+.btn-small, .btn-small:active, .btn-small.active{
+  font-size: 12px;
+  min-width: 200px;
+  padding: 6px;
+  margin-bottom: 10px;
+}  
+  
+    }
+
+
+
+/*  extra small devices */ 
+@media all and (min-width: 297px) and (max-width: 400px) {
+.new-class{
+  text-align:center;
+}  
+.btn{
+  margin-right:1px;
+  display: inline-block;
+}
+.btn-small, .btn-small:active, .btn-small.active{
+  font-size: 10px;
+  min-width: 220px;
+  padding: 6px;
+  margin-bottom: 10px;
+}    
+    }
+
+
+/*  extra super small devices */ 
+@media all and (max-width: 296px)
+{
+.new-class{
+  text-align:center;
+}  
+.btn{
+  margin-right:0.5px;
+  display: inline-block;
+}
+.btn-small, .btn-small:active, .btn-small.active{
+  font-size: 8px;
+  min-width: 200px;
+  padding: 6px;
+  margin-bottom: 10px;
+}  
+  
+}
+footer {
+  width: 100vw;
+height: auto;
+background-color: #3f877a;
+color: white;
+}
+
+.footer__div {
+padding: 73px 103px;
+}
+
+.footer__title {
+font-size: 24px;
+}
+
+.footer__title ul {
+list-style: none;
+font-size: 16px;
+}
+
+.footer__subtitle {
+margin-top: 24px;
+}
+
+.copyright {
+	width: 100%;
+	background-color: black;
+	height: 49px;
+}
+
+.copyright__text {
+	margin: 0;
+	text-align: center;
+  color: white;
+}
+

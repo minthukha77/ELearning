@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!--bootstrap 5 css link-->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.css" />
+  <!--<link rel="stylesheet" href="/css/CM0004_Student Profile.css" />-->
+  <title>Pyinnyar Subuu</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    integrity="sha512-..." crossorigin="anonymous" />
+
+
+  <link rel="icon" type="image/x-icon" href="/images/fav.png">
+  <link rel="stylesheet" th:href="@{/css/global.css}" />
+  <link rel="stylesheet" th:href="@{/css/ST0005_Exam.css}" />
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('#teacherName,#testName,#examStatus').on('change', filterMenu);
+
+      function filterMenu() {
+        var selectedteacher = $('#teacherName').val();
+        var selectedtest = $('#testName').val();
+        var selectedstatus = $('#examStatus').val();
+
+        if (selectedteacher === '' || selectedtest === '' || selectedstatus === '') {
+          $('#items #id1').show();
+          return;
+        }
+
+        $('#items #id1').hide();
+
+
+        if (selectedteacher !== '') {
+          $('#items #id1[data-teacherName="' + selectedteacher + '"]').show();
+        }
+
+        if (selectedtest !== '') {
+          $('#items #id1[data-className="' + selectedtest + '"]').show();
+        }
+        if (selectedstatus !== '') {
+          $('#items #id1[data-examStatus="' + selectedstatus + '"]').show();
+        }
+
+
+
+      }
+
+    });
+
+    $(document).ready(function () {
+      $("#to-date").on("change", function () {
+        var fromDate = $("#from-date").val();
+        var toDate = $("#to-date").val();
+
+        var fromDateObj = new Date(fromDate);
+        var toDateObj = new Date(toDate);
+
+        $('#items #id1').each(function () {
+          var rowDate = new Date($(this).data("date"));
+
+          if (rowDate >= fromDateObj && rowDate <= toDateObj) {
+            $(this).show();
+          } else {
+            $(this).hide();
+          }
+        })
+      });
+    });
+  </script>
+
+
+
+</head>
+
+
+<body style="background-color: #f0f0f0">
+
+  <!-- guest user navi bar -->
+  <div th:replace="@{fragments/nav}"></div>
+
+
+
+  <div class="top" style="margin-top: 100px;display: flex;">
+    <h3 style="color:#0000FF;margin-left:110px;text-decoration-line:underline;">Top</h3>
+    <i style="left: 10px;top:10px;position:relative;" class="fas fa-arrow-right"></i>
+    <h3 style="margin-left:20px;">Exam</h3>
+
+  </div>
+
+
+  <section class="team">
+    <div class="row">
+      <div class="col-md-2">
+        <select id="from-date" class="form-select" style="margin-left: 30px;">
+          <option selected>Exam From</option>
+          <th:block th:each="exam:${examList}">
+            <option th:text="${exam.examDate}"></option>
+          </th:block>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <select id="to-date" class="form-select" style="margin-left: 20px;">
+          <option selected>Exam To</option>
+          <th:block th:each="exam:${examList}">
+            <option th:text="${exam.examDate}"></option>
+          </th:block>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <select id="examStatus" class="form-select" style="margin-left: 20px;">
+          <option selected>Exam By Status</option>
+          <th:block th:each="exam:${examList}">
+            <option th:text="${exam.examStatus}"></option>
+          </th:block>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <select id="teacherName" class="form-select" style="margin-left: 20px;">
+          <option selected>Exam By Teachers</option>
+          <th:block th:each="exam:${examList}">
+            <option th:value="${exam.teacherName}" th:text="${exam.teacherName}"></option>
+          </th:block>
+        </select>
+      </div>
+
+      <div class="col-md-2">
+        <select id="testName" class="form-select" style="margin-left: 20px;">
+          <option selected>Exam By Courses</option>
+          <th:block th:each="exam:${examList}">
+            <option th:value="${exam.className}" th:text="${exam.className}"></option>
+          </th:block>
+        </select>
+      </div>
+
+
+
+    </div>
+
+    <div th:each="examRows : ${examQty}" class="textsize" style="margin-left: 85%;">
+      <h5 style="font-size: 13px;" th:text="${examRows+'&nbsp;&nbsp;Exams Found'}"></h5>
+    </div>
+
+    <div class="container">
+      <div class="row">
+
+        <div th:each="exam : ${examList}" class="col-lg-6 mt-4" id="items">
+          <div class="dialog" id="id1" th:data-teacherName="${exam.teacherName}" th:data-className="${exam.className}"
+            th:data-examStatus="${exam.examStatus}" th:data-date="${exam.examDate}">
+
+
+            <div th:style="${#strings.equalsIgnoreCase(#strings.replace(exam.examStatus, '\\s', ''), 'exam finished')} ? 'background-color: #9E9E9E' : ''"  class="member d-flex align-items-start">
+
+                    <div class="member-info" >
+                      <div style="display: flex;margin-bottom: 20px;">
+                        <h5 style="margin-right: 10px;font-size:15px;" th:text="${exam.id}"></h5>
+                        <h4 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                            font-size: 16px;line-height: 19px;margin-right:10px;" th:text="${exam.testName}"></h4>
+                        <h4 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                            font-size: 16px;line-height: 19px;" th:text="${'('+exam.examStatus+')'}"></h4>
+                      </div>
+                      <div class="classtitle" style="display: flex;margin-bottom: 5px;">
+                        <h5 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                            font-size: 16px;line-height: 19px;margin-right:110px;" th:text="${exam.className}"></h5>
+                        <h5 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                             font-size: 16px;line-height: 19px;" th:text="${'('+exam.sectionName+')'}"></h5>
+                      </div>
+
+                      <div class="teachertitle">
+                        <h5 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                            font-size: 16px;line-height: 19px;margin-right:10px;margin-bottom: 10px;" th:text="${exam.teacherName}"></h5>
+                        <div class="teachertitle2" style="display: flex;">
+                            <h5 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                                font-size: 16px;line-height: 19px;margin-right:10px;margin-right: 200px;" th:text="${exam.passingScore}"></h5>
+                           
+                        </div>
+                      </div>
+                      <div class="datetitle" style="display: flex;margin-bottom: 5px;">
+                        <h5 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                            font-size: 16px;line-height: 19px;margin-right:10px;" th:text="${exam.examDate}"></h5>
+                        <h5 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                             font-size: 16px;line-height: 19px;" th:text="${'('+exam.startTime+'&nbsp;&nbsp;'}"></h5>
+                        <h5 style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                         font-size: 16px;line-height: 19px;" th:text="${exam.endTime+')'}"></h5>
+                      </div>
+                      <div class="teachertitle2" style="display: flex;">
+                        <a style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                            font-size: 16px;line-height: 19px;color:#0000FF;text-decoration-line:underline;
+                            margin-right:10px;margin-right: 200px;" th:href="@{/showExamQuestions/{id}(id=${exam.id})}">Exam Questions</a>
+                        <a style="font-family: 'Inter';font-style: normal;font-weight: 400;
+                            font-size: 16px;line-height: 19px;color:#0000FF;text-decoration-line:underline;
+                            margin-right:10px;" th:href="@{/showExamResults/{id}(id=${exam.id})}">Exam Results</a>
+                    </div>
+                   <!--<div class="form">
+                        <div class="row">
+                          <div class="col-md-5">
+                            <label for="teacher" class="col-form-label">TeacherName</label>
+                          </div>
+                          <div class="col-md-7 mt-2">
+                            <h5 th:text="${exam.teacherName}"></h5>
+                          </div>
+                        </div>
+                   
+                        <div class="row">
+                          <div class="col-md-5">
+                            <label for="score" class="col-form-label">Passing Score</label>
+                          </div>
+                          <div class="col-md-7 mt-1">
+                            <h5 th:text="${exam.passingScore}"></h5>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-5">
+                            <label for="examdate" class="col-form-label">Exam Date</label>
+                          </div>
+                          <div class="col-md-7 mt-2">
+                            <h5 th:text="${exam.examDate}"></h5>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-5">
+                            <label for="examminute" class="col-form-label">Exam Minute</label>
+                          </div>
+                          <div class="col-md-7 mt-2">
+                            <h5 th:text="${exam.examMinute}"></h5>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                              <label for="description" class="col-form-label">Description</label>
+                            </div>
+                            <div class="col-md-12">
+                                <p th:text="${exam.examDescription}"></p>
+                            </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-md-6">
+                            <a th:href="@{/showExamQuestions}" class="btn btn-primary btn-sm mb-3">Exam Questions</a>
+                          </div>
+                          <div class="col-md-6">
+                            <a th:href="@{/showExamResults}" class="btn btn-primary btn-sm mb-3">Exam Results</a>
+                          </div>
+                        </div>
+                      </div>-->
+
+                    </div>
+                </div>
+              </div>
+              
+              </div>
+
+            
+
+
+
+           
+
+        </div>
+      </div> 
+
+    </section>
+
+      
+
+
+  
+<!-- Student currently attending course table Ends here -->
+
+
+  <div th:replace="@{fragments/footer}"></div>
+  <script th:inline="javascript">
+    const isEditable = /*[[${isEditable}]]*/ false;
+    const uid = /*[[${id}]]*/ false;
+    const userRole = /*[[${role}]]*/ 'ROLE_STUDENT';
+  </script>
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="/js/photoPlaceHolder.js"></script>
+  <script src="/js/CM0004_profile.js"></script>
+  <script th:src="@{./../../../js/main.js}"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+  
+  
+</body>
+
+</html>

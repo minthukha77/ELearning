@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exam Questions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{/css/AT0007_TestQuestions.css}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+</head>
+
+<body style="padding-top: 80px;">
+    <div th:replace="@{fragments/nav}"></div>
+    <!-- create exam start  -->
+    <div class="create-exam-container min-vh-100 w-100 position-fixed top-0 d-flex justify-content-center align-items-center fadeIn d-none"
+        style="background-color: rgba(0, 0, 0, 0.4); z-index: 1000; padding-top: 100px; padding-bottom: 200px;">
+        <div class="create-exam-content rounded shadow bg-white">
+            <div class="d-flex justify-content-end p-2">
+                <div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle"
+                    style="width: 25px; height: 25px; cursor: pointer" id="cancel_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+            <div class="px-3 pb-3">
+                <p id="question_number">Question No.</p>
+                <div class="material-container" id="material-container">
+                    <div id="question_materials"></div>
+                    <div class="delete-button" id="delete-button-container" style="display: none;">
+                        <div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle ms-2"
+                            style="width: 20px; height: 20px; cursor: pointer" onclick="deleteQuestion()">
+                            <i class="fa fa-trash"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group-sm mb-2 shadow-sm">
+                    <label for="description" class="form-label fw-bold mb-1"><small>Description <span
+                                class="text-danger">*</span></small></label>
+                    <textarea class="form-control" id="question_description" rows="3"
+                        placeholder="Add description about exam"></textarea>
+                </div>
+                <div class="input-group-sm mb-2 shadow-sm">
+                    <label for="question_upload_box" class="form-label fw-bold mb-1"><small>Question Video, Image or
+                            Audio Upload Box</small></label>
+                    <input type="file" class="form-control" id="question_upload_box" />
+                </div>
+                <p style="color: red; display: none;" id="description_warning">Please insert description or file</p>
+
+                <div class="input-group-sm mb-2 shadow-sm">
+                    <label for="remove_files" class="form-label fw-bold mb-1" style="display: none;"><small>Remove
+                            question materials.</small></label>
+                    <div style="display: none;">
+                        <input type="radio" id="remove_yes" name="remove_files" value="yes">
+                        <label for="remove_yes">Yes</label>
+                    </div>
+                    <div style="display: none;">
+                        <input type="radio" id="remove_no" name="remove_files" value="no" checked>
+                        <label for="remove_no">No</label>
+                    </div>
+                </div>
+
+                <div class="input-group-sm mb-2 shadow-sm">
+                    <label for="answer_Type" class="form-label fw-bold mb-1"><small>Answer Type <span
+                                class="text-danger">*</span></small></label>
+                    <select class="form-select" aria-label="Default select example" id="answer_Type">
+                        <option value="1" selected>
+                            Single Answer
+                        </option>
+                        <option value="2">Multiple Answer</option>
+                        <option value="3">Free Answer</option>
+                    </select>
+                </div>
+
+                <!-- answer type start  -->
+                <label for="manage_answer" class="form-label fw-bold mb-1"><small>Manage Answer <span
+                            class="text-danger">*</span></small></label>
+                <div class="input-group-sm mb-2 fadeIn" id="single_answer">
+                    <div class="singleCounter" id="0"></div>
+                    <div class="row align-items-center mt-2 shadow-sm">
+                        <div class="col-11">
+                            <input type="text" class="form-control" placeholder="option 1" id="text_option_0" />
+                        </div>
+                        <div class="col-1 px-1">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                    id="radio_option_0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="" id="single_answer_choice">
+                    </div>
+                    <p style="color: red; display: none;" id="warning"></p>
+                    <div class="btn btn-sm btn-success mt-3" id="single_add_option">
+                        <small>+ Add Option</small>
+                    </div>
+                </div>
+
+                <div class="input-group-sm mb-2 d-none fadeIn" id="multiple_answer">
+                    <div class="multiCounter" id="0"></div>
+                    <div class="row align-items-center mt-2 shadow-sm">
+                        <div class="col-11">
+                            <input type="text" class="form-control" placeholder="option 1" id="check_text_option_0" />
+                        </div>
+                        <div class="col-1 px-1">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkBox" name="flexCheckDefault"
+                                    id="check_option_0" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="" id="multiple_answer_choice">
+                    </div>
+                    <div class="btn btn-sm btn-success mt-2" id="multiple_add_option">
+                        <small>+ Add Option</small>
+                    </div>
+                </div>
+                <!-- answer type end  -->
+
+                <div class="input-group-sm mb-3 shadow-sm">
+                    <label for="passing_score" class="form-label fw-bold mb-1"><small>Maximum Marks <span
+                                class="text-danger">*</span></small></label>
+                    <input type="text" class="form-control" id="passing_score"
+                        placeholder="Enter minimum passing score" />
+                </div>
+                <p style="color: red; display: none;" id="passing_score_warning">Please insert passing score</p>
+                <div class="input-group-sm text-end">
+                    <input type="submit" class="form-control btn btn-sm btn-success" id="submit" style="width: 100px" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- create exam end  -->
+
+    <section class="main container">
+        <div class="d-flex align-items-center justify-content-between flex-wrap">
+            <div class="mt-3">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item"><a href="#">Exam</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">
+                            Questions
+                        </li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="mt-3">
+                <small class="text-success fw-bold"><span th:text="${#lists.size(questionList)}"></span>
+                    Questions</small>
+            </div>
+        </div>
+        <div class="text-md-end mt-2">
+            <div class="btn btn-sm btn-success rounded border-0" id="create_question">
+                Create Question
+            </div>
+        </div>
+
+        <div class="d-flex justify-content-center align-items-center flex-wrap" style="padding-bottom: 50px;">
+            <div class="box">
+                <div class="row">
+                    <div class="col-12 col-lg-12" th:each="testquestion, index:${questionList}">
+                        <div class="col-12 mt-4 question1">
+                            <div class="card border-0">
+                                <div class="d-flex justify-content-end align-items-center p-2">
+                                    <i class="fa-solid fa-pen-to-square text-success" style="cursor: pointer"
+                                        th:onclick="setDataToEditDialog([[${testquestion}]],[[${index.count}]],[[${testquestion.question_materials_type}]],'${testquestion.question_materials}')"></i>
+                                    <div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle ms-2"
+                                        style="width: 20px; height: 20px; cursor: pointer" id="">
+                                        <i class="fa-solid fa-xmark"
+                                            th:onclick="setDataToDeleteDialog([[${testquestion}]]);"></i>
+                                    </div>
+                                </div>
+                                <div class="card-body text-dark">
+                                    Question No. <small class="fw-bold text-success question-no"
+                                        th:text="${index.count}">
+                                    </small>
+                                    <div class="mb-3"></div>
+                                    <div th:if="${testquestion.question_materials_type == 'AUDIO'}">
+                                        <audio controls class="w-100">
+                                            <source th:src="${testquestion.question_materials}" type="audio/mpeg">
+                                        </audio>
+                                    </div>
+                                    <div th:if="${testquestion.question_materials_type == 'VIDEO'}">
+                                        <video width="100%" height="240" controls>
+                                            <source th:src="${testquestion.question_materials}" type="video/mp4">
+                                        </video>
+                                    </div>
+                                    <div th:if="${testquestion.question_materials_type == 'IMAGE'}"
+                                        style="justify-content: center; align-items: center; display: flex;">
+                                        <img th:src="${testquestion.question_materials}" style="width: 100%;">
+                                    </div>
+                                    <h5 class="">Description</h5>
+                                    <p th:text="${testquestion.question_text}"></p>
+                                    <div th:each="choice, choiceindex : ${testquestion.choices}">
+                                        <div class="form-check border rounded py-2 px-5 mt-2"
+                                            th:style="${choice.correct == true ? 'background-color: green' : 'background-color: white'}">
+                                            <label class="form-check-label" th:text="${choice.choice}"
+                                                th:style="${choice.correct == true ? 'color: white' : 'color: black'}"></label>
+                                        </div>
+                                    </div>
+                                    <div class="mt-3">
+                                        <div class="text-end mb-2">
+                                            <small class="fw-bold">Maximum Mark : <span
+                                                    th:text="${testquestion.maximum_mark}"> </span> Marks</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="delete-exam-container min-vh-100 w-100 position-fixed top-0 d-flex justify-content-center align-items-center d-none fadeIn"
+        style="background-color: rgba(0, 0, 0, 0.4); z-index: 1000; padding-top: 80px;">
+        <div class="create-exam-content rounded shadow bg-white">
+            <div class="d-flex justify-content-end p-2">
+                <div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle"
+                    style="width: 25px; height: 25px; cursor: pointer" id="delete_cancel_btn">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+            <div class="px-3 pb-3">
+                <h5 class="text-success text-center mb-3">Are You Sure Want To Delete?</h5>
+                <div class="input-group-sm text-end">
+                    <input type="submit" class="form-control btn btn-sm btn-success" id="deleteSubmit"
+                        style="width: 100px" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div th:replace="@{fragments/footer}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script th:inline="javascript">
+        var role = /*[[${user_role}]]*/ "default";
+        var url;
+
+        if (role == "TEACHER") {
+            url = "teacher";
+        } else {
+            url = "admin";
+        }
+
+        var mode = "create";
+        var question_id;
+        let createExamContainer = document.querySelector('.create-exam-container');
+        cancelBtn = document.querySelector('#cancel_btn');
+        createExam = document.querySelector('#create_question');
+
+        cancelBtn.addEventListener('click', () => createExamContainer.classList.add('d-none'));
+        createExam.addEventListener('click', () => {
+            createExamContainer.classList.remove('d-none');
+            $('#single_answer_choice').empty();
+            $('#multiple_answer_choice').empty();
+            $("#question_description").value = "";
+            $("#passing_score").value = "";
+            mode = "create";
+        });
+
+        let answerType = document.querySelector('#answer_Type');
+        singleAnswer = document.querySelector('#single_answer');
+        multipleAnswer = document.querySelector('#multiple_answer');
+        singleAddOption = document.querySelector('#single_add_option');
+        multipleAddOption = document.querySelector('#multiple_add_option');
+        singleAddOptionBox = document.querySelector('#single_add_optionbox');
+        multipleAddOptionBox = document.querySelector('#multiple_add_optionbox');
+        singleAddNew = document.querySelector('#single_add_new');
+        multipleAddNew = document.querySelector('#multiple_add_new');
+        singleAnswerChoice = document.querySelector('#single_answer_choice');
+        multipleAnswerChoice = document.querySelector('#multiple_answer_choice');
+        singleAddText = document.querySelector('#single_add_text');
+        multipleAddText = document.querySelector('#multiple_add_text');
+
+        answerType.addEventListener('change', () => {
+            if (answerType.value == '1') {
+                singleAnswer.classList.remove('d-none')
+                multipleAnswer.classList.add('d-none')
+            } else if (answerType.value == '2') {
+                singleAnswer.classList.add('d-none')
+                multipleAnswer.classList.remove('d-none')
+            } else if (answerType.value == '3') {
+                singleAnswer.classList.add('d-none')
+                multipleAnswer.classList.add('d-none')
+            }
+        })
+
+        var singleCount = 1;
+        singleAddOption.addEventListener('click', () => {
+            $('#single_answer_choice').append('<div class="singleCounter" id="' + singleCount + '">' +
+                '<div class="row align-items-center mt-2 shadow-sm">' +
+                '<div class="col-10">' +
+                '<input type="text" class="form-control" placeholder="option ' + (singleCount + 1) + '" id="text_option_' + singleCount + '"' +
+                ' />' +
+                '</div>' +
+                '<div class="col-1 px-1">' +
+                '<div class="form-check">' +
+                '<input class="form-check-input" type="radio" name="flexRadioDefault"' +
+                'id="radio_option_' + singleCount + '" />' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-1 px-1">' +
+                '<div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle ms-2"' +
+                'style="width: 20px; height: 20px; cursor: pointer" id="radio_delete_' + singleCount + '">' +
+                '<i class="fa-solid fa-xmark" onclick="deleteRow(' + singleCount + ')"></i>' +
+                '</div >' +
+                '</div>' +
+                '</div></div>');
+            singleCount++;
+        })
+
+        var multipleCount = 1;
+        multipleAddOption.addEventListener('click', () => {
+            $('#multiple_answer_choice').append('<div class="multiCounter" id="' + multipleCount + '">' +
+                '<div class="row align-items-center mt-2 shadow-sm">' +
+                '<div class="col-10">' +
+                '<input type="text" class="form-control" placeholder="option ' + (multipleCount + 1) + '" id="check_text_option_' + multipleCount + '" />' +
+                '</div>' +
+                '<div class="col-1 px-1">' +
+                '<div class="form-check">' +
+                '<input class="form-check-input" type="checkBox"' +
+                'id="check_option_' + multipleCount + '" />' +
+                '</div>' +
+                '</div>' +
+                '<div class="col-1 px-1">' +
+                '<div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle ms-2"' +
+                'style="width: 20px; height: 20px; cursor: pointer" id="check_delete_' + multipleCount + '">' +
+                '<i class="fa-solid fa-xmark" onclick="deleteRow(' + multipleCount + ')"></i>' +
+                '</div >' +
+                '</div>' +
+                '</div></div>');
+            multipleCount++;
+        })
+
+        submit = document.getElementById("submit");
+        submit.addEventListener('click', () => {
+            choices = [];
+            answers = [];
+            var choices_string;
+            var answers_string;
+            let formData = new FormData();
+            var test_id = /*[[${test_id}]]*/ null
+
+            var question_description = document.getElementById("question_description").value;
+            var description_warning = document.getElementById("description_warning");
+            var passing_score_warning = document.getElementById("passing_score_warning");
+            if (question_description == null || question_description == "") {
+                description_warning.style.display = "block";
+                return;
+            }
+            var question_materials = document.getElementById("question_upload_box");
+            var removeYesRadio = document.getElementById('remove_yes');
+            var question_mark = document.getElementById("passing_score").value;
+            var singlechoice = document.getElementById("single_answer_choice");
+            var singlecounters = Array.from(document.getElementsByClassName("singleCounter"));
+            var multiplecounters = Array.from(document.getElementsByClassName("multiCounter"));
+            var answertype = document.getElementById("answer_Type");
+            var warning = document.getElementById("warning");
+            if (answerType.value == 1) {
+                answerType = "SINGLE_ANSWER";
+            } else if (answerType.value == 2) {
+                answerType = "MULTIPLE_ANSWER";
+            } else {
+                answerType = "FREE_ANSWER";
+            }
+            if (answerType != "FREE_ANSWER") {
+                if (answerType == "SINGLE_ANSWER") {
+                    var index = 0;
+                    singlecounters.forEach(counter => {
+                        var id = counter.id;
+                        if (document.getElementById("radio_option_" + id).checked == true) {
+                            var answer = { "answer": index }
+                            answers.push(answer);
+                        }
+                        var choice = { "choice": document.getElementById("text_option_" + id).value }
+                        choices.push(choice);
+                        index++;
+                    });
+                    choices_string = JSON.stringify(choices);
+                    answers_string = JSON.stringify(answers);
+                    console.log(answers);
+                } else {
+                    var index = 0;
+                    multiplecounters.forEach(counter => {
+                        var id = counter.id;
+                        if (document.getElementById("check_option_" + id).checked == true) {
+                            var answer = { "answer": index }
+                            answers.push(answer);
+                        }
+                        var choice = { "choice": document.getElementById("check_text_option_" + id).value }
+                        choices.push(choice);
+                        index++;
+                    });
+                    choices_string = JSON.stringify(choices);
+                    answers_string = JSON.stringify(answers);
+                }
+            }
+            if (choices.length == 1) {
+                warning.innerHTML = "Please Add At Least 2 Choices";
+                warning.style.display = "block";
+                return;
+            }
+            // console.log(answers);
+            // if (answers.length == 0) {
+            //     warning.innerHTML = "Please Add Answer";
+            //     warning.style.display = "block";
+            //     return;
+            // }
+            if (question_mark == null || question_mark == "") {
+                passing_score_warning.style.display = "block";
+                return;
+            }
+            warning.style.display = "none";
+            description_warning.style.display = "none";
+            passing_score_warning.style.display = "none";
+            var file = question_materials.files[0];
+
+            formData.append('test_id', parseInt(test_id));
+            formData.append('question_text', question_description);
+            formData.append('questions_type', answerType);
+            if (answerType != "FREE_ANSWER") {
+                formData.append('choices', choices_string);
+                formData.append('answers', answers_string);
+            }
+            if (file != null) {
+                formData.append('question_materials', file);
+            }
+            
+            if (removeYesRadio.checked) {
+                var dummyFile = new File([""], "dummy.blank", { type: "application/octet-stream" });
+                var dataTransfer = new DataTransfer();
+                dataTransfer.items.add(dummyFile);
+                question_materials.files = dataTransfer.files;
+                file = dummyFile;
+                formData.append('question_materials', file);
+
+
+            }
+
+            formData.append('maximum_mark', parseInt(document.getElementById("passing_score").value));
+            if (mode == 'create') {
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "https://pyinnyarsubuu.com/" + url + "/create-question", true);
+                xhr.onload = function () {
+                    window.location.reload();
+                };
+                xhr.send(formData);
+            } else {
+                formData.append('question_id', parseInt(question_id))
+                var xhr = new XMLHttpRequest();
+                xhr.open("POST", "https://pyinnyarsubuu.com/" + url + "/edit-question", true);
+                xhr.onload = function () {
+                    window.location.reload();
+                };
+                xhr.send(formData);
+            }
+
+        })
+
+
+        function setDataToEditDialog(question, questionNumber, materialsType, materialsUrl) {
+
+            document.getElementById("question_number").innerText = "Question No. " + questionNumber;
+
+
+            var materialsContainer = document.getElementById("question_materials");
+            var deleteButtonContainer = document.getElementById("delete-button-container");
+            materialsContainer.innerHTML = "";
+
+
+            if (materialsType === 'AUDIO') {
+                var audioElement = document.createElement("audio");
+                audioElement.setAttribute("controls", "controls");
+
+                var sourceElement = document.createElement("source");
+                sourceElement.setAttribute("src", question.question_materials);
+                sourceElement.setAttribute("type", "audio/mpeg");
+
+                audioElement.appendChild(sourceElement);
+                materialsContainer.appendChild(audioElement);
+
+                var showDeleteBlock = true;
+                if (showDeleteBlock) {
+                    deleteButtonContainer.style.display = "block";
+                }
+
+            } else if (materialsType === 'VIDEO') {
+                var videoElement = document.createElement("video");
+                videoElement.setAttribute("width", "100%");
+                videoElement.setAttribute("height", "240");
+                videoElement.setAttribute("controls", "controls");
+
+                var sourceElement = document.createElement("source");
+                sourceElement.setAttribute("src", question.question_materials);
+                sourceElement.setAttribute("type", "video/mp4");
+
+                videoElement.appendChild(sourceElement);
+                materialsContainer.appendChild(videoElement);
+
+                var showDeleteBlock = true;
+                if (showDeleteBlock) {
+                    deleteButtonContainer.style.display = "block";
+                }
+            } else if (materialsType === 'IMAGE') {
+                var imageElement = document.createElement("img");
+                imageElement.setAttribute("src", question.question_materials);
+                imageElement.setAttribute("style", "width: 100%");
+                materialsContainer.appendChild(imageElement);
+
+                var showDeleteBlock = true;
+                if (showDeleteBlock) {
+                    deleteButtonContainer.style.display = "block";
+                }
+            }
+
+
+            if (question.question_type == "MULTIPLE_ANSWER") {
+                multipleCount = question.choices.length;
+            } else if (question.question_type == "SINGLE_ANSWER") {
+                singleCount = question.choices.length;
+            }
+            question_id = question.id;
+            mode = "update";
+            console.log(question);
+            $('#single_answer_choice').empty();
+            $('#multiple_answer_choice').empty();
+            createExamContainer.classList.remove('d-none');
+            var question_description = document.getElementById("question_description");
+            question_description.value = question.question_text;
+
+            var question_type = document.getElementById("answer_Type");
+            console.log(question.question_type);
+            if (question.question_type == "SINGLE_ANSWER") {
+                question_type.selectedIndex = 0
+                singleAnswer.classList.remove('d-none')
+                multipleAnswer.classList.add('d-none')
+            } else if (question.question_type == "MULTIPLE_ANSWER") {
+                question_type.selectedIndex = 1
+                singleAnswer.classList.add('d-none')
+                multipleAnswer.classList.remove('d-none')
+            } else {
+                question_type.selectedIndex = 2
+                singleAnswer.classList.add('d-none')
+                multipleAnswer.classList.add('d-none')
+            }
+
+            var passing_score = document.getElementById("passing_score");
+            passing_score.value = question.maximum_mark;
+            if (question.question_type == "SINGLE_ANSWER") {
+                document.getElementById("text_option_0").value = question.choices[0].choice;
+                if (question.choices[0].correct == true) {
+                    document.getElementById("radio_option_0").checked = true;
+                }
+                for (var i = 1; i < question.choices.length; i++) {
+                    $('#single_answer_choice').append('<div class="singleCounter" id="' + i + '">' +
+                        '<div class="row align-items-center mt-2 shadow-sm">' +
+                        '<div class="col-10">' +
+                        '<input type="text" class="form-control" placeholder="option ' + (i + 1) + '" id="text_option_' + i + '"' +
+                        ' />' +
+                        '</div>' +
+                        '<div class="col-1 px-1">' +
+                        '<div class="form-check">' +
+                        '<input class="form-check-input" type="radio" name="flexRadioDefault"' +
+                        'id="radio_option_' + i + '" />' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-1 px-1">' +
+                        '<div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle ms-2"' +
+                        'style="width: 20px; height: 20px; cursor: pointer" id="radio_delete_' + i + '">' +
+                        '<i class="fa-solid fa-xmark" onclick="deleteRow(' + i + ')"></i>' +
+                        '</div >' +
+                        '</div>' +
+                        '</div></div>');
+                    document.getElementById("text_option_" + i).value = question.choices[i].choice;
+                    if (question.choices[i].correct == true) {
+                        document.getElementById("radio_option_" + i).checked = true;
+                    }
+                }
+            } else if (question.question_type == "MULTIPLE_ANSWER") {
+                document.getElementById("check_text_option_0").value = question.choices[0].choice;
+                if (question.choices[0].correct == true) {
+                    document.getElementById("check_option_0").checked = true;
+                }
+                for (var i = 1; i < question.choices.length; i++) {
+                    $('#multiple_answer_choice').append('<div class="multiCounter" id="' + i + '">' +
+                        '<div class="row align-items-center mt-2 shadow-sm">' +
+                        '<div class="col-10">' +
+                        '<input type="text" class="form-control" placeholder="option ' + (i + 1) + '" id="check_text_option_' + i + '" />' +
+                        '</div>' +
+                        '<div class="col-1 px-1">' +
+                        '<div class="form-check">' +
+                        '<input class="form-check-input" type="checkBox"' +
+                        'id="check_option_' + i + '" />' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="col-1 px-1">' +
+                        '<div class="d-flex justify-content-center align-items-center bg-danger text-white rounded-circle ms-2"' +
+                        'style="width: 20px; height: 20px; cursor: pointer" id="check_delete_' + i + '">' +
+                        '<i class="fa-solid fa-xmark" onclick="deleteRow(' + i + ')"></i>' +
+                        '</div >' +
+                        '</div>' +
+                        '</div></div>');
+                    document.getElementById("check_text_option_" + i).value = question.choices[i].choice;
+                    if (question.choices[i].correct == true) {
+                        document.getElementById("check_option_" + i).checked = true;
+                    }
+                }
+            }
+        }
+
+
+        function deleteQuestion() {
+
+            document.getElementById('remove_yes').checked = true;
+
+
+            var submitButton = document.getElementById('submit');
+            submitButton.click();
+        }
+
+        function deleteRow(index) {
+            var delete_row = document.getElementById(index);
+            var delete_row = document.getElementById(index);
+            var multiple_choice = document.getElementById('multiple_answer_choice');
+            var single_choice = document.getElementById('single_answer_choice');
+            if (delete_row.className == "multiCounter") {
+                multiple_choice.removeChild(delete_row);
+            } else {
+                single_choice.removeChild(delete_row);
+            }
+        }
+
+        let deleteCancelBtn = document.querySelector('#delete_cancel_btn');
+        let deleteExamContainer = document.querySelector('.delete-exam-container');
+        deleteCancelBtn.addEventListener('click', () => deleteExamContainer.classList.add('d-none'));
+
+        var testquestionID;
+        function setDataToDeleteDialog(testquestion) {
+            testquestionID = testquestion.id;
+            let deleteExamDialog = document.querySelector('.delete-exam-container');
+            deleteExamDialog.classList.remove('d-none');
+        }
+
+        $("#deleteSubmit").click(function () {
+            fetch("/" + url + "/delete-question?question_id=" + testquestionID, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                if (response.status == 200) {
+                    window.location.reload();
+                }
+            })
+        })
+    </script>
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>

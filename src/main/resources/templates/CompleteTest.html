@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4"
+  >
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+      <title>Pyinnyar Subuu</title>
+
+      <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+      <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+    </head>
+    <body>
+      <div style="width: 1000px; margin: 100px auto">
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/Student/Register/Complete'|"
+        >
+          Student Register Complete(Student)
+        </button>
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/Admin/StudentList/Register/Complete'|"
+        >
+          Student Register Complete(Admin)
+        </button>
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/Teacher/Register/Complete'|"
+        >
+          Teacher Register Complete
+        </button>
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/Review/Complete'|"
+        >
+          Review Complete(Student & Teacher)
+        </button>
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/Admin/Review/Complete'|"
+        >
+          Review Complete(Admin)
+        </button>
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/Payment/Complete'|"
+        >
+          Payment Complete
+        </button>
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/TakeALeave/Complete'|"
+        >
+          Take a Leave Complete
+        </button>
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/teacher/course-upload/complete'|"
+        >
+          Upload Course Complete(Teacher)
+        </button>
+        <button
+          id="studentRegisterConfirm"
+          type="button"
+          style="margin: 10px"
+          class="btn btn-outline-primary"
+          th:onclick="|window.location.href='/admin/course-upload/complete'|"
+        >
+          Upload Course Complete(Admin)
+        </button>
+      </div>
+
+      <!-- <button id="studentRegisterConfirm" type="button" style="margin: 10px;" class="btn btn-outline-primary" th:onclick="|window.location.href='/complete'|">Student Register Complete(Student)</button> -->
+      <!-- <form action="/complete" method="get">
+    <button name="yourButton" value="[test]">Student Register Complete(Student)</button>
+  </form> -->
+    </body>
+  </html>
+</html>

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+  <html
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extrasspringsecurity4"
+  >
+    <head>
+      <meta charset="UTF-8" />
+      <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+        crossorigin="anonymous"
+      />
+      <!-- modal -->
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+      <title>500 ERROR</title>
+
+      <link rel="icon" type="image/x-icon" href="/images/fav.png" />
+      <style>
+        .container {
+          background: #fff;
+          font-family: "Nunito", sans-serif;
+          padding: 0;
+          box-sizing: border-box;
+          max-width: 700px;
+          margin: 1.5rem auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+        }
+
+        @media (max-width: 650px) {
+          .container {
+            width: 85%;
+          }
+        }
+
+        .header {
+          color: #7452d6;
+          font-size: 3em;
+          font-weight: 700;
+          text-align: center;
+          text-shadow: 2px 2px 5px #411fa3;
+          box-sizing: border-box;
+          margin: 0;
+          padding: 0;
+          display: block;
+          /* margin-block-start: 0.67em;
+            margin-block-end: 0.67em; */
+          margin-inline-start: 0px;
+          margin-inline-end: 0px;
+          font-family: "Nunito", sans-serif;
+          /* background: #fff1f1; */
+        }
+
+        .compcontainer {
+          width: 75%;
+          padding: 1rem 0;
+          box-sizing: border-box;
+          display: block;
+        }
+
+        @media (max-width: 650px) {
+          .compcontainer {
+            height: 10rem;
+          }
+        }
+
+        img {
+          display: block;
+          margin-left: auto;
+          margin-right: auto;
+        }
+
+        p {
+          margin-bottom: 0;
+        }
+
+        h2,
+        p {
+          color: #b9a8ea;
+          opacity: 70%;
+        }
+
+        .btn {
+          z-index: 1;
+          overflow: hidden;
+          background: transparent;
+          position: relative;
+          padding: 8px 50px;
+          border-radius: 30px;
+          cursor: pointer;
+          font-size: 1em;
+          letter-spacing: 2px;
+          transition: 0.2s ease;
+          font-weight: bold;
+          margin: 20px 0px;
+        }
+
+        .btn.green {
+          border: 4px solid #411fa3;
+          color: #0e0620;
+        }
+
+        .btn.green:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 0%;
+          height: 100%;
+          background: #7452d6;
+          z-index: -1;
+          transition: 0.2s ease;
+        }
+
+        .btn.green:hover {
+          color: #fff;
+          background: #7452d6;
+          transition: 0.2s ease;
+        }
+
+        .btn.green:hover:before {
+          width: 100%;
+        }
+      </style>
+    </head>
+
+    <body>
+      <div class="container">
+        <!-- <div class="compcontainer">
+            
+        </div> -->
+        <img
+          src="../images/500error.gif"
+          alt="500error"
+          style="width: 50%"
+          th:src="@{images/500error.gif}"
+        />
+        <h1 class="header">500 ERROR</h1>
+        <h2>Internal Server Error</h2>
+
+        <p>The server has been deserted for a while.</p>
+        <p>Please be patient or try again later.</p>
+        <button class="btn green" th:onclick="|window.location.href='/'|">
+          HOME
+        </button>
+      </div>
+    </body>
+  </html>
+</html>

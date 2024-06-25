@@ -1,0 +1,2 @@
+INSERT INTO public.user_account(account_id, account_status, is_mail_verified, mail, password, registered_date, role) 
+VALUES (0, 'Registered',TRUE,'SuperAdmin@gmail.com','$2a$10$T6ues0iAD9jXnIqxGWPzzOtppcA5pDx6YqmE/c8J/hYyIP2Z8ZhNW','2021-12-01','ROLE_SUPER_ADMIN');

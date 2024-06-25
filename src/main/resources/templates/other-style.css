@@ -1,0 +1,327 @@
+/*General*/
+body{
+  font-family: 游ゴシック, "Yu Gothic", 游ゴシック体, YuGothic, sans-serif;
+}
+p{
+  font-size: 16px;
+}
+.fa-5x {
+  color: #7749f8;
+}
+.btn {
+    font-family: 游ゴシック, "Yu Gothic", 游ゴシック体, YuGothic, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 8px 32px;
+    border-radius: 50px;
+    transition: 0.5s;
+    margin: 10px;
+    color: #fff;
+    background: #7749f8;
+  }
+  .btn-reset {
+    font-family: 游ゴシック, "Yu Gothic", 游ゴシック体, YuGothic, sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    letter-spacing: 1px;
+    display: inline-block;
+    padding: 8px 32px;
+    border-radius: 50px;
+    transition: 0.5s;
+    margin: 10px;
+    color: #fff;
+    background: #68717a;
+
+  }
+  
+  .btn:hover,
+  .btn:focus {
+    color: #7749f8;
+    background: #fff;
+    border-color: #7749f8;
+  }
+  
+  /*Navigation bar*/
+  .navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    /*background: rgba(0,0,0,0.7);*/
+    border: 0;
+    padding: 5px 0;
+    width: 100%;
+    position: fixed;
+    /*z-index: 999;*/
+  }
+  
+  .navbar-brand {
+    float: left;
+    min-height: 80px;
+    padding: 0 15px 5px;
+  }
+  
+  #upper-menu {
+    padding-top: 15px;
+    padding-left: 7%;
+  }
+  .navbar-inverse .navbar-nav > li > a {
+    font-weight: 400;
+    color: #fff;
+  }
+  
+  .navbar-inverse .navbar-nav > li > a:hover,
+  .navbar-inverse .navbar-nav > li > a:focus {
+    color: #f549ec;
+    font-weight: 400;
+  }
+  
+  .navbar-inverse .navbar-nav >.active > a{
+    color: #f549ec;
+    background: transparent;
+  }
+
+  .navbar-inverse .navbar-nav > .active > a:hover,
+  .navbar-inverse .navbar-nav > .active > a:focus {
+    color: #fff;
+    background: transparent;
+
+  }
+  
+  .navbar-inverse .navbar-text {
+    padding-top: 10px;
+    color: #fff;
+  }
+  
+  .navbar-nav > li > a {
+    padding-top: 5px;
+    padding-bottom: 10px;
+  }
+  
+  /* carousel */
+  
+  
+  .carousel-caption {
+    text-align: left;
+    left: 20%;
+    top: 50%;
+    transform: translateY(-50%);
+    text-transform: uppercase;
+  }
+
+  /* header image area */
+  .header-img{
+      width: 100%;
+      height: 30%;
+  }
+
+  /*section*/
+.sec-header{
+    margin: 40px 0 0;
+    font-family:游ゴシック, "Yu Gothic", 游ゴシック体, YuGothic, sans-serif;
+    font-weight: 300px;
+}
+.sec-content {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-left: 200px;
+    margin-right: 200px;
+    border-bottom: 1px solid rgba(0,0,0,0.2);
+    text-align:center ;
+}
+
+.sec-content .violet-text {
+  color:#940564;
+}
+
+.sec-content img {
+  border-radius: 5px;
+}
+
+@media(max-width:1200px){
+  .sec-content {
+    margin-left: 50px;
+    margin-right: 50px;
+  }
+}
+
+.sec-content-text {
+    margin-top: 20px;
+}
+
+/* form section */
+
+.form-header {
+  margin-top: 120px;
+  padding-top: 100px;
+}
+
+.form-header p {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  font-size: 20px;
+  color: #152536;
+
+}
+
+.form-header-col{
+  background: grey;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+/* .form-row {
+  padding-top: 30px;
+} */
+
+.form-col {
+  border-left: 1px solid rgb(165, 163, 163);
+  border-right: 1px solid rgb(165, 163, 163);
+  border-bottom: 1px solid rgb(165, 163, 163);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  /* background-color: burlywood; */
+}
+
+.col-form-label-rt{
+text-align: right;
+}
+
+.bg-red {
+  text-align: center;
+  color: #fff;
+  background: rgb(255, 0, 0);
+}
+
+.bg-grey {
+  text-align: center;
+  color: #fff;
+  background: rgb(131, 130, 130);
+}
+
+.form-sec-header{
+padding-top:20px;
+color: #f549ec;
+}
+
+/*footer*/
+
+.footer-link{
+  margin-top: 40px;
+  padding: 40px 0 30px 0;
+    background-color:#DAD9D9;
+}
+
+.footer-link ul {
+  padding: 0;
+}
+
+.footer-link ul li{
+    list-style-type:none;
+    float: left;
+}
+.footer-link ul li a{
+  font-weight: 600;
+  text-decoration:none;
+  font-size:14px;
+  color:rgb(0, 0, 0);
+  display:block;
+  padding:5px 15px;
+}
+
+.footer-link ul li a:hover{
+  color: #f549ec;
+}
+
+.footer-link ul li.active a{
+  color: #f549ec;
+}
+
+.footer-social{
+  background-color:#DAD9D9;
+  color:rgb(0, 0, 0);
+}
+
+.copy-c{
+  padding:15px 0;
+}
+
+/* Back to top button */
+.back-to-top {
+  position: fixed;
+  display: none;
+  background: #7749F8;
+  color: #fff;
+  display: inline-block;
+  width: 44px;
+  height: 44px;
+  text-align: center;
+  line-height: 1;
+  font-size: 16px;
+  border-radius: 50%;
+  right: 15px;
+  bottom: 15px;
+  transition: background 0.5s;
+  z-index: 11;
+}
+
+.back-to-top i {
+  padding-top: 12px;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .back-to-top {
+    bottom: 15px;
+  }
+}
+
+ /* The side navigation menu */
+ .sidenav {
+  height: 100%; /* 100% Full-height */
+  width: 0; /* 0 width - change this with JavaScript */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Stay on top */
+  top: 0; /* Stay at the top */
+  left: 0;
+  background-color: #111; /* Black*/
+  overflow-x: hidden; /* Disable horizontal scroll */
+  padding-top: 60px; /* Place content 60px from the top */
+  transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+}
+
+/* The navigation menu links */
+.sidenav a {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+  color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#main {
+  transition: margin-left .5s;
+  padding: 20px;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+} 

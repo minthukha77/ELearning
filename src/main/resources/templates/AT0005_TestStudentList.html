@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students List</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+        integrity="sha512-MV7K8+y+gLIBoVD59lQIYicR65iaqukzvf/nwasF0nqhPay5w/9lJmVM2hMDcnK1OnMGCdVK+iQrJ7lzPJQd1w=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" th:href="@{/css/AT0005_TestStudentList.css}" />
+    <link rel="stylesheet" th:href="@{/css/global.css}" />
+    <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</head>
+
+<body style="padding-top: 80px;">
+    <div th:replace="@{fragments/nav}"></div>
+    <!-- add student modal box start  -->
+    <div class="add-student-box min-vh-100 position-fixed w-100 top-0 d-flex justify-content-center align-items-center d-none"
+        style="z-index: 1000;background: rgba(0,0,0,0.4); max-height: 500px; overflow-y: auto;">
+        <div class="add-student-content px-2 py-3 rounded shadow-sm bg-white">
+            <div class="d-flex justify-content-end">
+                <div class="bg-danger text-white rounded-circle d-flex justify-content-center align-items-center"
+                    style="width: 30px;height: 30px;cursor: pointer;" id="add_student_cancel">
+                    <i class="fa-solid fa-xmark"></i>
+                </div>
+            </div>
+            <div class="bg-white d-flex align-items-center px-2 mt-3" id="add_student_search_box">
+                <i class="fa-solid fa-magnifying-glass me-1" id="add_student_search_icon"></i>
+                <input type="search" class="px-2 py-1 border-0 w-100" placeholder="Enter StudentName"
+                    id="add_student_search">
+            </div>
+            <div id="student_list">
+
+            </div>
+        </div>
+    </div>
+    <!-- add student modal box end -->
+
+    <section class="main container mt-3">
+        <div class="d-flex flex-wrap align-items-center justify-content-between">
+            <div class="mt-2">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Exam</li>
+                    </ol>
+                </nav>
+            </div>
+            <div class="">
+                <div class="btn btn-success btn-sm mt-2 mx-2" id="add_enrolled_student">
+                    Add All Enrolled Students
+                </div>
+                <div class="btn btn-success btn-sm mt-2" id="add_student">Add Custom Students</div>
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-between mt-3">
+            <div class="">
+                <small class="fw-bold text-success me-3"><span class="" th:text="${total_students}"></span> Students
+                    Found</small>
+                <small class="fw-bold text-success"><span th:text="${check_students}"></span>/<span
+                        th:text="${total_students}"></span> Checked</small>
+            </div>
+            <div class="bg-white d-flex align-items-center px-2 mt-3" id="student_search_box">
+                <i class="fa-solid fa-magnifying-glass me-1" id="student_search_icon"></i>
+                <input type="search" class="px-2 py-1 border-0 w-100" placeholder="Enter StudentName"
+                    id="search_student">
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap align-items-center justify-content-end mt-3">
+            <a href="?" style="padding-right: 10px; padding-top: 5px;">Clear</a>
+            <div class="btn btn-success btn-sm mt-2" id="search_examinee">Search</div>
+        </div>
+
+        <!-- student result start  -->
+        <section class="my-3">
+            <div class="d-flex flex-wrap align-items-center justify-content-start">
+                <div class="col-12 col-md-6 col-lg-4 card-container mx-0 px-0 px-md-1 mt-3 student-item"
+                    th:each="test_student : ${test_students}">
+                    <div class="card border-0 shadow-sm">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <img th:src="@{/images/profile.png}" alt="" class="img-fluid rounded-circle"
+                                    style="width: 50px; height: 50px" />
+                                <div class="rounded-circle bg-danger text-white d-flex justify-content-center align-items-center fw-bold"
+                                    style="cursor: pointer; width: 25px; height: 25px">
+                                    <i class="fa-solid fa-xmark"></i>
+                                </div>
+                            </div>
+                            <div class="mt-3">
+                                <small class="fw-bold name" th:text="${test_student.userInfo.userName}"></small><br />
+                                <small class="fw-bold ph-no" th:text="${test_student.userInfo.phoneNo}"></small><br />
+                                <small class="fw-bold mail"
+                                    th:text="${test_student.userInfo.userAccount.mail}"></small><br />
+                                <small class="fw-bold text-muted">Checked Questions ( <span
+                                        th:text="${test_student.total_unmark_answer}"></span> / <span
+                                        th:text="${test_student.total_free_answer}"></span> )</small>
+                                <div class="text-end mt-2">
+                                    <small class="fw-bold">
+                                        <a th:href="'/admin/exam/' + ${test_student.test.test_id} + '/student/'+ ${test_student.userInfo.uid}"
+                                            class="text-success text-decoration-underline">Go To Answers</a>
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- student result end  -->
+    </section>
+    <div th:replace="@{fragments/footer}"></div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script th:src="@{/js/AT0005_TestStudentList.js}"></script>
+    <script th:inline="javascript">
+        var test_id = /*[[${test_id}]]*/ null;
+        var test_student = /*[[${test_students}]]*/ null;
+        var user_role =/*[[${user_role}]]*/ null;
+        if (user_role == "TEACHER") {
+            url = "teacher";
+        } else {
+            url = "admin";
+        }
+
+        var addEnrolledStudent = document.getElementById("add_enrolled_student");
+        addEnrolledStudent.addEventListener('click', () => {
+            data = {
+                test_id: test_id
+            }
+            data = JSON.stringify(data);
+            fetch("/" + url + "/set-enrolled-examinee", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: data
+            }).then(response => {
+                if (response.status == 200) {
+                    window.location.reload();
+                }
+            })
+        })
+
+        var addstudent = document.getElementById("add_student_search");
+        addstudent.addEventListener("input", function () {
+            var student_list = $("#student_list");
+            student_list.empty();
+            if (addstudent.value != "") {
+                fetch("/" + url + "/get-student?name=" + addstudent.value, {
+                    method: "GET",
+                    headers: {
+                        "Content-Type": "application/json"
+                    }
+                }).then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        for (var i = 0; i < data.length; i++) {
+                            student_list.append('<div class="mt-3 shadow-sm rounded p-2 border">' +
+                                '<div class="d-flex justify-content-between align-items-end">' +
+                                '<div class="d-flex align-items-center">' +
+                                '<div class="me-2" style="width: 65px;">' +
+                                '<img src="https://pyinnyarsubuu.com/images/profile.png" alt="" class="img-fluid rounded-circle">' +
+                                '</div>' +
+                                '<div class="">' +
+                                '<small class="fw-bold d-block">' + data[i]['userName'] + '</small>' +
+                                '<small class="fw-bold d-block">' + data[i]['phoneNo'] + '</small>' +
+                                '<small class="fw-bold d-block">' + data[i]['userAccount']['mail'] + '</small>' +
+                                '</div>' +
+                                '</div>' +
+                                '<div class="btn btn-sm btn-success" onclick="setStudentData(' + data[i]['uid'] + ');">Add</div>' +
+                                '</div>' +
+                                '</div>');
+                        }
+                    })
+            }
+        })
+
+
+        function setStudentData(student) {
+            data = {
+                test_id: test_id,
+                student_id: student
+            }
+            data = JSON.stringify(data);
+            fetch("/" + url + "/set-examinee", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: data
+            }).then(response => {
+                window.location.reload();
+            })
+        }
+    </script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            
+            $("#search_examinee").click(function () {
+                var searchValue = $("#search_student").val().toLowerCase(); 
+
+                
+                $(".student-item").each(function () {
+                    var studentName = $(this).find(".name").text().toLowerCase(); 
+
+                    
+                    if (studentName.includes(searchValue)) {
+                        $(this).show(); 
+                    } else {
+                        $(this).hide(); 
+                    }
+                });
+            });
+        });
+    </script>
+
+
+    <script th:src="@{/js/main.js}"></script>
+</body>
+
+</html>
